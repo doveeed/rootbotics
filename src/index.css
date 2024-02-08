@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+  font-size: 16px;
+  background-color: #f4ecd4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1, h2, h3, h4, ol {
+  margin: 0;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body, button {
+  font-family: 'Times New Roman';
+}
