@@ -16,35 +16,35 @@ export default function TradePosts({tradeposts = {}, onUpdateTradePosts}) {
     return (
         <Card title='Trade Posts'>
             <div style={{marginBottom: '1rem'}}>Whenever a player removes a trade post, return half their warriors from the Payments box (rounded up).</div>
-            <div>
-                <div style={{display: "flex", gap: '1rem', flexWrap: "wrap", marginBottom: '1rem'}}>
+            <div style={{maxWidth: '400px', margin: '0 auto'}}>
+                <div style={{display: "flex", gap: '1rem', flexWrap: "wrap", marginBottom: '1rem',}}>
                     {fox.map(({id,type, isPlaced, points}, index) => (
-                        <div  key={id} style={{position: "relative", cursor: "pointer"}} onClick={() => handleClick({index, type})}>
-                        <div style={{width: '100px', height: '100px', display: 'flex', alignItems: "center", justifyContent: 'center', backgroundImage: `url(${FoxTradePost})`, backgroundSize: 'cover', opacity: isPlaced ? '50%' : '100%'}} ></div>
-                        <div style={{width: '92px', height: '92px', display: 'flex', alignItems: "center", justifyContent: 'center', 
-                            fontSize: '2rem',
-                            fontWeight: 'bold', borderRadius: '50%', border: `4px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
-                    </div>
+                        <div  key={id} style={{position: "relative", cursor: "pointer", display: 'flex', flex: '1'}} onClick={() => handleClick({index, type})}>
+                            <img src={FoxTradePost} style={{opacity: isPlaced ? '50%' : '100%'}} width="100%" alt="fox trade post"/>
+                            <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
+                                fontSize: '2rem',
+                                fontWeight: 'bold', borderRadius: '50%', border: `4px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                        </div>
                     ))}
                 </div>
-                <div style={{display: "flex", gap: '1rem', flexWrap: "wrap", marginBottom: '1rem'}}>
-                {rabbit.map(({id,type, isPlaced, points}, index) => (
-                        <div  key={id} style={{position: "relative", cursor: "pointer"}} onClick={() => handleClick({index, type})}>
-                        <div style={{width: '100px', height: '100px', display: 'flex', alignItems: "center", justifyContent: 'center', backgroundImage: `url(${RabbitTradePost})`, backgroundSize: 'cover', opacity: isPlaced ? '50%' : '100%'}} ></div>
-                        <div style={{width: '92px', height: '92px', display: 'flex', alignItems: "center", justifyContent: 'center', 
-                            fontSize: '2rem',
-                            fontWeight: 'bold', borderRadius: '50%', border: `4px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
-                    </div>
+                <div style={{display: "flex", gap: '1rem', flexWrap: "wrap", marginBottom: '1rem',}}>
+                    {rabbit.map(({id,type, isPlaced, points}, index) => (
+                        <div  key={id} style={{position: "relative", cursor: "pointer", display: 'flex', flex: '1'}} onClick={() => handleClick({index, type})}>
+                            <img src={RabbitTradePost} style={{opacity: isPlaced ? '50%' : '100%'}} width="100%" alt="rabbit trade post"/>
+                            <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
+                                fontSize: '2rem',
+                                fontWeight: 'bold', borderRadius: '50%', border: `4px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                        </div>
                     ))}
                 </div>
-                <div style={{display: "flex", gap: '1rem', flexWrap: "wrap", marginBottom: '1rem'}}>
-                {mouse.map(({id,type, isPlaced, points}, index) => (
-                        <div  key={id} style={{position: "relative", cursor: "pointer"}} onClick={() => handleClick({index, type})}>
-                        <div style={{width: '100px', height: '100px', display: 'flex', alignItems: "center", justifyContent: 'center', backgroundImage: `url(${MouseTradePost})`, backgroundSize: 'cover', opacity: isPlaced ? '50%' : '100%'}} ></div>
-                        <div style={{width: '92px', height: '92px', display: 'flex', alignItems: "center", justifyContent: 'center', 
-                            fontSize: '2rem',
-                            fontWeight: 'bold', borderRadius: '50%', border: `4px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
-                    </div>
+                <div style={{display: "flex", gap: '1rem', flexWrap: "wrap", marginBottom: '1rem',}}>
+                    {mouse.map(({id,type, isPlaced, points}, index) => (
+                        <div  key={id} style={{position: "relative", cursor: "pointer", display: 'flex', flex: '1'}} onClick={() => handleClick({index, type})}>
+                            <img src={MouseTradePost} style={{opacity: isPlaced ? '50%' : '100%'}} width="100%" alt="mouse trade post"/>
+                            <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
+                                fontSize: '2rem',
+                                fontWeight: 'bold', borderRadius: '50%', border: `4px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                        </div>
                     ))}
                 </div>
             </div>
