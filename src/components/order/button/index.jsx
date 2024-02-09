@@ -23,16 +23,23 @@ export default function OrderButton({orderedSuit ='', suit = '', setOrderedSuit 
             onClick={() => setOrderedSuit(suit)}
             style={{
                 border: 'none',
-                borderRadius: '4px',
+                borderRadius: '5%',
                 backgroundColor,
                 cursor: 'pointer',
                 fontWeight: 'bold',
                 fontSize: '1.5rem',
                 opacity: suit === orderedSuit ? '100%' : '50%',
-                padding: '8px 16px',
+                alignItems: 'center',
                 justifyContent: 'center',
                 display: 'flex',
-                flex: '1'
-            }}>{children}</button>
+                flex: '1',
+                width: '25%',
+                paddingTop: '10%',
+                paddingBottom: '10%',
+                position: 'relative',
+            }}>
+                <div style={{position: 'absolute', top: 0, borderRadius: '5%', border: `4px solid ${suit === orderedSuit ? 'white' : 'transparent'}`, height: '100%', width: '100%', boxSizing: 'border-box'}}></div>
+                {children}
+            </button>
     );
 }
