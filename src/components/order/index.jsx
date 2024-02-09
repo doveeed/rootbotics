@@ -5,7 +5,8 @@ export default function Order({order, onChangeOrder}) {
     return (
         <div style={{
             display: 'flex',
-            flexDirection: 'row'
+            flexDirection: 'row',
+            flexWrap: 'wrap',
         }}>
             {suits.map((suit, index) => (
                 <OrderButton
