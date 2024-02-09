@@ -2,6 +2,7 @@ import Number from "../../../number";
 import Step from "../../../step";
 import Steps from "../../../steps";
 import Suit from "../../../suit";
+import Blank from '../../../../assets/blank.png';
 
 export default function Conspiracies({canBuyServices, index, isSpiteful, isFanatics, onUpdateConspiracyIndex, orderedSuit}) {
     const conspiracies = ['Convert', 'Crusade', 'Convert', 'Crusade', 'Sanctify'];
@@ -18,20 +19,21 @@ export default function Conspiracies({canBuyServices, index, isSpiteful, isFanat
                         style={{
                             border: '4px solid black',
                             fontWeight: 'bold',
-                            width: '72px',
-                            height: '72px',
                             display: 'flex',
-                            flexShrink: 0,
+                            flex: '1',
                             justifyContent: 'center',
                             alignItems: 'center',
                             backgroundColor: index === i ? 'black': 'transparent',
                             color: index === i ? 'white': 'black',
                             cursor: "pointer",
+                            position: 'relative',
+                            overflow: 'hidden',
                         }}
                         onClick={() => onUpdateConspiracyIndex(i)}
                     
                     >
-                        {name}
+                        <img src={Blank} alt="blank" width="100%"/>
+                        <div style={{position: 'absolute', width: '100%', wordBreak: 'break-all', textAlign: 'center'}}>{name}</div>
                     </div>)
                 })}
             </div>
