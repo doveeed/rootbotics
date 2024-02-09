@@ -60,7 +60,7 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
     }
     
     const eveningSteps = [
-        <Step title="Score" description={<> <Number value={1} /> per <img src={Extortion} alt='face-up Extortion plot token' title='face-up Extortion plot token' height={24} width={24} style={{marginBottom: '-6px'}}/> on the map. (<Number value={numFlippedExtortions} />)</>}/>,
+        <Step title="Score" description={<> <Number value={1} /> per <img src={Extortion} alt='face-up Extortion plot token' height={24} width={24} style={{marginBottom: '-6px'}}/> on the map. (<Number value={numFlippedExtortions} />)</>}/>,
         <Step title="Discard" description="the order card."/>
     ];
 
@@ -78,7 +78,7 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
                 backgroundColor="#3c2d90"
                 color="white"
             />
-            <div style={{padding: '16px 8px'}}>
+            <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
                     <>
                         <Card title="Setup (I)">
@@ -108,21 +108,75 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
                 {isSetup && (
                     <>
                         <Card title="Plots">
-                            <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
-                                {plots.map(({type, flipped, key}, index) => (
-                                <Plot key={key} type={type} flipped={flipped} 
-                                onFlip={() => {
-                                    const before = plots.slice(0,index);
-                                    const after = plots.slice(index + 1);
-                                    const newPlot = {
-                                        type,
-                                        flipped: !flipped,
-                                        key,
-                                    };
-                                    updateState({...state, plots: [...before, newPlot,...after]})
-                                }
-                                }/>
-                            ))}
+                            <div style={{display: 'flex', gap: '1rem', maxWidth: '500px'}}>
+                                <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
+                                    {plots.filter((({type}) => type === 'bomb')).map(({type, flipped, key}) => (
+                                        <Plot key={key} type={type} flipped={flipped} 
+                                            onFlip={() => {
+                                                const index = plots.findIndex((plot) => plot.key === key);
+                                                const before = plots.slice(0,index);
+                                                const after = plots.slice(index + 1);
+                                                const newPlot = {
+                                                    type,
+                                                    flipped: !flipped,
+                                                    key,
+                                                };
+                                                updateState({...state, plots: [...before, newPlot,...after]})
+                                            }
+                                        }/>
+                                    ))}
+                                </div>
+                                <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
+                                {plots.filter((({type}) => type === 'snare')).map(({type, flipped, key}) => (
+                                        <Plot key={key} type={type} flipped={flipped} 
+                                            onFlip={() => {
+                                                const index = plots.findIndex((plot) => plot.key === key);
+                                                const before = plots.slice(0,index);
+                                                const after = plots.slice(index + 1);
+                                                const newPlot = {
+                                                    type,
+                                                    flipped: !flipped,
+                                                    key,
+                                                };
+                                                updateState({...state, plots: [...before, newPlot,...after]})
+                                            }
+                                        }/>
+                                    ))}
+                                </div>
+                                <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
+                                {plots.filter((({type}) => type === 'extortion')).map(({type, flipped, key}) => (
+                                        <Plot key={key} type={type} flipped={flipped} 
+                                            onFlip={() => {
+                                                const index = plots.findIndex((plot) => plot.key === key);
+                                                const before = plots.slice(0,index);
+                                                const after = plots.slice(index + 1);
+                                                const newPlot = {
+                                                    type,
+                                                    flipped: !flipped,
+                                                    key,
+                                                };
+                                                updateState({...state, plots: [...before, newPlot,...after]})
+                                            }
+                                        }/>
+                                    ))}
+                                </div>
+                                <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
+                                {plots.filter((({type}) => type === 'raid')).map(({type, flipped, key}) => (
+                                        <Plot key={key} type={type} flipped={flipped} 
+                                            onFlip={() => {
+                                                const index = plots.findIndex((plot) => plot.key === key);
+                                                const before = plots.slice(0,index);
+                                                const after = plots.slice(index + 1);
+                                                const newPlot = {
+                                                    type,
+                                                    flipped: !flipped,
+                                                    key,
+                                                };
+                                                updateState({...state, plots: [...before, newPlot,...after]})
+                                            }
+                                        }/>
+                                    ))}
+                                </div>
 
                             </div>
                         </Card>
