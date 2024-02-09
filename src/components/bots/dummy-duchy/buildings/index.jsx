@@ -18,18 +18,17 @@ export default function Buildings({buildings, onUpdateBuildings}) {
         <div>
             <div style={{display: 'flex', alignItems: 'center'}}>
                 <div style={{minWidth: '80px'}}>Citadels</div>
-                <div style={{display: 'flex', gap: '1rem', marginBottom: '1rem'}}>
+                <div style={{display: 'flex', gap: '1rem', marginBottom: '1rem', maxWidth: '400px'}}>
                     {buildings.filter(({type}) => type === 'citadel').map(({id, isPlaced}, index) => (
-                        <div key={id} style={{position: 'relative', cursor: 'pointer'}} onClick={() => {handleClick(id)}}>
-                        <img key={id} 
-                        
-                        src={isPlaced ? index < 2 ? Citadel1: Citadel2 : CitadelBuilding} height={80} width={80} title="citadel" alt='citadel'/>
+                        <div key={id} style={{position: 'relative', cursor: 'pointer', display: 'flex', flex: '1'}} onClick={() => {handleClick(id)}}>
+                        <img key={id} src={isPlaced ? index < 2 ? Citadel1: Citadel2 : CitadelBuilding} width="100%" alt='citadel'/>
                         <div style={{
-                                width: '72px',
-                                height: '72px',
+                                width: '100%',
+                                height: '100%',
                                 border: `4px solid ${isPlaced ? '#d2a88d': 'transparent'}`,
-                                borderRadius: '12px',
+                                borderRadius: '15%',
                                 position: 'absolute',
+                                boxSizing: 'border-box',
                                 top: 0,
                             }}></div>
                         </div>
@@ -38,19 +37,18 @@ export default function Buildings({buildings, onUpdateBuildings}) {
             </div>
             <div style={{display: 'flex', alignItems: 'center'}}>
                 <div style={{minWidth: '80px'}}>Markets</div>
-                <div style={{display: 'flex', gap: '1rem'}}>
+                <div style={{display: 'flex', gap: '1rem', maxWidth: '400px'}}>
                     {buildings.filter(({type}) => type === 'market').map(({id, isPlaced}) => (
-                        <div key={id} style={{position: 'relative', cursor: 'pointer'}} onClick={() => {handleClick(id)}}>
-                        <img key={id} 
-                        
-                        src={isPlaced ? Market : MarketBuilding} height={80} width={80} title="market" alt='market'/>
+                        <div key={id} style={{position: 'relative', cursor: 'pointer', display: 'flex', flex: '1'}} onClick={() => {handleClick(id)}}>
+                        <img key={id} src={isPlaced ? Market : MarketBuilding} width="100%" title="market" alt='market'/>
                         <div style={{
-                                width: '72px',
-                                height: '72px',
-                                border: `4px solid ${isPlaced ? '#d2a88d': 'transparent'}`,
-                                borderRadius: '12px',
+                                width: '100%',
+                                height: '100%',
                                 position: 'absolute',
+                                border: `4px solid ${isPlaced ? '#d2a88d': 'transparent'}`,
+                                borderRadius: '15%',
                                 top: 0,
+                                boxSizing: 'border-box',
                             }}></div>
                         </div>
                     ))}
