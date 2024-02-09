@@ -16,7 +16,9 @@ function App() {
   useEffect(() => {
     try {
       const bots = JSON.parse(window.localStorage.getItem('bots'));
-      console.log('DAH: saved bots', bots);
+      if (!bots) {
+        return;
+      }
       updateBots(bots);
     } catch(e){
       console.error(e);
