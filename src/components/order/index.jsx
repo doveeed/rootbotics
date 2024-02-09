@@ -1,7 +1,19 @@
 import OrderButton from "./button";
+import BirdSuit from '../../assets/bird-suit.png';
+import MouseSuit from '../../assets/mouse-suit.png';
+import RabbitSuit from '../../assets/rabbit-suit.png';
+import FoxSuit from '../../assets/fox-suit.png';
+
+const suitImgMap = {
+    bird: BirdSuit,
+    mouse: MouseSuit,
+    rabbit: RabbitSuit,
+    fox: FoxSuit,
+}
 
 export default function Order({order, onChangeOrder}) {
     const suits = ['bird', 'fox','rabbit', 'mouse'];
+
     return (
         <div style={{
             display: 'flex',
@@ -17,7 +29,7 @@ export default function Order({order, onChangeOrder}) {
                     orderedSuit={order} 
                     setOrderedSuit={(suit) => onChangeOrder(suit)}
                 >
-                    {suit}
+                    <img src={suitImgMap[suit]} alt={suit} width='80%' />
                 </OrderButton>
             ))}
         </div>
