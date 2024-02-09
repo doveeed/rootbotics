@@ -1,4 +1,3 @@
-import Mole from '../../../assets/mole.png'
 import Step from "../../step";
 import Header from "../../header";
 import Card from "../../card";
@@ -47,7 +46,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
                 onDelete={onDelete}
                 backgroundColor="#56c3bc"
             />
-            <div style={{padding: '16px 8px'}}>
+            <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
                     <>
                         <Card title="Setup (G)">
