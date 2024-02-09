@@ -7,6 +7,8 @@ export default function Order({order, onChangeOrder}) {
             display: 'flex',
             flexDirection: 'row',
             flexWrap: 'wrap',
+            gap: '0.5rem',
+            maxWidth: '400px'
         }}>
             {suits.map((suit, index) => (
                 <OrderButton
