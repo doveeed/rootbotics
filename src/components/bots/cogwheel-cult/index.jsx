@@ -70,7 +70,7 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
                 onDelete={onDelete}
                 backgroundColor="#f4e274"
             />
-            <div style={{padding: '16px 8px'}}>
+            <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
                     <>
                         <Card title="Setup (F)">
@@ -122,7 +122,7 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
                             />
                             <div>
                                 <div style={{display: 'flex'}}>
-                                    <div ><img src={Suited} alt="rabbit, fox, mouse cards" title="rabbit, fox, mouse cards" width="48px" style={{margin: '0 0.5rem 0 1rem'}} /></div>
+                                    <div ><img src={Suited} alt="rabbit, fox, mouse cards" width="48px" style={{margin: '0 0.5rem 0 1rem'}} /></div>
                                     <div>
                                         <Step title='' description={<>Place a warrior into clearing matching the revealeed card. Then if you rule the clearing, also place a matching garden in the clearing.{canBuyServices ? ' If the Riverfolk player has fewer points than you do and buying Mercenaries would allow you to place a garden, buy Mercenaries.': ''}</>}
                                             substeps={<Steps type='I' steps={
@@ -132,7 +132,7 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
                                     </div>
                                 </div>
                                 <div style={{display: 'flex'}}>
-                                    <div ><img src={Bird} alt="bird card" title="bird card" width="48px" style={{margin: '0 0.5rem 0 1rem'}} /></div>
+                                    <div ><img src={Bird} alt="bird card" width="48px" style={{margin: '0 0.5rem 0 1rem'}} /></div>
                                     <div>
                                         <Step 
                                             title="" description={<>Move one of your warriors from the clearing with the most Lizard warriors to the Acolytes box. Then move this card to the discard pile.</>}
