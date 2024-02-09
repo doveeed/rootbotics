@@ -3,6 +3,7 @@ import { useState } from "react";
 export default function Menu ({bots, onAddBot = () => {}}) {
     const botFactions = bots.map(bot => bot.faction);
     const options = [
+        {faction: 'dc-mechanical-marquise-2point0', name: 'DC Mechanical Marquise 2.0'},
         {faction: 'cogwheel-cult', name: 'Cogwheel Cult'},
         {faction: 'rivetfolk-company', name: 'Rivetfolk Company'},
         {faction: 'dummy-duchy', name: 'Dummy Duchy'},
@@ -19,6 +20,7 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                 isSetup: false, 
                 orderedSuit: 'bird',
                 isHumanRiverfolk: false,
+                level: 'expert',
             }
         }
         switch(faction) {
@@ -27,7 +29,6 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                     ...bot,
                     state: {
                         ...bot.state,
-                        level: 'expert',
                         traits: [
                             {
                                 id: 'poor-manual-dexterity',
@@ -92,7 +93,6 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                     ...bot,
                     state: {
                         ...bot.state,
-                        level: 'expert',
                         traits: [
                             {
                                 id: 'poor-manual-dexterity',
@@ -157,12 +157,63 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                     
                 }
                 break;
+            case 'dc-mechanical-marquise-2point0':
+                bot = {
+                    ...bot,
+                    state: {
+                        ...bot.state,
+                        traits: [
+                            {
+                                id: 'the-keep',
+                                isDefault: true,
+                                isEnabled: true,
+                                name: 'The Keep'
+                            },
+                            {
+                                id: 'poor-manual-dexterity',
+                                isDefault: true,
+                                isEnabled: true,
+                                name: 'Poor Manual Dexterity',
+                            },
+                            {
+                                id: 'hates-surprises',
+                                isDefault: true,
+                                isEnabled: true,
+                                name: 'Hates Surprises',
+                            },
+                            {
+                                id: 'hospitals',
+                                isDefault: false,
+                                isEnabled: false,
+                                name: 'Hospitals',
+                            },
+                            {
+                                id: 'iron-will',
+                                isDefault: false,
+                                isEnabled: false,
+                                name: 'Iron Will',
+                            },
+                            {
+                                id: 'fortified',
+                                isDefault: false,
+                                isEnabled: false,
+                                name: 'Fortified',
+                            },
+                        ],
+                        buildings: {
+                            sawmill: [{id: 'sawmill-1', type: 'sawmill', isPlaced: false, points: 0},{id: 'sawmill-1', type: 'sawmill', isPlaced: false, points: 0}, {id: 'sawmill-2', type: 'sawmill', isPlaced: false, points: 1}, {id: 'sawmill-3', type: 'sawmill', isPlaced: false, points: 2}, {id: 'sawmill-4', type: 'sawmill', isPlaced: false, points: 3}, {id: 'sawmill-5', type: 'sawmill', isPlaced: false, points: 4}, {id: 'sawmill-6', type: 'sawmill', isPlaced: false, points: 5}],
+                            workshop: [{id: 'workshop-1', type: 'workshop', isPlaced: false, points: 0},{id: 'workshop-1', type: 'workshop', isPlaced: false, points: 0}, {id: 'workshop-2', type: 'workshop', isPlaced: false, points: 1}, {id: 'workshop-3', type: 'workshop', isPlaced: false, points: 2}, {id: 'workshop-4', type: 'workshop', isPlaced: false, points: 3}, {id: 'workshop-5', type: 'workshop', isPlaced: false, points: 4}, {id: 'workshop-6', type: 'workshop', isPlaced: false, points: 5}],
+                            recruiter: [{id: 'recruiter-1', type: 'recruiter', isPlaced: false, points: 0},{id: 'recruiter-1', type: 'recruiter', isPlaced: false, points: 0}, {id: 'recruiter-2', type: 'recruiter', isPlaced: false, points: 1}, {id: 'recruiter-3', type: 'recruiter', isPlaced: false, points: 2}, {id: 'recruiter-4', type: 'recruiter', isPlaced: false, points: 3}, {id: 'recruiter-5', type: 'recruiter', isPlaced: false, points: 4}, {id: 'recruiter-6', type: 'recruiter', isPlaced: false, points: 5}],
+                        }
+                    }
+
+                }
+                break;
             case 'dummy-duchy':
                 bot = {
                     ...bot,
                     state: {
                         ...bot.state,
-                        level: 'expert',
                         traits: [
                             {
                                 id: 'hates-surprises',
@@ -297,7 +348,6 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                     ...bot,
                     state: {
                         ...bot.state,
-                        level: 'expert',
                         traits: [
                             {
                                 id: 'poor-manual-dexterity',
