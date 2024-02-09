@@ -28,9 +28,11 @@ export default function OrderButton({orderedSuit ='', suit = '', setOrderedSuit 
                 cursor: 'pointer',
                 fontWeight: 'bold',
                 fontSize: '1.5rem',
-                marginRight: '8px',
                 opacity: suit === orderedSuit ? '100%' : '50%',
                 padding: '8px 16px',
+                justifyContent: 'center',
+                display: 'flex',
+                flex: '1'
             }}>{children}</button>
     );
 }
