@@ -32,7 +32,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
         <Step title="Craft" description={<>order card for <Number value={1}/> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, if available, and replace the order card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly.':''}</>} />,
         <Step 
             title="Recruit"
-            description={<>{levelToRecruit[level]}, plus one per <img src={Mole} title="Duchy warrior" alt='Duchy warrior' height={24} width={24} style={{marginBottom: '-6px'}} /> showing, in the Burrow.</>}
+            description={<>{levelToRecruit[level]}, plus one per <img src={Mole} alt='Duchy warrior' height={24} width={24} style={{marginBottom: '-6px'}} /> showing, in the Burrow.</>}
         />
     ];
 
@@ -68,7 +68,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                 onDelete={onDelete}
                 backgroundColor="#e5bc9d"
             />
-            <div style={{padding: '16px 8px'}}>
+            <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
                     <>
                         <Card title="Setup (H)">
