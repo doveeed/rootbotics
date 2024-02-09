@@ -16,33 +16,33 @@ export default function Gardens({gardens, onUpdateGardens} ) {
         <Card title="Gardens">
             <div>
                 <div style={{marginBottom: '1rem'}}><i>When a garden is removed from the map, discard the top card in your Lost Souls.</i></div>
-                <div style={{display: "flex", gap: '1rem', flexWrap: "wrap", marginBottom: '1rem'}}>{mouse.map(({id, type, isPlaced, points}, index) => {
+                <div style={{display: "flex", gap: '1rem', flexWrap: "wrap", marginBottom: '1rem', width: '100%'}}>{mouse.map(({id, type, isPlaced, points}, index) => {
                     return (
-                        <div  key={id} style={{position: "relative", cursor: "pointer"}} onClick={() => handleClick({index, type})}>
-                            <div style={{width: '80px', height: '80px', display: 'flex', alignItems: "center", justifyContent: 'center', backgroundImage: `url(${MouseGarden})`, backgroundSize: 'cover', opacity: isPlaced ? '50%' : '100%'}} ></div>
-                            <div style={{width: '72px', height: '72px', display: 'flex', alignItems: "center", justifyContent: 'center', 
+                        <div  key={id} style={{position: "relative", cursor: "pointer", display: 'flex', flex: '1'}} onClick={() => handleClick({index, type})}>
+                            <img style={{opacity: isPlaced ? '50%' : '100%'}} src={MouseGarden} width="100%" alt="mouse garden" />
+                            <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                                 fontSize: '2rem',
-                                fontWeight: 'bold', borderRadius: '12px', border: `4px solid ${isPlaced ? '#f4e274' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                                fontWeight: 'bold', borderRadius: '15%', border: `4px solid ${isPlaced ? '#f4e274' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     );
                 })}</div>
-                 <div style={{display: "flex", gap: '1rem', flexWrap: "wrap", marginBottom: '1rem'}}>{rabbit.map(({id, type, isPlaced, points}, index) => {
+                 <div style={{display: "flex", gap: '1rem', flexWrap: "wrap", marginBottom: '1rem', width: '100%'}}>{rabbit.map(({id, type, isPlaced, points}, index) => {
                     return (
-                        <div  key={id} style={{position: "relative", cursor: "pointer"}} onClick={() => handleClick({index, type})}>
-                            <div style={{width: '80px', height: '80px', display: 'flex', alignItems: "center", justifyContent: 'center', backgroundImage: `url(${RabbitGarden})`, backgroundSize: 'cover', opacity: isPlaced ? '50%' : '100%'}} ></div>
-                            <div style={{width: '72px', height: '72px', display: 'flex', alignItems: "center", justifyContent: 'center', 
+                        <div  key={id} style={{position: "relative", cursor: "pointer", display: 'flex', flex: '1'}} onClick={() => handleClick({index, type})}>
+                            <img style={{opacity: isPlaced ? '50%' : '100%'}} src={RabbitGarden} width="100%" alt="rabbit garden" />
+                            <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                                 fontSize: '2rem',
-                                fontWeight: 'bold', borderRadius: '12px', border: `4px solid ${isPlaced ? '#f4e274' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                                fontWeight: 'bold', borderRadius: '15%', border: `4px solid ${isPlaced ? '#f4e274' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     );
                 })}</div>
-                <div style={{display: "flex", gap: '1rem', flexWrap: "wrap", marginBottom: '1rem'}}>{fox.map(({id, type, isPlaced, points}, index) => {
+                <div style={{display: "flex", gap: '1rem', flexWrap: "wrap", marginBottom: '1rem', width: '100%'}}>{fox.map(({id, type, isPlaced, points}, index) => {
                     return (
-                        <div  key={id} style={{position: "relative", cursor: "pointer"}} onClick={() => handleClick({index, type})}>
-                            <div style={{width: '80px', height: '80px', display: 'flex', alignItems: "center", justifyContent: 'center', backgroundImage: `url(${FoxGarden})`, backgroundSize: 'cover', opacity: isPlaced ? '50%' : '100%'}} ></div>
-                            <div style={{width: '72px', height: '72px', display: 'flex', alignItems: "center", justifyContent: 'center', 
+                        <div  key={id} style={{position: "relative", cursor: "pointer", display: 'flex', flex: '1'}} onClick={() => handleClick({index, type})}>
+                            <img style={{opacity: isPlaced ? '50%' : '100%'}} src={FoxGarden} width="100%" alt="fox garden" />
+                            <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                                 fontSize: '2rem',
-                                fontWeight: 'bold', borderRadius: '12px', border: `4px solid ${isPlaced ? '#f4e274' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                                fontWeight: 'bold', borderRadius: '15%', border: `4px solid ${isPlaced ? '#f4e274' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     );
                 })}</div>
