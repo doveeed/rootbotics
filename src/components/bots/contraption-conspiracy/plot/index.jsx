@@ -25,30 +25,21 @@ export default function Plot ({type, flipped, onFlip}) {
     }
    return (
     <div
-        style={{
-            width: '94px', 
-            height: '94px',
-            border: `4px solid ${flipped ? 'purple': 'transparent'}`,
-            borderRadius: '50%', 
-        }}
+    style={{display: 'flex', flex: '1', position: 'relative', cursor: 'pointer'}}
+    onClick={onFlip}
+        
     >
-    <div
-        onClick={onFlip}
+        <img src={bgImg} width="100%" alt={`${type} plot`} style={{opacity: flipped ? '50%' : '100%'}} />
+        <div
         style={{
-            background: `url(${bgImg})`,
-            color: 'black',
-            fontWeight: 'bold',
-            cursor: 'pointer', 
-            width: '102px', 
-            height: '102px', 
+            width: '100%', 
+            height: '100%',
+            position: 'absolute',
+            top: 0,
+            border: `4px solid ${flipped ? '#3c2d90': 'transparent'}`,
             borderRadius: '50%', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
+            boxSizing: 'border-box',
             display: 'flex',
-            opacity: flipped ? '50%' : '100%',
-            flexWrap: 'wrap',
-            backgroundSize: 'cover',
-            margin: '-4px'
         }}
     >
     </div>
