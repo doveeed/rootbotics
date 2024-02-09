@@ -8,7 +8,6 @@ export default function Buildings({buildings = {}, onUpdateBuildings}) {
     const {sawmill = [], workshop = [], recruiter = []} = buildings;
 
     const handleClick = ({index, type}) => {
-        console.log(buildings[type])
         const building = buildings[type][index];
         const before = buildings[type].slice(0,index);
         const after = buildings[type].slice(index + 1);
