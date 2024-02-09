@@ -251,7 +251,7 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                             {
                                 name: 'Foremole',
                                 suit: 'mouse',
-                                action: <>You have an additional revealed <img src={Mole} title="Duchy warrior" alt="Duchy warrior" height={24} width={24} style={{marginBottom: '-6px'}}/> </>,
+                                action: <>You have an additional revealed <img src={Mole} alt="Duchy warrior" height={24} width={24} style={{marginBottom: '-6px'}}/> </>,
                                 level: 1,
                                 isSwayed: false,
                             },
