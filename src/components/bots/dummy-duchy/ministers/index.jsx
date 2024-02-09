@@ -1,3 +1,17 @@
+import Mole from '../../../../assets/mole.png';
+import Number from '../../../number';
+
+const ministerNameActionMapping = {
+    'Banker': 'Repeat the Build Action.',
+    'Baron of Dirt': <>Score <Number value={1} /> per market on the map.</>,
+    'Brigadier': 'Repeat the Dig Action if there are at least 3 warriors in the burrow, targeting the clearing with the most enemy buildings and tokens.',
+    'Captain': 'As attacker, deal an extra hit in clearings with a tunnel.',
+    'Duchess of Mud': <>Score <Number value={2} /> if all tunnels are on the map.</>,
+    'Earl of Stone': <>Score <Number value={1} /> per citadel on the map.</>,
+    'Foremole': <>You have an additional revealed <img src={Mole} alt="Duchy warrior" height={24} width={24} style={{marginBottom: '-6px'}}/>.</>,
+    'Marshal': 'Place a warrior from your supply into such a clearing that has at least one of your buildings and the least of your warriors.',
+    'Mayor': <>Return a warrior to your supplf from the clearing you rule with the most of your warriors Score <Number value={1} />.</>,
+}
 
 export default function Ministers ({ministers, onUpdateMinisters
 }) {
@@ -33,9 +47,8 @@ export default function Ministers ({ministers, onUpdateMinisters
                             const after = ministers.slice(index + 1);
                             onUpdateMinisters([...before, {suit, name, action, level, isSwayed: !isSwayed}, ...after])
                         }}/>
-                        {/* <div style={{minWidth: '56px'}}><Suit suit={suit} /></div> */}
-                        <div style={{minWidth: '144px', backgroundColor, borderRadius: '4px', padding: '0 8px', margin: '0px 8px', display: 'flex', justifyContent: 'center'}}><b style={{}}>{name}</b></div>
-                        <div style={{flex: 1}}>{action}</div>
+                        <div style={{minWidth: '144px', backgroundColor, borderRadius: '4px', padding: '0 8px', margin: '0px 8px', display: 'flex', justifyContent: 'center'}}><b>{name}</b></div>
+                        <div style={{flex: 1}}>{ministerNameActionMapping[name]}</div>
                         </label>
                     </div>
                 )})}
