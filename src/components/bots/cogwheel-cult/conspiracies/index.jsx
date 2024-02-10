@@ -1,8 +1,8 @@
-import Number from "../../../number";
 import Step from "../../../step";
 import Steps from "../../../steps";
 import Suit from "../../../suit";
 import Blank from '../../../../assets/blank.png';
+import OneVP from "../../../one-vp";
 
 export default function Conspiracies({canBuyServices, index, isSpiteful, isFanatics, onUpdateConspiracyIndex, orderedSuit}) {
     const conspiracies = ['Convert', 'Crusade', 'Convert', 'Crusade', 'Sanctify'];
@@ -55,7 +55,7 @@ export default function Conspiracies({canBuyServices, index, isSpiteful, isFanat
                         description={<>Battle in each <Suit suit={orderedSuit} /> clearing in which you have two or more warriors.{canBuyServices ? '  If the Riverfolk player has fewer points than you do, you only have two warriors there, and at least one Riverfolk warrior is present, then buy Mercenaries.': ''}</>}
                         substeps={<Steps type="I" steps={[<Step title={<i>Defender Tie:</i>} description={<i>Battle the player with most points there.</i>} />]}/>}
                     />
-                    {isSpiteful && <><b>Spiteful.</b> Score <Number value={1} /> if you removed at least one token in any clearing</>}
+                    {isSpiteful && <><b>Spiteful.</b> Score <OneVP /> if you removed at least one token in any clearing</>}
                     </>
                 )}
                 {selectedConspiracy === 'Sanctify' && (
