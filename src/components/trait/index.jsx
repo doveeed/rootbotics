@@ -1,6 +1,9 @@
 import Number from "../number";
+import OneVP from "../one-vp";
 
 const traitIdDescriptionMap = {
+    'automated-ambush': 'In battle as defender with any Alliance warriors, you deal an extra hit.',
+    'automated-outrage': <>Whenever a human player removes a sympathy token or moves any warriors into a sympathetic clearing, they must discard a matching card. If they cannot, you score <OneVP />.</>,
     'backup-plans': 'When one of your tokens is removed, place a warrior from your supply into the clearing wich contained the token.',
     'cost-of-errors': 'Whenever any number of Duchy buildings are removed, remove the crown furthest towards the bottom of the minister track.',
     'embedded-agents': 'In battle as defender with a facedown plot token, you deal an extra hit.',
@@ -9,9 +12,9 @@ const traitIdDescriptionMap = {
     'ferocious': 'As Attacker you always have a Maximum Rolled Hits of three.',
     'fortified': 'Your buildings each take two hits to remove in battle. Taking a single hit with a building has no effect',
     'foundations': <>Cost of Errors now only removes the crown furthest towards the bottom of the minister track <b>matching</b> the clearing in which the buildings were removed.</>,
-    'gamble': <>Whenever a plot token would be flipped, the human player with the most pieces in the clearing must first guess the type of token. If correct, the token effect does not trigger and the token is removed after scoring points for flipped tokens, and the player draws a card. If incorrect, gain <Number value={1}/> </>,
+    'gamble': <>Whenever a plot token would be flipped, the human player with the most pieces in the clearing must first guess the type of token. If correct, the token effect does not trigger and the token is removed after scoring points for flipped tokens, and the player draws a card. If incorrect, gain <OneVP />.</>,
     'garrison': 'Trade Posts are never defenseless and increase your possible Hits by 1 as if they were a warrior.',
-    'greedy': <>Grain <Number value={1} /> when the player with the highest score uses one or more of your services.</>,
+    'greedy': <>Grain <OneVP/> when the player with the highest score uses one or more of your services.</>,
     'hates-surprises': 'Ambush cards cannot be played against you.',
     'hospitals': 'At the end of battle as defender, if two or more Marquise warriors were removed in the battle, place one warrior in the clearing with the keep token.',
     'invaders': 'During the Dig action, target ordered clearings with the most enemy buildings, but the least enemy warriors. If you cannot Build due to no free building slots, battle in all clearings instead.',
@@ -26,7 +29,7 @@ const traitIdDescriptionMap = {
     'nobility': 'Tirmoil is now triggered if you are unable to place a roost or if you are unable to place a warrior. Whenever you fall into Turmoil, you do not lose victory points. Instead, you score on victory pount per bird card in the Decree.',
     'overwhelm': 'The Dig action requires and moves only there warriors (instead of four), and is repeated a second time each turn.',
     'pilgrims': 'You rule any clearing where you have any gardens.',
-    'poor-manual-dexterity': <>You have no hand of cards. You cannot discard cards. If a human would take a card from you, they draw a card instead. If a human would give a card to you, they discard it, and you score <Number value={1} />.</>,
+    'poor-manual-dexterity': <>You have no hand of cards. You cannot discard cards. If a human would take a card from you, they draw a card instead. If a human would give a card to you, they discard it, and you score <OneVP />.</>,
     'relentless': 'After resolving the Decree, remove all defenseless buildings and tokens in any clearing where you have warriors.',
     'robot-revenge': "When one or more of your warriors are removed during another player's turn, place one of them into the Acolytes Box.",
     'spiteful': <>Whenever you <b>Crusade</b>, score one victory point if you removed at least one token in any clearing.</>,
