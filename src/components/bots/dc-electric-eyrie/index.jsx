@@ -3,16 +3,16 @@ import Step from "../../step";
 import Header from "../../header";
 import Card from "../../card";
 import Steps from "../../steps";
-import Order from "../../order";
 import Suit from "../../suit";
 import Number from "../../number";
 import Level from '../../level';
 import Trait from '../../trait';
 import Buildings from "./buildings";
 import Decree from "./decree";
+import OneVP from "../../one-vp";
 
 export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
-    const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', buildings = [], isHumanRiverfolk = false, decree = {}} = state;
+    const {isSetup = false, traits = [], level = 'expert', buildings = [], isHumanRiverfolk = false, decree = {}} = state;
     const {fox, mouse, rabbit, bird} = decree;
     const isBossMode = level === 'boss';
     const isWarTax = traits.find(({id}) => id === 'war-tax').isEnabled;;
@@ -30,7 +30,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
-        <Step title="Craft" description={<>order card for <Number value={1}/> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do, the order card has no craftable item, there is a card in the Market of a suit that is not in your Decree, the current order card suit is already in the Decree, buy the card from the Market of a suit that is not in your Decree and replace the order card. If there are multpile, choose one at random. If there is a craftable item in the Market, buy it. If there are multiple, choose the one with the most VP. Otherwise, choose randomly.':''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do, the order card has no craftable item, there is a card in the Market of a suit that is not in your Decree, the current order card suit is already in the Decree, buy the card from the Market of a suit that is not in your Decree and replace the order card. If there are multpile, choose one at random. If there is a craftable item in the Market, buy it. If there are multiple, choose the one with the most VP. Otherwise, choose randomly.':''}</>} />,
         <Step title="Add" description="the order card to the matching Decree column." />
     ]
 
@@ -193,7 +193,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
     ];
 
     if (isBossMode) {
-        eveningSteps.push(<Step title="Boss Mode." description={<>Score <Number value={1} /> for every player (rounded up).</>} />)
+        eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP /> for every two players (rounded up).</>} />)
     }
 
     return (
@@ -203,7 +203,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor="blue"
+                backgroundColor="#406eb1"
                 color="white"
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
@@ -234,9 +234,6 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
                 </Card>
                 {isSetup && (
                     <>
-                        <Card title="Ordered suit">
-                            <Order order={orderedSuit} onChangeOrder={(newOrder) => updateState({...state, orderedSuit:newOrder})}/>
-                        </Card>
                         <Card title="Decree & Roosts">
                             <Decree decree={decree} onUpdateDecree={(newDecree) => updateState({...state, decree: newDecree})}/>
                             <Buildings buildings={buildings} onUpdateBuildings={(newBuildings) => {updateState({...state, buildings: newBuildings})}}/>
@@ -265,7 +262,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
                             <Steps
                                 type="1"
                                 steps={[
-                                    <Step title="Humiliate:" description={<>{isNobility ? 'Score' : 'Lose'} one point per bird card <i>(including Viziers)</i> in the Decree. <Number value={bird} isNegative/></>}/>,
+                                    <Step title="Humiliate:" description={<>{isNobility ? 'Score' : 'Lose'} one point per bird card <i>(including Viziers)</i> in the Decree. (<Number value={bird} isNegative={isNobility ? false : true}/>)</>}/>,
                                     <Step title="Purge:" description={<>Discard Decree, except Viziers.</>}/>,
                                     <Step title="Rest:" description={<>Go to Evening.</>}/>
                                 ]}
