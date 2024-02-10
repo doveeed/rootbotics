@@ -4,7 +4,6 @@ import RabbitBase from '../../../../assets/rabbit-base.png';
 import MouseBase from '../../../../assets/mouse-base.png';
 
 export default function Buildings({buildings, onUpdateBuildings}) {
-    console.log('DAH: buildings', buildings);
     const {fox, rabbit, mouse} = buildings
 
     const handleClick = (type) => {
