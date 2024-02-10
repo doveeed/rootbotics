@@ -11,6 +11,7 @@ import Lake from './assets/lake.png';
 import Mountain from './assets/mountain.png';
 import DCMechanicalMarquise2point0 from "./components/bots/dc-mechanical-marquise-2point0";
 import DCElectricEyrie from "./components/bots/dc-electric-eyrie";
+import DCAutomatedAlliance from "./components/bots/dc-automated-alliance";
 
 
 function App() {
@@ -55,6 +56,9 @@ function App() {
             break;
           case 'contraption-conspiracy':
             Faction = ContraptionConspiracy;
+            break;
+          case 'dc-automated-alliance':
+            Faction = DCAutomatedAlliance;
             break;
           case 'dc-electric-eyrie':
             Faction = DCElectricEyrie;
