@@ -20,7 +20,6 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
     const isInvaders = traits.find(({id}) => id === 'invaders').isEnabled;
     const lowestOrderedUnswayed = ministers.find(({suit, isSwayed}) => (orderedSuit === 'bird' || suit === orderedSuit) && !isSwayed);
     const highestUnswayed = ministers.slice().reverse().find(({isSwayed}) => !isSwayed);
-    console.log('DAH: ministers', ministers);
     const isCaptainSwayed = ministers.some(({name, isSwayed}) => name === 'Captain' && isSwayed);
     const isForemoleSwayed = ministers.some(({name, isSwayed}) => name === 'Foremole' && isSwayed);
     const swayedActionMinisters = ministers.filter(({isSwayed, name}) => isSwayed && name !== 'Captain' && name !== 'Foremole');
@@ -154,7 +153,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                                         title="Ministers."
                                         description={<>Take the actions of all Swayed Ministers from top to bottom. <i>(Captain and Foremole are always active and have no action)</i></>}
                                         substeps={
-                                            <Steps type='I'
+                                            swayedActionMinisters.length > 0 && <Steps type='I'
                                                 steps={swayedActionMinisters.length > 0 && swayedActionMinisters.map(({name}) => (<Step title={`${name}:`} description={ministerNameActionMapping[name]}/>))}
                                             />
                                         }
