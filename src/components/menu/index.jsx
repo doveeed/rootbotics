@@ -4,6 +4,7 @@ export default function Menu ({bots, onAddBot = () => {}}) {
     const botFactions = bots.map(bot => bot.faction);
     const options = [
         {faction: 'dc-mechanical-marquise-2point0', name: 'DC Mechanical Marquise 2.0'},
+        {faction: 'dc-electric-eyrie', name: 'DC Electric Eyrie'},
         {faction: 'cogwheel-cult', name: 'Cogwheel Cult'},
         {faction: 'rivetfolk-company', name: 'Rivetfolk Company'},
         {faction: 'dummy-duchy', name: 'Dummy Duchy'},
@@ -155,6 +156,72 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                         ],
                     }
                     
+                }
+                break;
+            case 'dc-electric-eyrie':
+                bot = {
+                    ...bot,
+                    state: {
+                        ...bot.state,
+                        traits: [
+                            {
+                                id: 'lords-of-the-forest',
+                                isDefault: true,
+                                isEnabled: true,
+                                name: 'Lords of the Forest',
+                            },
+                            {
+                                id: 'hates-surprises',
+                                isDefault: true,
+                                isEnabled: true,
+                                name: 'Hates Surprises',
+                            },
+                            {
+                                id: 'poor-manual-dexterity',
+                                isDefault: true,
+                                isEnabled: true,
+                                name: 'Poor Manual Dexterity',
+                            },
+                            {
+                                id: 'nobility',
+                                isDefault: false,
+                                isEnabled: false,
+                                name: 'Nobility',
+                            },
+                            {
+                                id: 'relentless',
+                                isDefault: false,
+                                isEnabled: false,
+                                name: 'Relentless',
+                            },
+                            {
+                                id: 'swoop',
+                                isDefault: false,
+                                isEnabled: false,
+                                name: 'Swoop',
+                            },
+                            {
+                                id: 'war-tax',
+                                isDefault: false,
+                                isEnabled: false,
+                                name: 'War Tax',
+                            },
+                        ],
+                        decree: {
+                            fox: 0,
+                            mouse: 0,
+                            rabbit: 0,
+                            bird: 2,
+                        },
+                        buildings: [
+                            {id: 'roost-1', isPlaced: false, points: 0}, 
+                            {id: 'roost-2', isPlaced: false, points: 1},
+                            {id: 'roost-3', isPlaced: false, points: 2},
+                            {id: 'roost-4', isPlaced: false, points: 3},
+                            {id: 'roost-5', isPlaced: false, points: 4},
+                            {id: 'roost-6', isPlaced: false, points: 5},
+                            {id: 'roost-7', isPlaced: false, points: 6}]
+                    }
                 }
                 break;
             case 'dc-mechanical-marquise-2point0':
@@ -429,7 +496,7 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={24} height={24} fill="black"><path d="M416 277.333H277.333V416h-42.666V277.333H96v-42.666h138.667V96h42.666v138.667H416v42.666z"></path></svg>
             </button>)}
             {isOpen && (
-                <div style={{ position: "absolute", right: '0', width: '200px', backgroundColor: 'white', cursor: "pointer"}}>
+                <div style={{ position: "absolute", right: '0', width: '300px', backgroundColor: 'white', cursor: "pointer"}}>
                     {filteredOptions.map(({faction, name}, index) => (
                         <div key={`${faction}-${index}`} style={{padding: '0.5rem'}} onClick={() => {
                             setIsOpen(false)
