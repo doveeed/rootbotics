@@ -81,7 +81,7 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
     return (
         <section>
             <Header
-                title="DC Mechanical Marquise 2.0"
+                title="DC M. Marquise 2.0"
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
@@ -95,8 +95,6 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
                                 steps={
                                     [
                                         <Step title="Gather Warriors." description="Form a supply of 25 warriors."/>,
-                                        <Step title="Place Warriors." description="Place 4 warriors and 1 garden of matching printed suit in a random corner clearing that is not the starting corner clearing of another bot and, if possible, is diagonally opposite from a starting corner clearing. Then place 1 warrior in each adjacent clearing."/>,
-                                        <Step title="Draw Lost Souls." description="Draw 3 cards and place them face up in your lost souls in the order drawn."/>,
                                     ]
                                 }
                             />
