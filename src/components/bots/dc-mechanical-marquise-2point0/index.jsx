@@ -8,6 +8,7 @@ import Number from "../../number";
 import Level from '../../level';
 import Trait from '../../trait';
 import Buildings from "./buildings";
+import OneVP from "../../one-vp";
 
 export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', buildings = {}, isHumanRiverfolk = false} = state;
@@ -40,7 +41,7 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
-        <Step title="Craft" description={<>order card for <Number value={1}/> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, if available, and replace the order card. If multiple cards exist, pick a Bird card, then pick the one with the most VP for the item. If multiple, choose randomly. If theer are no craftable items available and the order card is not Bird, buy any available Bird card. If there are multiple, choose randomly.':''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, if available, and replace the order card. If multiple cards exist, pick a Bird card, then pick the one with the most VP for the item. If multiple, choose randomly. If theer are no craftable items available and the order card is not Bird, buy any available Bird card. If there are multiple, choose randomly.':''}</>} />,
     ]
 
     const daylightSteps = orderedSuit === 'bird' ? [
@@ -51,7 +52,7 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
             ]
 
         }/>}/>,
-        <Step title="Recruit" description={<>{levelToRecruit[level]} warriors evenly among the two lowest priority clearings you rule. If you rule only one clearing, place all warriors there. Score <Number value={1}/> for every two warriors that could not be recruited.</>}/>,
+        <Step title="Recruit" description={<>{levelToRecruit[level]} warriors evenly among the two lowest priority clearings you rule. If you rule only one clearing, place all warriors there. Score <OneVP /> for every two warriors that could not be recruited.</>}/>,
         <Step title="Build" description={<>a {birdBuild} in the clearing you rule with the most Marquise warriors.{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you did not build, and buying Mercenaries would allow you to rule and build, then buy Mercenaries and build.': ''}</>} />,
         <Step title="Move" description={<>all but three of your warriors from each <Suit suit={orderedSuit} /> clearing to the adjacent clearing with the most enemy pieces. Each warrior may only move once during this action. After completing all moves, also <b>Battle</b> in all clearings you moved into.</>}/>,
     ]: [
@@ -61,7 +62,7 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
             [
                 <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with most pieces there, then with most points there.</i>}/>
             ]}/>} />,
-        <Step title="Recruit" description={<>{levelToRecruit[level]} warriors evenly among ordered clearings you rule. Score <Number value={1}/> for every two warriors that could not be recruited.</>}/>,
+        <Step title="Recruit" description={<>{levelToRecruit[level]} warriors evenly among ordered clearings you rule. Score <OneVP /> for every two warriors that could not be recruited.</>}/>,
         <Step title="Build" description={<>a {suitToBuilding[orderedSuit]} in the clearing you rule with the most Marquise warriors.{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you did not build, and buying Mercenaries would allow you to rule and build, then buy Mercenaries and build.': ''}</>} />,
         <Step title="Move" description={<>all but three of your warriors from each <Suit suit={orderedSuit} /> clearing to the adjacent clearing with the most enemy pieces. Each warrior may only move once during this action.</>}/>,
         
@@ -74,7 +75,7 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
     ];
 
     if (isBossMode) {
-        eveningSteps.push(<Step title="Boss Mode." description={<>Score <Number value={1} /> for every player (rounded up).</>} />)
+        eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP /> for every two players (rounded up).</>} />)
     }
     
 
@@ -85,7 +86,7 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor="orange"
+                backgroundColor="#e27b38"
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
