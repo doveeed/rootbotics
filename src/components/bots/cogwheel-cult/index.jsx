@@ -11,6 +11,7 @@ import Conspiracies from "./conspiracies";
 import Gardens from "./gardens";
 import Suited from "../../../assets/suited.png";
 import Bird from "../../../assets/bird.png";
+import OneVP from "../../one-vp";
 
 export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', conspiracyIndex = 4, gardens = {}, isHumanRiverfolk = false} = state;
@@ -53,11 +54,11 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
         <Step title="Score" description={<>points of rightmost empty garden space. (<Number value={gardenPoints} />)</>}/>,
         <Step title="Discard Lost Souls." description=""/>,
         <Step title="Return" description="revealed cards to Lost Souls"/>,
-        <Step title="Reveal" description={<>the top card of the deck and craft it for <Number value={1} /> if it shows an available item. {canBuyServices ? 'If the drawn card has no craftable item and the Riverfolk have fewer points than you, buy a craftable item from the Riverfolk if available. Do not buy a Bird card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly.':''} Then add it to Lost Souls.</>}/>
+        <Step title="Reveal" description={<>the top card of the deck and craft it for <OneVP/> if it shows an available item. {canBuyServices ? 'If the drawn card has no craftable item and the Riverfolk have fewer points than you, buy a craftable item from the Riverfolk if available. Do not buy a Bird card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly.':''} Then add it to Lost Souls.</>}/>
     ];
 
     if (isBossMode) {
-        eveningSteps.push(<Step title="Boss Mode." description={<>Score <Number value={1} /> for every player (rounded up).</>} />)
+        eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP/> for every two players (rounded up).</>} />)
     }
     
 
@@ -124,7 +125,7 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
                                 <div style={{display: 'flex'}}>
                                     <div ><img src={Suited} alt="rabbit, fox, mouse cards" width="48px" style={{margin: '0 0.5rem 0 1rem'}} /></div>
                                     <div>
-                                        <Step title='' description={<>Place a warrior into clearing matching the revealeed card. Then if you rule the clearing, also place a matching garden in the clearing.{canBuyServices ? ' If the Riverfolk player has fewer points than you do and buying Mercenaries would allow you to place a garden, buy Mercenaries.': ''}</>}
+                                        <Step title='' description={<>Place a warrior into clearing matching the revealeed card. Then if you rule the clearing, also place a matching garden in the clearing.{canBuyServices ? <><b>Riverfolk:</b> if the Riverfolk player has fewer points than you do and buying Mercenaries would allow you to place a garden, buy Mercenaries.</>: ''}</>}
                                             substeps={<Steps type='I' steps={
                                                 [<Step title={<i>Clearing Tie:</i>} description={<i>Place warrior into clearing with free building slots, then most enemy buildings.</i>} />]
                                             }/>}
