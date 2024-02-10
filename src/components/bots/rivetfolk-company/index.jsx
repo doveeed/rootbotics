@@ -8,6 +8,7 @@ import Number from "../../number";
 import Level from '../../level';
 import Trait from '../../trait';
 import TradePosts from './trade-posts';
+import OneVP from "../../one-vp";
 
 
 export default function RivetfolkCompany({state = {}, onDelete = () => {}, updateState = () => {}}) {
@@ -28,13 +29,13 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
     }
 
     const eveningSteps = [
-        <Step title="Score" description={<><Number value={1} /> per warrior of the player with the most warriors in your payment, and return them. Keep any other warriors.</>}/>,
+        <Step title="Score" description={<><OneVP /> per warrior of the player with the most warriors in your payment, and return them. Keep any other warriors.</>}/>,
         <Step title="Racketeering" description={<>Shield or Sword: From each clearing move all but two Riverfolk warriors to the payments box.</>}/>,
         <Step title="Discard" description="the left-most card in the market." substeps={<Steps type='I' steps={[<Step title={<>Shield:</>} description='Discard the left-most card again.'/>]}/>}/>
     ];
 
     if (isBossMode) {
-        eveningSteps.push(<Step title="Boss Mode." description={<>Score <Number value={1} /> for every  player (rounded up).</>} />)
+        eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP /> for every two players (rounded up).</>} />)
     }
 
     return (
@@ -97,7 +98,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
                                 type="1"
                                 steps={[
                                     <Step title="Stock the market" description="by adding cards from the deck until there are 5 cards in the market."/>,
-                                    <Step title="Craft" description={<>the first card added that shows an available item for <Number value={1}/> and then discard it.</>} />,
+                                    <Step title="Craft" description={<>the first card added that shows an available item for <OneVP /> and then discard it.</>} />,
                                     <Step 
                                         title="Order Card"
                                         description="is the right-most card in the market"
