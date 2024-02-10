@@ -1,5 +1,5 @@
 import Card from '../card';
-import Number from '../number';
+import OneVP from '../one-vp';
 
 export default function Level({faction,level, labels,onChangeLevel}) {
 
@@ -21,7 +21,7 @@ export default function Level({faction,level, labels,onChangeLevel}) {
             </div>
             <div>
                 <input type='radio' checked={level === 'boss'} value="boss" id={`${faction}-boss`} onChange={onChange} />
-                <label htmlFor={`${faction}-boss`}>Boss Mode (Coop) = {labels['master']} + Each round score <Number value={1} /> for every two players (rounded up).</label>
+                <label htmlFor={`${faction}-boss`}>Boss Mode (Coop) = {labels['master']} + Each round score <OneVP/> for every two players (rounded up).</label>
             </div>
     </Card>
 
