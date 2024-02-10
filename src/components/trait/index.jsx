@@ -18,17 +18,22 @@ const traitIdDescriptionMap = {
     'investors': <>When Cost of Errors is triggered by a human player, that player has to discard a card matching the clearing which a building was removed. If they discard a matching card, lose one victory point. If they can't, immediately sway a Minister matching the clearing.</>,
     'involved': "If a human player did not buy your Mercenary services on their turn, your warriors belong to all other players for rule and battle purposes as if the player's oppenents bought the Mercenary ServiceWorker. Vagabond can buy Mercenaries to avoid this, but does not gain the benefits of the service",
     'iron-will': <><b>Expand</b> may happen twice per turn instead of only once.</>,
+    'lords-of-the-forest': 'You rule any clearings where you are tied in presence.',
     'market': 'The market is a row of five cards visible to all players. While players can freely look at the cards at all times, the order of the market has to be maintained as new cards are added to the right side.',
     'martyrs': 'Whenever you perform a ritual for a Bird card in Daylight, move an aditional warrior from the supply to your Acolytes.',
     'mastermind': 'Perform "Plot" twice each turn.',
     'nimble': 'You can move regardless of who rules your clearing.',
+    'nobility': 'Tirmoil is now triggered if you are unable to place a roost or if you are unable to place a warrior. Whenever you fall into Turmoil, you do not lose victory points. Instead, you score on victory pount per bird card in the Decree.',
     'overwhelm': 'The Dig action requires and moves only there warriors (instead of four), and is repeated a second time each turn.',
     'pilgrims': 'You rule any clearing where you have any gardens.',
     'poor-manual-dexterity': <>You have no hand of cards. You cannot discard cards. If a human would take a card from you, they draw a card instead. If a human would give a card to you, they discard it, and you score <Number value={1} />.</>,
-    'spiteful': <>Whenever you <b>Crusade</b>, score one victory point if you removed at least one token in any clearing.</>,
+    'relentless': 'After resolving the Decree, remove all defenseless buildings and tokens in any clearing where you have warriors.',
     'robot-revenge': "When one or more of your warriors are removed during another player's turn, place one of them into the Acolytes Box.",
+    'spiteful': <>Whenever you <b>Crusade</b>, score one victory point if you removed at least one token in any clearing.</>,
+    'swoop': 'At the end of Daylight, recruit two warriors in the highest priority clearing in which you have no pices.',
     'the-keep': 'Only you can place pieces in the clearing with the keep token.',
     'vendetta': 'Whenever any token is flipped, it has the immediate effect of a Bomb',
+    'war-tax': <>Whenever you destroy a token or building, the owner of the token loses <Number value={1} isNegative/></>
 }
 
 export default  function Trait({id, faction, name, description, isDefault, isEnabled, isSetup, onUpdate }) {
