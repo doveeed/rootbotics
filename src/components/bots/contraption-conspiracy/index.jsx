@@ -9,6 +9,7 @@ import Plot from "./plot";
 import Number from "../../number";
 import Level from '../../level';
 import Trait from '../../trait';
+import OneVP from '../../one-vp';
 
 
 export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
@@ -31,7 +32,7 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
-        <Step title="Craft" description={<>order card for <Number value={1}/> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, if available, and replace the order card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly.':''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP/> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, if available, and replace the order card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly.':''}</>} />,
         <Step 
             title="Recruit"
             description={<>{levelToRecruit[level]} in each of two <Suit suit={orderedSuit} /> clearings.</>}
@@ -50,7 +51,7 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
         />,
         <Step 
         title="Flip"
-        description={<>each plot token <i>(no warrior needed in clearing).</i> {isGamble ? 'First, have the human player with the most pieces there resolve the Gamble. ': ''}For each flip, gain <Number value={1} /> per face-up plot on the map (<Number value={flippedPlots.length} />), then resolve its flip effect.{isVendetta ? ' (each plot has the immediate effect of a Bomb)': ''}</>}
+        description={<>each plot token <i>(no warrior needed in clearing).</i> {isGamble ? 'First, have the human player with the most pieces there resolve the Gamble. ': ''}For each flip, gain <OneVP /> per face-up plot on the map (<Number value={flippedPlots.length} />), then resolve its flip effect.{isVendetta ? ' (each plot has the immediate effect of a Bomb)': ''}</>}
         />
     
     ];
@@ -60,12 +61,12 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
     }
     
     const eveningSteps = [
-        <Step title="Score" description={<> <Number value={1} /> per <img src={Extortion} alt='face-up Extortion plot token' height={24} width={24} style={{marginBottom: '-6px'}}/> on the map. (<Number value={numFlippedExtortions} />)</>}/>,
+        <Step title="Score" description={<> <OneVP /> per <img src={Extortion} alt='face-up Extortion plot token' height={24} width={24} style={{marginBottom: '-6px'}}/> on the map. (<Number value={numFlippedExtortions} />)</>}/>,
         <Step title="Discard" description="the order card."/>
     ];
 
     if (isBossMode) {
-        eveningSteps.push(<Step title="Boss Mode." description={<>Score <Number value={1} /> for every  player (rounded up).</>} />)
+        eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP /> for every two players (rounded up).</>} />)
     }
 
     return (
