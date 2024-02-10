@@ -5,6 +5,7 @@ export default function Menu ({bots, onAddBot = () => {}}) {
     const options = [
         {faction: 'dc-mechanical-marquise-2point0', name: 'DC Mechanical Marquise 2.0'},
         {faction: 'dc-electric-eyrie', name: 'DC Electric Eyrie'},
+        {faction: 'dc-automated-alliance', name: 'DC Automated Alliance'},
         {faction: 'cogwheel-cult', name: 'Cogwheel Cult'},
         {faction: 'rivetfolk-company', name: 'Rivetfolk Company'},
         {faction: 'dummy-duchy', name: 'Dummy Duchy'},
@@ -156,6 +157,91 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                         ],
                     }
                     
+                }
+                break;
+            case 'dc-automated-alliance':
+                bot = {
+                    ...bot,
+                    state: {
+                        ...bot.state,
+                        traits: [
+                            {
+                                id: 'automated-outrage',
+                                isDefault: true,
+                                isEnabled: true,
+                                name: 'Automated Outrage',
+                            },
+                            {
+                                id: 'automated-ambush',
+                                isDefault: true,
+                                isEnabled: true,
+                                name: 'Automated Ambush',
+                            },
+                            {
+                                id: 'poor-manual-dexterity',
+                                isDefault: true,
+                                isEnabled: true,
+                                name: 'Poor Manual Dexterity',
+                            },
+                        ],
+                        buildings: {
+                            fox: {suit: 'fox', isPlaced: false},
+                            rabbit: {suit: 'rabbit', isPlaced: false},
+                            mouse: {suit: 'mouse', isPlaced: false},
+                        },
+                        sympathy: [
+                            {
+                                id: 'sympathy-1',
+                                isPlaced: false,
+                                points: 0,
+                            },
+                            {
+                                id: 'sympathy-2',
+                                isPlaced: false,
+                                points: 1,
+                            },
+                            {
+                                id: 'sympathy-3',
+                                isPlaced: false,
+                                points: 1,
+                            },
+                            {
+                                id: 'sympathy-4',
+                                isPlaced: false,
+                                points: 1,
+                            },
+                            {
+                                id: 'sympathy-5',
+                                isPlaced: false,
+                                points: 1,
+                            },
+                            {
+                                id: 'sympathy-6',
+                                isPlaced: false,
+                                points: 2,
+                            },
+                            {
+                                id: 'sympathy-7',
+                                isPlaced: false,
+                                points: 2,
+                            },
+                            {
+                                id: 'sympathy-8',
+                                isPlaced: false,
+                                points: 3,
+                            },
+                            {
+                                id: 'sympathy-9',
+                                isPlaced: false,
+                                points: 3,
+                            }, 
+                            {
+                                id: 'sympathy-10',
+                                isPlaced: false,
+                                points: 4,
+                            }
+                        ]
+                    },
                 }
                 break;
             case 'dc-electric-eyrie':
@@ -496,7 +582,7 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={24} height={24} fill="black"><path d="M416 277.333H277.333V416h-42.666V277.333H96v-42.666h138.667V96h42.666v138.667H416v42.666z"></path></svg>
             </button>)}
             {isOpen && (
-                <div style={{ position: "absolute", right: '0', width: '300px', backgroundColor: 'white', cursor: "pointer"}}>
+                <div style={{ position: "absolute", right: '0', top: '54px', width: '300px', backgroundColor: 'white', cursor: "pointer"}}>
                     {filteredOptions.map(({faction, name}, index) => (
                         <div key={`${faction}-${index}`} style={{padding: '0.5rem'}} onClick={() => {
                             setIsOpen(false)
