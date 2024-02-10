@@ -1,13 +1,13 @@
 import Mole from '../../../../assets/mole.png';
-import Number from '../../../number';
 import OneVP from '../../../one-vp';
+import VP2 from '../../../../assets/vp2.png';
 
 export const ministerNameActionMapping = {
     'Banker': 'Repeat the Build Action.',
     'Baron of Dirt': <>Score <OneVP /> per market on the map.</>,
     'Brigadier': 'Repeat the Dig Action if there are at least 3 warriors in the burrow, targeting the clearing with the most enemy buildings and tokens.',
     'Captain': 'As attacker, deal an extra hit in clearings with a tunnel.',
-    'Duchess of Mud': <>Score <Number value={2} /> if all tunnels are on the map.</>,
+    'Duchess of Mud': <>Score <img src={VP2} alt="two victory points" width={24} style={{marginBottom: '-4px'}}/> if all tunnels are on the map.</>,
     'Earl of Stone': <>Score <OneVP /> per citadel on the map.</>,
     'Foremole': <>You have an additional revealed <img src={Mole} alt="Duchy warrior" height={24} width={24} style={{marginBottom: '-6px'}}/>.</>,
     'Marshal': 'Place a warrior from your supply into such a clearing that has at least one of your buildings and the least of your warriors.',
