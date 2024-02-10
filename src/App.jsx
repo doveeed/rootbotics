@@ -10,6 +10,7 @@ import Winter from './assets/winter.png';
 import Lake from './assets/lake.png';
 import Mountain from './assets/mountain.png';
 import DCMechanicalMarquise2point0 from "./components/bots/dc-mechanical-marquise-2point0";
+import DCElectricEyrie from "./components/bots/dc-electric-eyrie";
 
 
 function App() {
@@ -55,6 +56,9 @@ function App() {
           case 'contraption-conspiracy':
             Faction = ContraptionConspiracy;
             break;
+          case 'dc-electric-eyrie':
+            Faction = DCElectricEyrie;
+            break;
           case 'dc-mechanical-marquise-2point0':
             Faction = DCMechanicalMarquise2point0;
             break;
@@ -86,9 +90,6 @@ function App() {
         );
       })}
       </main>
-      <footer>
-        {!isNoBots && (<button style={{width: '100%', backgroundColor: '#fcf8e8', border: 'none', cursor: 'pointer', padding: '24px 16px'}} onClick={() => {window.scrollTo(0,0)}}>Back to top</button>)}
-      </footer>
       {isNoBots && (
           <div style={{padding: '0.5rem 1rem', display: 'flex',flexDirection: 'column', gap: '2rem', maxWidth: '740px', margin: '0 auto'}}>
            <div>
@@ -109,7 +110,11 @@ function App() {
            </div>
           </div>
         )}
+        <footer>
+        <button style={{width: '100%', backgroundColor: '#fcf8e8', border: 'none', cursor: 'pointer', padding: '24px 16px'}} onClick={() => {window.scrollTo(0,0)}}>Back to top</button>
+      </footer>
     </div>
+    
   );
 }
 
