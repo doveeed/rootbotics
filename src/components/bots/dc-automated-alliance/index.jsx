@@ -48,7 +48,7 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
         daylightSteps.push(<Step title="Surprise Revolt." description={<>Remove all enemy pieces from the <Suit suit={orderedSuit} /> sympathetic clearing with the most enemy pices, and place the <Suit suit={orderedSuit}/> base there.</>}/>)
     }
 
-    daylightSteps.push(<Step title="Public Pity." description={<>If you did not revolt this turn, <b>Spread Sympathy</b> twice if you have four or fewer sympathetic clearings, or <b>Spread Sympathy</b> once if you have five or more.</>}/>)
+    daylightSteps.push(<Step title="Public Pity." description={<>If you did not revolt this turn, <b>Spread Sympathy</b> {numPlacedSympathy < 5 ? 'twice': 'once'}.</>}/>)
 
     const eveningSteps = [
         <Step title="Organize" description={<>In each clearing with a base and {levelToOrganize[level]} Alliance warriors, remove all Alliance warriors there and <b>Spread Sympathy</b>.</>}/>,
