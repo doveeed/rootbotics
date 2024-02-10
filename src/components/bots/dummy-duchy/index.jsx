@@ -8,8 +8,9 @@ import Suit from "../../suit";
 import Number from "../../number";
 import Level from '../../level';
 import Trait from '../../trait';
-import Ministers from './ministers';
+import Ministers, {ministerNameActionMapping} from './ministers';
 import Buildings from './buildings';
+import OneVP from '../../one-vp';
 
 
 export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
@@ -19,20 +20,25 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
     const isInvaders = traits.find(({id}) => id === 'invaders').isEnabled;
     const lowestOrderedUnswayed = ministers.find(({suit, isSwayed}) => (orderedSuit === 'bird' || suit === orderedSuit) && !isSwayed);
     const highestUnswayed = ministers.slice().reverse().find(({isSwayed}) => !isSwayed);
+    console.log('DAH: ministers', ministers);
+    const isCaptainSwayed = ministers.some(({name, isSwayed}) => name === 'Captain' && isSwayed);
+    const isForemoleSwayed = ministers.some(({name, isSwayed}) => name === 'Foremole' && isSwayed);
+    const swayedActionMinisters = ministers.filter(({isSwayed, name}) => isSwayed && name !== 'Captain' && name !== 'Foremole');
     const levelToRecruit = {
         'beginner': 'one warrior',
         'expert': 'two warriors',
         'master': 'three warriors',
         'boss': 'three warriors',
     }
+    const numPlacedMarkets = buildings.filter(({type, isPlaced}) => type === 'market' && isPlaced).length;
     const canBuyServices = isRivetfolkPlaying || isHumanRiverfolk;
 
     const birdsongSteps = [
         <Step title="Reveal" description={<>the top card of the deck as order card.</>} />,
-        <Step title="Craft" description={<>order card for <Number value={1}/> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, if available, and replace the order card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly.':''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, if available, and replace the order card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly.':''}</>} />,
         <Step 
             title="Recruit"
-            description={<>{levelToRecruit[level]}, plus one per <img src={Mole} alt='Duchy warrior' height={24} width={24} style={{marginBottom: '-6px'}} /> showing, in the Burrow.</>}
+            description={<>{levelToRecruit[level]},{isForemoleSwayed ? <> plus one for swayed <b>Foremole</b>,</>: ''} plus one per <img src={Mole} alt='Duchy warrior' height={24} width={24} style={{marginBottom: '-6px'}} /> showing, in the Burrow.</>}
         />
     ];
 
@@ -46,7 +52,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
             description={<>In each <Suit suit={orderedSuit} /> clearing without a Citadel or Market and less than three Duchy warriors, move your warriors into an adjacent clearing with a Citadel or a Market. If there is no such clearing, instead place the warriors into the Burrow. Then in each clearing you rule with more than four Duchy warriors, place all but four of your Warriors from that clearing into the burrow.</>}
             substeps={<Steps type='I' steps={[<Step title={<i><b>Target Clearing Tie:</b></i>} description={<><i>Such a clearing with the least of your warriors.</i></>}/>]}/>}    
         />,
-        <Step title="Score" description={<> <Number value={1} /> per market on the map. (<Number value={1} />)</>}/>,
+        <Step title="Score" description={<><OneVP /> per market on the map. (<Number value={numPlacedMarkets} />)</>}/>,
         <Step 
             title="Sway."
             description={<>Place a crown on the top-most ordered unswayed minister.{lowestOrderedUnswayed ? ` (${lowestOrderedUnswayed.name})`: ''}</>}
@@ -56,7 +62,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
     ];
 
     if (isBossMode) {
-        eveningSteps.push(<Step title="Boss Mode." description={<>Score <Number value={1} /> for every  player (rounded up).</>} />)
+        eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP /> for every two players (rounded up).</>} />)
     }
 
     return (
@@ -133,7 +139,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                                     />,
                                     <Step 
                                         title="Battle"
-                                        description={<>in each each <Suit suit={orderedSuit} /> clearing.{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you have two or fewer warriors in a clearing, and at least one Riverfolk warrior is present there, then buy Mercenaries.': ''}</>}
+                                        description={<>in each each <Suit suit={orderedSuit} /> clearing.{isCaptainSwayed ? <><b>Captian:</b> deal an extra hit.</>: ''}{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you have two or fewer warriors in a clearing, and at least one Riverfolk warrior is present there, then buy Mercenaries.': ''}</>}
                                         substeps={
                                             <Steps 
                                                 type="I"
@@ -143,11 +149,17 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                                             />
                                         }
                                     />,
-                                    <Step title="Build" description={<>in such a clearing that you rule with most Duchy warriors.{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you did not build,  and buying Mercenaries would allow you to rule and build, then buy Mercenaries and build.': ''} Place a Citadel if you have more than 8 warriors in your supply, otherwise place a Market. Score <Number value={1} /> if you can't place a building while there are still buildings on this board.</>} />,
+                                    <Step title="Build" description={<>in such a clearing that you rule with most Duchy warriors.{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you did not build,  and buying Mercenaries would allow you to rule and build, then buy Mercenaries and build.': ''} Place a Citadel if you have more than 8 warriors in your supply, otherwise place a Market. Score <OneVP /> if you can't place a building while there are still buildings on this board.</>} />,
                                     <Step
                                         title="Ministers."
                                         description={<>Take the actions of all Swayed Ministers from top to bottom. <i>(Captain and Foremole are always active and have no action)</i></>}
-                                    />
+                                        substeps={
+                                            <Steps type='I'
+                                                steps={swayedActionMinisters.length > 0 && swayedActionMinisters.map(({name}) => (<Step title={`${name}:`} description={ministerNameActionMapping[name]}/>))}
+                                            />
+                                        }
+                                    />,
+                                    
                                 ]}
                             />
                         </Card>
