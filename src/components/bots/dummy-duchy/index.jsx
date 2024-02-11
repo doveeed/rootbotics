@@ -10,14 +10,15 @@ import Trait from '../../trait';
 import Ministers, {ministerNameActionMapping} from './ministers';
 import Buildings from './buildings';
 import OneVP from '../../one-vp';
+import Tunnels from "./tunnels";
 
 
 export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
-    const {isSetup = false, orderedSuit = 'bird', traits = [], ministers, buildings, level = 'expert', isHumanRiverfolk = false} = state;
+    const {isSetup = false, orderedSuit = 'bird', traits = [], ministers, buildings = [], tunnels = [], level = 'expert', isHumanRiverfolk = false} = state;
     const isBossMode = level === 'boss';
     const isOverwhelm = traits.find(({id}) => id === 'overwhelm').isEnabled;
     const isInvaders = traits.find(({id}) => id === 'invaders').isEnabled;
-    const lowestOrderedUnswayed = ministers.find(({suit, isSwayed}) => (orderedSuit === 'bird' || suit === orderedSuit) && !isSwayed);
+    const lowestOrderedUnswayed = ministers.find(({suit, isSwayed}) => suit === orderedSuit && !isSwayed);
     const highestUnswayed = ministers.slice().reverse().find(({isSwayed}) => !isSwayed);
     const isCaptainSwayed = ministers.some(({name, isSwayed}) => name === 'Captain' && isSwayed);
     const isForemoleSwayed = ministers.some(({name, isSwayed}) => name === 'Foremole' && isSwayed);
@@ -54,16 +55,22 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
     const eveningSteps = [
         <Step 
             title="Rally."
-            description={<>In each <Suit suit={orderedSuit} /> clearing without a Citadel or Market and less than 3 Duchy warriors, move your warriors into an adjacent clearing with a Citadel or a Market. If there is no such clearing, instead place the warriors into the Burrow. Then in each clearing you rule with more than 4 Duchy warriors, place all but four of your Warriors from that clearing into the burrow.</>}
+            description={<>In each <Suit suit={orderedSuit} /> clearing without a Citadel or Market and less than 3 Duchy warriors, move your warriors into an adjacent clearing with a Citadel or a Market. If there is no such clearing, instead place the warriors into the Burrow. Then in each clearing you rule with more than 4 Duchy warriors, place all but 4 of your Warriors from that clearing into the burrow.</>}
             substeps={<Steps type='I' steps={[<Step title={<i><b>Target Clearing Tie:</b></i>} description={<><i>Such a clearing with the least of your warriors.</i></>}/>]}/>}    
         />,
         <Step title="Score" description={<><OneVP /> per market on the map. (<Number value={numPlacedMarkets} />)</>}/>,
     ];
 
     if (lowestOrderedUnswayed || highestUnswayed) {
+        const ministerToSway = lowestOrderedUnswayed ? lowestOrderedUnswayed : highestUnswayed;
        eveningSteps.push(<Step 
         title="Sway"
-        description={<>the {lowestOrderedUnswayed ? lowestOrderedUnswayed.name: highestUnswayed.name }</>}
+        description={<>the {ministerToSway.name}. <button style={{cursor: 'pointer'}} onClick={() => {
+            const ministerIndex = ministers.findIndex(({name}) => name === ministerToSway.name);
+            const before = ministers.slice(0,ministerIndex);
+            const after = ministers.slice(ministerIndex + 1);
+            updateState({...state, ministers: [...before, {...ministers[ministerIndex], isSwayed: true }, ...after]})
+        }}>click to sway</button></>}
     />);
     }
 
@@ -92,7 +99,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                                         <Step title="Gather Pieces." description="Form supplies of 20 warriors, 3 tunnel tokens, and 9 crowns."/>,
                                         <Step title="Prepare the Burrow." description="Place the Burrow near the map."/>,
                                         <Step title="Surface." description="Place 2 warriors and 1 tunnel in a corner clearing that is not the starting corner clearing of another bot and, if possible, is diagonally opposite from a starting corner clearing. Then place 2 warriros in each clearing adjacent to the chosen corner clearing, exept the Burrow."/>,
-                                        <Step title="Sway Starting Ministers." description="Draw 2 cards and discard them. For each, place a crown oon the topmost maching unswayed minister on your faction board."/>,
+                                        <Step title="Sway Starting Ministers." description="Draw 2 cards and discard them. For each, place a crown on the topmost maching unswayed minister on your faction board."/>,
                                     ]
                                 }
                             />
@@ -112,8 +119,9 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                 </Card>
                 {isSetup && (
                     <>
-                        <Card title="Buildings">
+                        <Card title="Buildings & Tunnels">
                             <Buildings buildings={buildings} onUpdateBuildings={(newBuildings) => updateState({...state, buildings: newBuildings})}/>
+                            <Tunnels tunnels={tunnels} onUpdateTunnels={(newTunnels) => updateState({...state, tunnels: newTunnels})} />
                         </Card>
                         <Card title="Minister Track">
                             <Ministers ministers={ministers} onUpdateMinisters={(newMinisters) => updateState({...state, ministers: newMinisters})} />
@@ -157,13 +165,13 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                                             />
                                         }
                                     />,
-                                    <Step title="Build" description={<>in such a clearing that you rule with most Duchy warriors.{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you did not build,  and buying Mercenaries would allow you to rule and build, then buy Mercenaries and build.': ''} Place a Citadel if you have more than 8 warriors in your supply, otherwise place a Market. Score <OneVP /> if you can't place a building while there are still buildings on this board.</>} />,
+                                    <Step title="Build" description={<>in such a clearing that you rule with most Duchy warriors. Place a Citadel if you have more than 8 warriors in your supply, otherwise place a Market. {numPlacedMarkets + numPlacedCitadels === 6 ? '': <>Score <OneVP /> if you can't place a building while there are still buildings on this board.</>}{canBuyServices ? <><br/><b>Riverfolk:</b> If the Riverfolk player has fewer points than you do, you did not build, and buying Mercenaries would allow you to rule and build, then buy Mercenaries and build.</>: ''}{isInvaders ? <><br/><b>Invaders:</b> if you cannot build due to no free building slots, battle in all clearings.</>: ''}</>} />,
                                     <Step
                                         title="Ministers."
                                         description={<>Take the actions of all Swayed Ministers from top to bottom. <i>(Captain and Foremole are always active and have no action)</i></>}
                                         substeps={
                                             swayedActionMinisters.length > 0 && <Steps type='I'
-                                                steps={swayedActionMinisters.length > 0 && swayedActionMinisters.map(({name}) => (<Step title={`${name}:`} description={<>{ministerNameActionMapping[name]}{name === 'Baron of Dirt' ? <> <Number value={numPlacedMarkets} /></>: name ==='Earl of Stone' ? <> <Number value={numPlacedCitadels} /></>: ''}</>}/>))}
+                                                steps={swayedActionMinisters.length > 0 && swayedActionMinisters.map(({name}) => (<Step title={`${name}:`} description={<>{ministerNameActionMapping[name]}{name === 'Baron of Dirt' ? <> (<Number value={numPlacedMarkets} />)</>: name ==='Earl of Stone' ? <> (<Number value={numPlacedCitadels} />)</>: ''}</>}/>))}
                                             />
                                         }
                                     />,
