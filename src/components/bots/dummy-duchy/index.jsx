@@ -1,4 +1,3 @@
-import Mole from '../../../assets/mole.png'
 import Step from "../../step";
 import Header from "../../header";
 import Card from "../../card";
