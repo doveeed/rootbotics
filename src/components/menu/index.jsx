@@ -472,14 +472,17 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                             id: 'citadel-1',
                             type: 'citadel',
                             isPlaced: false,
+                            recruit: 1,
                         },{
                             id: 'citadel-2',
                             type: 'citadel',
                             isPlaced: false,
+                            recruit: 1,
                         },{
                             id: 'citadel-3',
                             type: 'citadel',
                             isPlaced: false,
+                            recruit: 2,
                         },{
                             id: 'market-1',
                             type: 'market',
