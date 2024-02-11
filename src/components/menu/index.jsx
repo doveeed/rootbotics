@@ -496,6 +496,16 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                             type: 'market',
                             isPlaced: false,
                         }],
+                        tunnels: [{
+                            id: 'tunnel-1',
+                            isPlaced: false,
+                        },{
+                            id: 'tunnel-2',
+                            isPlaced: false,
+                        },{
+                            id: 'tunnel-3',
+                            isPlaced: false,
+                        }]
                     }
                 }
                 break;
