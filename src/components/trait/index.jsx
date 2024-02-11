@@ -1,4 +1,3 @@
-import Number from "../number";
 import OneVP from "../one-vp";
 
 const traitIdDescriptionMap = {
