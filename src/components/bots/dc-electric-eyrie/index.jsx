@@ -30,7 +30,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
-        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do, the order card has no craftable item, there is a card in the Market of a suit that is not in your Decree, the current order card suit is already in the Decree, buy the card from the Market of a suit that is not in your Decree and replace the order card. If there are multpile, choose one at random. If there is a craftable item in the Market, buy it. If there are multiple, choose the one with the most VP. Otherwise, choose randomly.':''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do, the order card has no craftable item, there is a card in the Market of a suit that is not in your Decree, the current order card suit is already in the Decree, buy the card from the Market of a suit that is not in your Decree and replace the order card. If there are multpile, choose one at random. If there is a craftable item in the Market, buy it. If there are multiple, choose the one with the most victory points. Otherwise, choose randomly.':''}</>} />,
         <Step title="Add" description="the order card to the matching Decree column." />
     ]
 
@@ -122,7 +122,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
         daylightSteps.push(
             <Step 
                 title="Battle"
-                description={<>in a <Suit suit="fox" /> clearing.{ fox >= mouse && fox >= rabbit && fox >= bird ? <b> Deal one extra hit.</b> : ''}{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you have two or fewer warriors in the clearing, and at least one Riverfolk warrior is present there, then buy Mercenaries.': ''}{isWarTax ? <> If you destroy a token or building, the owner of the token loses <Number value={1} isNegative/> VP.</> : ''}</>}
+                description={<>in a <Suit suit="fox" /> clearing.{ fox >= mouse && fox >= rabbit && fox >= bird ? <b> Deal one extra hit.</b> : ''}{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you have two or fewer warriors in the clearing, and at least one Riverfolk warrior is present there, then buy Mercenaries.': ''}{isWarTax ? <> If you destroy a token or building, the owner of the token loses 1 victory point.</> : ''}</>}
                 substeps={<Steps type="I"
                     steps={[
                     <Step title={<i>Clearing Tie:</i>} description={<i>Battle in such a clearing with no roost, then defensless buildings.</i>} />,
@@ -137,7 +137,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
         daylightSteps.push(
             <Step 
                 title="Battle"
-                description={<>in a <Suit suit="mouse" /> clearing.{ mouse >= fox && mouse >= rabbit && mouse >= bird ? <b> Deal one extra hit.</b> : ''}{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you have two or fewer warriors in the clearing, and at least one Riverfolk warrior is present there, then buy Mercenaries.': ''}{isWarTax ? <> If you destroy a token or building, the owner of the token loses <Number value={1} isNegative/> VP.</> : ''}</>}
+                description={<>in a <Suit suit="mouse" /> clearing.{ mouse >= fox && mouse >= rabbit && mouse >= bird ? <b> Deal one extra hit.</b> : ''}{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you have two or fewer warriors in the clearing, and at least one Riverfolk warrior is present there, then buy Mercenaries.': ''}{isWarTax ? <> If you destroy a token or building, the owner of the token loses 1 victory point.</> : ''}</>}
                 substeps={<Steps type="I"
                     steps={[
                     <Step title={<i>Clearing Tie:</i>} description={<i>Battle in such a clearing with no roost, then defensless buildings.</i>} />,
@@ -152,7 +152,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
         daylightSteps.push(
             <Step 
                 title="Battle"
-                description={<>in a <Suit suit="rabbit" /> clearing.{ rabbit >= fox && rabbit >= mouse && rabbit >= bird ? <b> Deal one extra hit.</b> : ''}{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you have two or fewer warriors in the clearing, and at least one Riverfolk warrior is present there, then buy Mercenaries.': ''}{isWarTax ? <> If you destroy a token or building, the owner of the token loses <Number value={1} isNegative/> VP.</> : ''}</>}
+                description={<>in a <Suit suit="rabbit" /> clearing.{ rabbit >= fox && rabbit >= mouse && rabbit >= bird ? <b> Deal one extra hit.</b> : ''}{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you have two or fewer warriors in the clearing, and at least one Riverfolk warrior is present there, then buy Mercenaries.': ''}{isWarTax ? <> If you destroy a token or building, the owner of the token loses 1 victory point.</> : ''}</>}
                 substeps={<Steps type="I"
                     steps={[
                     <Step title={<i>Clearing Tie:</i>} description={<i>Battle in such a clearing with no roost, then defensless buildings.</i>} />,
@@ -167,7 +167,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
         daylightSteps.push(
             <Step 
                 title="Battle"
-                description={<>in a <Suit suit="bird" /> clearing.{ bird >= fox && bird >= mouse && bird >= rabbit ? <b> Deal one extra hit.</b> : ''}{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you have two or fewer warriors in the clearing, and at least one Riverfolk warrior is present there, then buy Mercenaries.': ''}{isWarTax ? <> If you destroy a token or building, the owner of the token loses <Number value={1} isNegative/> VP.</> : ''}</>}
+                description={<>in a <Suit suit="bird" /> clearing.{ bird >= fox && bird >= mouse && bird >= rabbit ? <b> Deal one extra hit.</b> : ''}{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you have two or fewer warriors in the clearing, and at least one Riverfolk warrior is present there, then buy Mercenaries.': ''}{isWarTax ? <> If you destroy a token or building, the owner of the token loses 1 victory point.</> : ''}</>}
                 substeps={<Steps type="I"
                     steps={[
                     <Step title={<i>Clearing Tie:</i>} description={<i>Battle in such a clearing with no roost, then defensless buildings.</i>} />,
@@ -179,7 +179,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
     }
 
     if (isRelentless) {
-        daylightSteps.push(<Step title="Relentless." description={<>Remove all defenseless buildings and tokens in any clearing where you have warriors.{isWarTax ?  <>If you destroy a token or building, the owner of the token loses <Number value={1} isNegative/> VP.</> : ''}</>}/>)
+        daylightSteps.push(<Step title="Relentless." description={<>Remove all defenseless buildings and tokens in any clearing where you have warriors.{isWarTax ?  <>If you destroy a token or building, the owner of the token loses 1 victory point.</> : ''}</>}/>)
     }
 
     daylightSteps.push(<Step title="Build." description={<>Place a roost in the clearing you rule of highest priority with no roost. If you cannot place a roost, you fall into Turmoil.{canBuyServices ? ' If the Riverfolk player has fewer points than you do and buying Mercenaries would allow you to place a roost, buy Mercenaries.': ''}</>}/>)
