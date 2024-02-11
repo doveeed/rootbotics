@@ -32,7 +32,7 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
-        <Step title="Craft" description={<>order card for <OneVP/> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, if available, and replace the order card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly.':''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP/> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, if available, and replace the order card. If multiple cards exist, pick the one with the most victory points for the item. If multiple, choose randomly.':''}</>} />,
         <Step 
             title="Recruit"
             description={<>{levelToRecruit[level]} in each of two <Suit suit={orderedSuit} /> clearings.</>}
