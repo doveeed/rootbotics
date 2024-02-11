@@ -31,7 +31,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
     const eveningSteps = [
         <Step title="Score" description={<><OneVP /> per warrior of the player with the most warriors in your payment, and return them. Keep any other warriors.</>}/>,
         <Step title="Racketeering" description={<>Shield or Sword: From each clearing move all but two Riverfolk warriors to the payments box.</>}/>,
-        <Step title="Discard" description="the left-most card in the market." substeps={<Steps type='I' steps={[<Step title={<>Shield:</>} description='Discard the left-most card again.'/>]}/>}/>
+        <Step title="Discard" description="the left-most card in the Market." substeps={<Steps type='I' steps={[<Step title={<>Shield:</>} description='Discard the left-most card again.'/>]}/>}/>
     ];
 
     if (isBossMode) {
@@ -82,7 +82,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
                                 <div style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>10 to 19:  <div style={{borderRadius: '50%', border: '4px solid black', width: '1.5rem', height: '1.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, marginLeft: '1rem'}}><b>3</b></div></div>
                                 <div style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>20 and higher:  <div style={{borderRadius: '50%', border: '4px solid black', width: '1.5rem', height: '1.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, marginLeft: '1rem'}}><b>4</b></div></div>
                             </div>
-                            <Step title='Hand Card:' description="The buyer takes a card from the Riverfolk's market and adds it to their hand." />
+                            <Step title='Hand Card:' description="The buyer takes a card from the Riverfolk's Market and adds it to their hand." />
                             <Step title='Riverboats:' description="The buyer treats rivers as paths until the end of their turn." />
                             <Step title='Mercenaries:' description='For battle and rule in Daylight and Evening, buyer treats Riverfolk warriors as their own. In battle, they must split Hits between their own pieces and Riverfolk warriors.' />
                         </Card>
@@ -97,11 +97,11 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
                             <Steps
                                 type="1"
                                 steps={[
-                                    <Step title="Stock the market" description="by adding cards from the deck until there are 5 cards in the market."/>,
+                                    <Step title="Stock the Market" description="by adding cards from the deck until there are 5 cards in the Market."/>,
                                     <Step title="Craft" description={<>the first card added that shows an available item for <OneVP /> and then discard it.</>} />,
                                     <Step 
                                         title="Order Card"
-                                        description="is the right-most card in the market"
+                                        description="is the right-most card in the Market"
                                     />
                                 ]}
                             />
