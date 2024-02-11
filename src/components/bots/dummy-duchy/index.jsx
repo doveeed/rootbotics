@@ -24,20 +24,27 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
     const isForemoleSwayed = ministers.some(({name, isSwayed}) => name === 'Foremole' && isSwayed);
     const swayedActionMinisters = ministers.filter(({isSwayed, name}) => isSwayed && name !== 'Captain' && name !== 'Foremole');
     const levelToRecruit = {
-        'beginner': 'one warrior',
-        'expert': 'two warriors',
-        'master': 'three warriors',
-        'boss': 'three warriors',
+        beginner: 1,
+        expert: 2,
+        master: 3,
+        boss: 3
     }
+    const totalRecruit = buildings.filter(({type})=> type === 'citadel').reduce((total, {isPlaced, recruit}) => {
+        if (isPlaced) {
+            return total + recruit;
+        }
+        return total;
+    }, levelToRecruit[level] + (isForemoleSwayed ? 1 : 0))
     const numPlacedMarkets = buildings.filter(({type, isPlaced}) => type === 'market' && isPlaced).length;
+    const numPlacedCitadels = buildings.filter(({type, isPlaced}) => type === 'citadel' && isPlaced).length;
     const canBuyServices = isRivetfolkPlaying || isHumanRiverfolk;
 
     const birdsongSteps = [
         <Step title="Reveal" description={<>the top card of the deck as order card.</>} />,
-        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, if available, and replace the order card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly.':''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, if available, and replace the order card. If multiple cards exist, pick the one with the most victory points for the item. If multiple, choose randomly.':''}</>} />,
         <Step 
             title="Recruit"
-            description={<>{levelToRecruit[level]},{isForemoleSwayed ? <> plus one for swayed <b>Foremole</b>,</>: ''} plus one per <img src={Mole} alt='Duchy warrior' height={24} width={24} style={{marginBottom: '-6px'}} /> showing, in the Burrow.</>}
+            description={<>{totalRecruit} {totalRecruit === 1 ? 'warrior':  'warriors'}, in the Burrow.</>}
         />
     ];
 
@@ -48,17 +55,20 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
     const eveningSteps = [
         <Step 
             title="Rally."
-            description={<>In each <Suit suit={orderedSuit} /> clearing without a Citadel or Market and less than three Duchy warriors, move your warriors into an adjacent clearing with a Citadel or a Market. If there is no such clearing, instead place the warriors into the Burrow. Then in each clearing you rule with more than four Duchy warriors, place all but four of your Warriors from that clearing into the burrow.</>}
+            description={<>In each <Suit suit={orderedSuit} /> clearing without a Citadel or Market and less than 3 Duchy warriors, move your warriors into an adjacent clearing with a Citadel or a Market. If there is no such clearing, instead place the warriors into the Burrow. Then in each clearing you rule with more than 4 Duchy warriors, place all but four of your Warriors from that clearing into the burrow.</>}
             substeps={<Steps type='I' steps={[<Step title={<i><b>Target Clearing Tie:</b></i>} description={<><i>Such a clearing with the least of your warriors.</i></>}/>]}/>}    
         />,
         <Step title="Score" description={<><OneVP /> per market on the map. (<Number value={numPlacedMarkets} />)</>}/>,
-        <Step 
-            title="Sway."
-            description={<>Place a crown on the top-most ordered unswayed minister.{lowestOrderedUnswayed ? ` (${lowestOrderedUnswayed.name})`: ''}</>}
-            substeps={<Steps type='I' steps={[<Step title={<i>No ordered unswayed minister:</i>} description={<><i>Sway the unswayed minister closest to the bottom of the track.</i>{highestUnswayed ? ` (${highestUnswayed.name})`: ''}</>}/>]}/>}    
-        />,
-        <Step title="Discard" description="the order card."/>
     ];
+
+    if (lowestOrderedUnswayed || highestUnswayed) {
+       eveningSteps.push(<Step 
+        title="Sway"
+        description={<>the {lowestOrderedUnswayed ? lowestOrderedUnswayed.name: highestUnswayed.name }</>}
+    />);
+    }
+
+    eveningSteps.push(<Step title="Discard" description="the order card."/>)
 
     if (isBossMode) {
         eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP /> for every two players (rounded up).</>} />)
@@ -125,7 +135,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                                 steps={[
                                     <Step
                                         title="Dig."
-                                        description={<>If there are {isOverwhelm ? 'three': 'four'} or more warriors in the burrow:<br/>Place a tunnel and move {isOverwhelm ? 3: 4} warriors from your burrow into such a <Suit suit={orderedSuit} /> clearing with no tunnel and none of your buildings.{isOverwhelm ? ' Repeat once.': ''}</>}
+                                        description={<>If there are {isOverwhelm ? '3': '4'} or more warriors in the burrow:<br/>Place a tunnel and move {isOverwhelm ? 3: 4} warriors from your burrow into such a <Suit suit={orderedSuit} /> clearing with no tunnel and none of your buildings.{isOverwhelm ? ' Repeat once.': ''}</>}
                                         substeps={
                                             <Steps 
                                                 type="I"
@@ -138,7 +148,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                                     />,
                                     <Step 
                                         title="Battle"
-                                        description={<>in each each <Suit suit={orderedSuit} /> clearing.{isCaptainSwayed ? <><b>Captian:</b> deal an extra hit.</>: ''}{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you have two or fewer warriors in a clearing, and at least one Riverfolk warrior is present there, then buy Mercenaries.': ''}</>}
+                                        description={<>in each each <Suit suit={orderedSuit} /> clearing.{isCaptainSwayed ? <><br/><b>Captian:</b> deal an extra hit in clearings with a tunnel.</>: ''}{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you have two or fewer warriors in a clearing, and at least one Riverfolk warrior is present there, then buy Mercenaries.': ''}</>}
                                         substeps={
                                             <Steps 
                                                 type="I"
@@ -154,7 +164,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                                         description={<>Take the actions of all Swayed Ministers from top to bottom. <i>(Captain and Foremole are always active and have no action)</i></>}
                                         substeps={
                                             swayedActionMinisters.length > 0 && <Steps type='I'
-                                                steps={swayedActionMinisters.length > 0 && swayedActionMinisters.map(({name}) => (<Step title={`${name}:`} description={ministerNameActionMapping[name]}/>))}
+                                                steps={swayedActionMinisters.length > 0 && swayedActionMinisters.map(({name}) => (<Step title={`${name}:`} description={<>{ministerNameActionMapping[name]}{name === 'Baron of Dirt' ? <> <Number value={numPlacedMarkets} /></>: name ==='Earl of Stone' ? <> <Number value={numPlacedCitadels} /></>: ''}</>}/>))}
                                             />
                                         }
                                     />,
