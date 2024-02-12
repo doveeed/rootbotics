@@ -352,6 +352,12 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                                 isEnabled: false,
                                 name: 'Fortified',
                             },
+                            {
+                                id: 'blitz',
+                                isDefault: false,
+                                isEnabled: false,
+                                name: 'Blitz',
+                            }
                         ],
                         buildings: {
                             sawmill: [{id: 'sawmill-1', type: 'sawmill', isPlaced: false, points: 0}, {id: 'sawmill-2', type: 'sawmill', isPlaced: false, points: 1}, {id: 'sawmill-3', type: 'sawmill', isPlaced: false, points: 2}, {id: 'sawmill-4', type: 'sawmill', isPlaced: false, points: 3}, {id: 'sawmill-5', type: 'sawmill', isPlaced: false, points: 4}, {id: 'sawmill-6', type: 'sawmill', isPlaced: false, points: 5}],
