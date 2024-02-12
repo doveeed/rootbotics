@@ -17,10 +17,10 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', conspiracyIndex = 4, gardens = {}, isHumanRiverfolk = false} = state;
     const {mouse = [], rabbit = [], fox = []} = gardens;
     const isBossMode = level === 'boss';
-    const isErratic = traits.find(({id}) => id === 'erratic').isEnabled;
-    const isMartyrs = traits.find(({id}) => id === 'martyrs').isEnabled;
-    const isFanatics = traits.find(({id}) => id === 'fanatics').isEnabled;
-    const isSpiteful = traits.find(({id}) => id === 'spiteful').isEnabled;
+    const isErratic = traits.some(({id, isEnabled}) => id === 'erratic' && isEnabled);
+    const isMartyrs = traits.some(({id, isEnabled}) => id === 'martyrs' && isEnabled);
+    const isFanatics = traits.some(({id, isEnabled}) => id === 'fanatics' && isEnabled);
+    const isSpiteful = traits.some(({id, isEnabled}) => id === 'spiteful' && isEnabled);
     const gardenPoints = Math.max(mouse.findLast(({isPlaced}) => isPlaced)?.points || 0, rabbit.findLast(({isPlaced}) => isPlaced)?.points || 0, fox.findLast(({isPlaced}) => isPlaced)?.points || 0);
     const levelToCards = {
         'beginner': 'three',
@@ -36,7 +36,7 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
     ]
 
     if (isErratic) {
-        birdsongSteps.unshift(<Step title="Add" description="the top card of the deck to the Lost Souls."/>)
+        birdsongSteps.unshift(<Step title="(Erratic)" description="Add the top card of the deck to the Lost Souls."/>)
     }
 
     const daylightSteps = [
@@ -47,18 +47,18 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
     ];
 
     if (canBuyServices) {
-        daylightSteps.unshift(<Step title="" description={<>If there are less than {levelToCards[level]} cards in Lost Souls, buy non-bird cards until this is no longer the case. Do this even if the Riverfolk or Rivetflok player has more points than you.</>}/>)
+        daylightSteps.unshift(<Step title="" description={<>If there are less than {levelToCards[level]} cards in Lost Souls, buy non-bird cards until this is no longer the case. Do this even if the Riverfolk or Rivetflok player has more victory points than you.</>}/>)
     }
 
     const eveningSteps = [
         <Step title="Score" description={<>points of rightmost empty garden space. (<Number value={gardenPoints} />)</>}/>,
         <Step title="Discard Lost Souls." description=""/>,
         <Step title="Return" description="revealed cards to Lost Souls"/>,
-        <Step title="Reveal" description={<>the top card of the deck and craft it for <OneVP/> if it shows an available item. {canBuyServices ? 'If the drawn card has no craftable item and the Riverfolk have fewer points than you, buy a craftable item from the Riverfolk if available. Do not buy a Bird card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly.':''} Then add it to Lost Souls.</>}/>
+        <Step title="Reveal" description={<>the top card of the deck and craft it for <OneVP/> if it shows an available item. {canBuyServices ? 'If the drawn card has no craftable item and the Riverfolk have fewer victory points than you, buy a craftable item from the Riverfolk if available. Do not buy a Bird card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly.':''} Then add it to Lost Souls.</>}/>
     ];
 
     if (isBossMode) {
-        eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP/> for every two players (rounded up).</>} />)
+        eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP/> for every two human players (rounded up).</>} />)
     }
     
 
@@ -125,7 +125,7 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
                                 <div style={{display: 'flex'}}>
                                     <div ><img src={Suited} alt="rabbit, fox, mouse cards" width="48px" style={{margin: '0 0.5rem 0 1rem'}} /></div>
                                     <div>
-                                        <Step title='' description={<>Place a warrior into clearing matching the revealeed card. Then if you rule the clearing, also place a matching garden in the clearing.{canBuyServices ? <><b>Riverfolk:</b> if the Riverfolk player has fewer points than you do and buying Mercenaries would allow you to place a garden, buy Mercenaries.</>: ''}</>}
+                                        <Step title='' description={<>Place a warrior into clearing matching the revealeed card. Then if you rule the clearing, also place a matching garden in the clearing.{canBuyServices ? <><b>(Riverfolk)</b> if the Riverfolk player has fewer points than you do and buying Mercenaries would allow you to place a garden, buy Mercenaries.</>: ''}</>}
                                             substeps={<Steps type='I' steps={
                                                 [<Step title={<i>Clearing Tie:</i>} description={<i>Place warrior into clearing with free building slots, then most enemy buildings.</i>} />]
                                             }/>}
@@ -136,11 +136,11 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
                                     <div ><img src={Bird} alt="bird card" width="48px" style={{margin: '0 0.5rem 0 1rem'}} /></div>
                                     <div>
                                         <Step 
-                                            title="" description={<>Move one of your warriors from the clearing with the most Lizard warriors to the Acolytes box. Then move this card to the discard pile.</>}
+                                            title="" description={<>Move 1 of your warriors from the clearing with the most Lizard warriors to the Acolytes box. Then move this card to the discard pile.</>}
                                         />
                                         {isMartyrs && (
                                             <Step 
-                                            title="Martyrs." description={<>Move one warrior from the supply to the Acolytes box.</>}
+                                            title="(Martyrs)" description={<>Move 1 additional warrior from the supply to the Acolytes box.</>}
                                         />
                                         )}
                                     </div>
