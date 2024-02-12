@@ -35,7 +35,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
     ];
 
     if (isBossMode) {
-        eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP /> for every two players (rounded up).</>} />)
+        eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP /> for every two human players (rounded up).</>} />)
     }
 
     return (
@@ -124,7 +124,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
                                             />
                                         }
                                     />,
-                                    <Step title="Recruit" description={<>one warrior in each {orderedSuit === 'bird' ? 'River': <Suit suit={orderedSuit} />} clearing.</>}
+                                    <Step title="Recruit" description={<>1 warrior in each {orderedSuit === 'bird' ? 'River': <Suit suit={orderedSuit} />} clearing.</>}
                                         substeps={
                                             <Steps 
                                                 type="I"
