@@ -192,7 +192,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
     }
     
     const eveningSteps = [
-        <Step title="Score" description={<>victory points listed on the rightmost empty space on the Roosts track. (<Number value={pointsToScore} />)</>} />,
+        <Step title="Score" description={<>victory points listed on the rightmost empty space on the Roosts Track. (<Number value={pointsToScore} />)</>} />,
     ];
 
     if (isBossMode) {
@@ -216,13 +216,17 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
                             <Steps
                                 steps={
                                     [
-                                        <Step title="Gather Warriors." description="Form a supply of 20 warriors."/>,
+                                        <Step title="Gather Pieces." description="Form a supply of 20 warriors and 7 roosts near you."/>,
                                         <Step title="Place Warriors." description="Place 1 roost and 6 warriors in the corner clearing diagonally opposite from the clearing with the Keep token. If the Marquise is not playing, place those pieces in a random corner clearing."/>,
+                                        <Step title="Tuck Viziers." description="Set the Bird card count 2 in the Decree (fox, mouse, and rabbit should be 0)." />
                                     ]
                                 }
                             />
                         </Card >
-                        <Level faction="dc-electric-eyrie" level={level} labels={{'beginner': 'one fewer', 'expert': 'the same', 'master': 'one more'}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        <Card title="Decree">
+                            <Decree decree={decree} onUpdateDecree={(newDecree) => updateState({...state, decree: newDecree})}/>
+                        </Card>
+                        <Level faction="dc-electric-eyrie" level={level} labels={{'beginner': <>Whenever you <b>Recruit</b> for Bird, place <b>one fewer</b> warrior than the card count.</>, 'expert': <>Whenever you <b>Recruit</b> for Bird, place <b>the same</b> number of warriors as the card count.</>, 'master': <>Whenever you <b>Recruit</b> for Bird, place <b>one more</b> warrior than the card count.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
                         {!isRivetfolkPlaying && (<Card title="Human Riverfolk">
                             <label htmlFor="dc-electric-eyrie"><input id="dc-electric-eyrie" type="checkbox" onChange={() => updateState({...state, isHumanRiverfolk: !isHumanRiverfolk})} checked={isHumanRiverfolk} /> {CONSTANTS.humanRiverfolkLabelText}</label>
                         </Card>)}
@@ -237,7 +241,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
                 </Card>
                 {isSetup && (
                     <>
-                        <Card title="Decree & Roosts">
+                        <Card title="Decree & Roosts Track">
                             <Decree decree={decree} onUpdateDecree={(newDecree) => updateState({...state, decree: newDecree})}/>
                             <Buildings buildings={buildings} onUpdateBuildings={(newBuildings) => {updateState({...state, buildings: newBuildings})}}/>
                         </Card>
@@ -265,7 +269,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
                             <Steps
                                 type="1"
                                 steps={[
-                                    <Step title="Humiliate:" description={<>{isNobility ? 'Score' : 'Lose'} 1 point per Bird card <i>(including Viziers)</i> in the Decree. (<Number value={bird} isNegative={isNobility ? false : true}/>)</>}/>,
+                                    <Step title={<>Humiliate:</>} description={<>{isNobility ? <><b>(Nobility) </b>Score</> : 'Lose'} 1 point per Bird card <i>(including Viziers)</i> in the Decree. (<Number value={bird} isNegative={isNobility ? false : true}/>)</>}/>,
                                     <Step title="Purge:" description={<>Discard Decree, except Viziers.</>}/>,
                                     <Step title="Rest:" description={<>Go to Evening.</>}/>
                                 ]}
