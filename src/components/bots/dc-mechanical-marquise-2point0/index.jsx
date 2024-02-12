@@ -70,7 +70,7 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
     ];
     
     if (isBlitz) {
-        daylightSteps.push(<Step title="Blitz." description="Select the highest priority clearing you rule with out any enemy pieces. Move all but 1 warirer from the clearing and battle in the destination if oponents are present."
+        daylightSteps.push(<Step title="(Blitz)" description="Select the highest priority clearing you rule with out any enemy pieces. Move all but 1 warirer from the clearing and battle in the destination if oponents are present."
         substeps={<Steps type="I" steps={[
             <Step title={<i>Destination Tie:</i>} description={<i>Move to such a clearing with the most enemy pieces there.</i>}/>,
             <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with most pieces there, then with most victory points there.</i>}/>
@@ -80,7 +80,7 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
 
     const eveningSteps = [
         <Step title="Expand." description={<>If you did not place a building this turn and would <b>Score</b> less than 3 victory points. Discard and draw a new order card, then repeat Daylight.{ isIronWill ? <div style={{paddingLeft: '26px'}}><b>(Iron Will) </b>You may only <b>Expand</b> twice per turn.</div> : <> You may only <b>Expand</b> once per turn.</>}</>}/>,
-        <Step title="Score" description={<>victory points of rightmost empty space on the {orderedSuit === 'bird' ? birdBuild: suitToBuilding[orderedSuit]} Buildings Track. (<Number value={pointsToScore} />)</>} />,
+        <Step title="Score" description={<>victory points of right-most empty space on the {orderedSuit === 'bird' ? birdBuild: suitToBuilding[orderedSuit]} Buildings Track. (<Number value={pointsToScore} />)</>} />,
         <Step title="Discard" description="the order card."/>,
     ];
 
@@ -105,15 +105,15 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
                             <Steps
                                 steps={
                                     [
-                                        <Step title="Gather Warriors." description="Form a supply of 25 warriors near you."/>,
-                                        <Step title="Place Keep." description="Place the Keep token in a random corner clearing."/>,
-                                        <Step title="Garrison." description="Place a warrior in each clearing except the clearing in the diagonally opposite corner from the clearing with the Keep tken. Place an extra warrior in the clearing with the Keep token."/>,
-                                        <Step title="Place Starting Buildings." description="Randomly place 1 sawmill, 1 workshop, and 1 recruiter among the clearings adjacent to the clearing with the Keep token, with only one building per clearing."/>,
+                                        <Step title="Gather Pieces." description="Form a supply of 25 warriors, 6 sawmills, 6 workshops, and 6 recruiters near you."/>,
+                                        <Step title="Place Keep." description="Place the keep token in a random corner clearing."/>,
+                                        <Step title="Garrison." description="Place a warrior in each clearing except the clearing in the diagonally opposite corner from the clearing with the keep tken. Place an extra warrior in the clearing with the keep token."/>,
+                                        <Step title="Place Starting Buildings." description="Randomly place 1 sawmill, 1 workshop, and 1 recruiter among the clearings adjacent to the clearing with the keep token, placing only one building per clearing."/>,
                                     ]
                                 }
                             />
                         </Card >
-                        <Level faction="dc-mechanical-marquise-2point0" level={level} labels={{'beginner': <>Whenever you <b>Recruit</b>, place 3 warriors.</>, 'expert': <>Whenever you <b>Recruit</b>, place 4 warriors.</>, 'master': <>Whenever you <b>Recruit</b>, place 5 warriors.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        <Level faction="dc-mechanical-marquise-2point0" level={level} labels={{'beginner': <>Whenever you <b>Recruit</b>, place <b>3 warriors</b>.</>, 'expert': <>Whenever you <b>Recruit</b>, place <b>4 warriors</b>.</>, 'master': <>Whenever you <b>Recruit</b>, place <b>5 warriors</b>.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
                         {!isRivetfolkPlaying && (<Card title="Human Riverfolk">
                             <label htmlFor="dc-mechanical-marquise-2point0"><input id="dc-mechanical-marquise-2point0" type="checkbox" onChange={() => updateState({...state, isHumanRiverfolk: !isHumanRiverfolk})} checked={isHumanRiverfolk} /> Check this box if there is a human Riverfolk player in the game.</label>
                         </Card>)}
