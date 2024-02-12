@@ -30,13 +30,16 @@ const traitIdDescriptionMap = {
     'overwhelm': <>The <b>Dig</b> action requires and moves only 3 warriors (instead of 4), and is repeated a second time each turn.</>,
     'pilgrims': 'You rule any clearing where you have any gardens.',
     'poor-manual-dexterity': <>You have no hand of cards. You cannot discard cards. If a human would take a card from you, they draw a card instead. If a human would give a card to you, they discard it, and you score <OneVP />.</>,
+    'popularity': 'Enemies can only score on victory point per turn for removing your sympathy tokens.',
     'relentless': 'After resolving the Decree, remove all defenseless buildings and tokens in any clearing where you have warriors.',
     'robot-revenge': "When 1 or more of your warriors are removed during another player's turn, place 1 of them into the Acolytes Box.",
     'spiteful': <>Whenever you <b>Crusade</b>, score <OneVP /> if you removed at least 1 token in any clearing.</>,
     'swoop': 'At the end of Daylight, recruit 2 warriors in the highest priority clearing in which you have no pieces.',
     'the-keep': 'Only you can place pieces in the clearing with the keep token.',
     'vendetta': 'Whenever any token is flipped, it has the immediate effect of a Bomb',
-    'war-tax': <>Whenever you destroy a token or building, the owner of the token loses 1 victory point.</>
+    'veterans': <>In battle as defender, use the same die result as the attacker. <i>(both players use the higher die to determine hits rolled)</i></>,
+    'war-tax': <>Whenever you destroy a token or building, the owner of the token loses 1 victory point.</>,
+    'wildfire': <>A the end of evening, <b>Spread Sympathy</b>. Do not score victory points for placing this sympathy token.</>
 }
 
 export default  function Trait({id, faction, name, description, isDefault, isEnabled, isSetup, onUpdate }) {
