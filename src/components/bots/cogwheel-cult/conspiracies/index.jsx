@@ -3,6 +3,7 @@ import Steps from "../../../steps";
 import Suit from "../../../suit";
 import Blank from '../../../../assets/blank.png';
 import OneVP from "../../../one-vp";
+import { CONSTANTS } from "../../../../utils";
 
 export default function Conspiracies({canBuyServices, index, isSpiteful, isFanatics, onUpdateConspiracyIndex, orderedSuit}) {
     const conspiracies = ['Convert', 'Crusade', 'Convert', 'Crusade', 'Sanctify'];
@@ -43,26 +44,25 @@ export default function Conspiracies({canBuyServices, index, isSpiteful, isFanat
                     <><Step
                         title=""
                         description={<>Remove an enemy warrior in a <Suit suit={orderedSuit} /> clearing and place a Lizard warrior there.</>}
-                        substeps={<Steps type="I" steps={[<Step title={<i>Player Tie:</i>} description={<i>Target clearing with most enemy buildings.</i>} />, <Step title={<i>Clearing Tie:</i>} description={<i>Target player with most points</i>} />]}/>}
+                        substeps={<Steps type="I" steps={[<Step title={<i>Player Tie:</i>} description={<i>Target the clearing with the most enemy buildings.</i>} />, <Step title={<i>Clearing Tie:</i>} description={<i>Target the player with the most victory points</i>} />]}/>}
                     />
-                    {isFanatics && (<Step title="Fanatics." description="battle in the above clearing, dealing an extra hit." substeps={<Steps type="I"  steps={[<Step title={<i>Player Tie:</i>} description={<i>Target palyer with most defensless buildings, then with most points.</i>}/>]}/>}/>)}
+                    {isFanatics && (<Step title="(Fanatics)" description={<>Battle in the clearing in which you removed an enemy warrior. <b>Deal an extra hit.</b></>} substeps={<Steps type="I"  steps={[<Step title={<i>Player Tie:</i>} description={<i>Target the player with the most defensless buildings, then with the most victory points.</i>}/>]}/>}/>)}
                     </>
                 )}
                 {selectedConspiracy === 'Crusade' && (
                     <>
                     <Step
                         title=""
-                        description={<>Battle in each <Suit suit={orderedSuit} /> clearing in which you have two or more warriors.{canBuyServices ? '  If the Riverfolk player has fewer points than you do, you only have two warriors there, and at least one Riverfolk warrior is present, then buy Mercenaries.': ''}</>}
-                        substeps={<Steps type="I" steps={[<Step title={<i>Defender Tie:</i>} description={<i>Battle the player with most points there.</i>} />]}/>}
+                        description={<>Battle in each <Suit suit={orderedSuit} /> clearing in which you have two or more warriors.{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}{isSpiteful && <div style={{paddingLeft: '26px'}}><b>(Spiteful)</b> Score <OneVP /> if you removed at least 1 token in any clearing</div>}</>}
+                        substeps={<Steps type="I" steps={[<Step title={<i>Defender Tie:</i>} description={<i>Battle the player with the most victory points.</i>} />]}/>}
                     />
-                    {isSpiteful && <><b>Spiteful.</b> Score <OneVP /> if you removed at least one token in any clearing</>}
                     </>
                 )}
                 {selectedConspiracy === 'Sanctify' && (
                     <Step
                         title=""
                         description={<>Remove an enemy building in a <Suit suit={orderedSuit} /> clearing and place a matching garden there.</>}
-                        substeps={<Steps type="I" steps={[<Step title={<i>Player Tie:</i>} description={<i>Target player with most points.</i>} />, <Step title={<i>Clearing Tie:</i>} description={<i>Target clearing with least enemy warriors.</i>} />]}/>}
+                        substeps={<Steps type="I" steps={[<Step title={<i>Player Tie:</i>} description={<i>Target the player with the most victory points.</i>} />, <Step title={<i>Clearing Tie:</i>} description={<i>Target clearing with least enemy warriors.</i>} />]}/>}
                     />
                 )}
             </div>
