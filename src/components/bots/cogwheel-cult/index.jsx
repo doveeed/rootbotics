@@ -24,15 +24,15 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
     const isSpiteful = traits.some(({id, isEnabled}) => id === 'spiteful' && isEnabled);
     const gardenPoints = Math.max(mouse.findLast(({isPlaced}) => isPlaced)?.points || 0, rabbit.findLast(({isPlaced}) => isPlaced)?.points || 0, fox.findLast(({isPlaced}) => isPlaced)?.points || 0);
     const levelToCards = {
-        'beginner': 'three',
-        'expert': 'four',
-        'master': 'five',
-        'boss': 'five',
+        'beginner': '3',
+        'expert': '4',
+        'master': '5',
+        'boss': '5',
     }
     const canBuyServices = isRivetfolkPlaying || isHumanRiverfolk;
 
     const birdsongSteps = [
-        <Step title="Outcasts." description="The most common suit in Lost Souls becomes the Order. In case of a tie, birds becomes the Order."/>,
+        <Step title="Outcasts." description="The most common suit in Lost Souls becomes the order. In case of a tie, Bird becomes the order."/>,
         <Step title="Perform Conspiracies" description={<>in <Suit suit={orderedSuit} /> clearings.</>} />,
     ]
 
@@ -52,7 +52,7 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
     }
 
     const eveningSteps = [
-        <Step title="Score" description={<>points of rightmost empty garden space. (<Number value={gardenPoints} />)</>}/>,
+        <Step title="Score" description={<>points of right-most empty garden space on the Gardens Track. (<Number value={gardenPoints} />)</>}/>,
         <Step title="Discard Lost Souls." description=""/>,
         <Step title="Return" description="revealed cards to Lost Souls"/>,
         <Step title="Reveal" description={<>the top card of the deck and craft it for <OneVP/> if it shows an available item. {canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player has fewer victory points than you do and the order card has no craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly. <b>Do not buy a Bird card.</b> Then add it to Lost Souls.</div>:''}</>}/>
@@ -79,14 +79,14 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
                             <Steps
                                 steps={
                                     [
-                                        <Step title="Gather Warriors." description="Form a supply of 25 warriors."/>,
+                                        <Step title="Gather Pieces." description="Form a supply of 25 warriors, 5 mouse gardens, 5 rabbit gardens, and 5 fox gardens near you."/>,
                                         <Step title="Place Warriors." description="Place 4 warriors and 1 garden of matching printed suit in a random corner clearing that is not the starting corner clearing of another bot and, if possible, is diagonally opposite from a starting corner clearing. Then place 1 warrior in each adjacent clearing."/>,
-                                        <Step title="Draw Lost Souls." description="Draw 3 cards and place them face up in your lost souls in the order drawn."/>,
+                                        <Step title="Draw Lost Souls." description="Draw 3 cards and place them face up in your Lost Souls in the order drawn."/>,
                                     ]
                                 }
                             />
                         </Card >
-                        <Level faction="cogwheel-cult" level={level} labels={{'beginner': 'three', 'expert': 'four', 'master': 'five'}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        <Level faction="cogwheel-cult" level={level} labels={{'beginner': <>At the start of Daylight, Reveal the top <b>3 cards</b> from the lost Souls pile.</>, 'expert': <>At the start of Daylight, Reveal the top <b>4 cards</b> from the lost Souls pile.</>, 'master': <>At the start of Daylight, Reveal the top <b>5 cards</b> from the lost Souls pile.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
                         {!isRivetfolkPlaying && (<Card title="Human Riverfolk">
                             <label htmlFor="cogwheel-cult-human-riverfolk"><input id="cogwheel-cult-human-riverfolk" type="checkbox" onChange={() => updateState({...state, isHumanRiverfolk: !isHumanRiverfolk})} checked={isHumanRiverfolk} /> Check this box if there is a human Riverfolk player in the game.</label>
                         </Card>)}
@@ -101,14 +101,14 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
                 </Card>
                 {isSetup && (
                     <>
-                        <Card title="Ordered suit">
-                            <Order order={orderedSuit} onChangeOrder={(newOrder) => updateState({...state, orderedSuit:newOrder})}/>
-                        </Card>
                         <Gardens gardens={gardens} onUpdateGardens={(gardens) => {updateState({...state, gardens})}}/>
                         <Card
                             title="Conspiracy Track"
                         >
                             <Conspiracies canBuyServices={canBuyServices} isSpiteful={isSpiteful} isFanatics={isFanatics} index={conspiracyIndex} onUpdateConspiracyIndex={(newIndex) => updateState({...state, conspiracyIndex: newIndex})} orderedSuit={orderedSuit}/>
+                        </Card>
+                        <Card title="Ordered suit">
+                            <Order order={orderedSuit} onChangeOrder={(newOrder) => updateState({...state, orderedSuit:newOrder})}/>
                         </Card>
                         <Card title="Birdsong" headerBackgroundColor="#f6a045" headerColor="white">
                             <Steps
