@@ -15,6 +15,7 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', buildings = {}, sympathy = [], isHumanRiverfolk = false} = state;
     const {fox, rabbit, mouse} = buildings;
     const isBossMode = level === 'boss';
+    const isWildfire = traits.some(({id, isEnabled}) => id === 'wildfire' && isEnabled);
     const numPlacedSympathy = sympathy.filter(({isPlaced}) => isPlaced).length;
     
     const levelToOrganize = {
@@ -27,7 +28,7 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
-        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <><br/><b>(Riverfolk)</b> if the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, if available, and replace the order card. If multiple cards exist, pick a Bird card, then pick the one with the most victory points for the item. If multiple, choose randomly. If there are no craftable items available and the order card is not Bird, buy any available Bird card. If there are multiple, choose randomly. <b>Use Riverfolk warriors to pay.</b></>:''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <div styl={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player has fewer victory points than you do and the order card has no available craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick a Bird card, then pick the one with the most VP for the item. If multiple, choose randomly.{ orderedSuit !== 'bird' ? ' If there are no cards with available craftable items, buy any available Bird card. If multiple, choose randomly.' : ''} <b>Use Riverfolk warriors to pay.</b></div>:''}</>} />,
     ]
 
     if (orderedSuit !== 'bird' && numPlacedSympathy > 0 && !buildings[orderedSuit]?.isPlaced) {
@@ -59,6 +60,10 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
     if (isBossMode) {
         eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP /> for every two human players (rounded up).</>} />)
     }
+
+    if (isWildfire) {
+        eveningSteps.push(<Step title="(Wildfire)" description={<>Immediately <b>Spread Sympathy</b>. Do not score points for placing this sympathy token.</>}/>)
+    }
     
 
     return (
@@ -78,7 +83,7 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
                             <Steps
                                 steps={
                                     [
-                                        <Step title="Gather Warriors." description="Form a supply of 10 warriors."/>,
+                                        <Step title="Gather Pieces." description="Form a supply of 10 warriors, 3 base buildings, and 10 sympathy tokens near you."/>,
                                     ]
                                 }
                             />
