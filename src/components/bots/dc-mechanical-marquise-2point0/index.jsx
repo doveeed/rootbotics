@@ -9,6 +9,7 @@ import Level from '../../level';
 import Trait from '../../trait';
 import Buildings from "./buildings";
 import OneVP from "../../one-vp";
+import { CONSTANTS } from "../../../utils";
 
 export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', buildings = {}, isHumanRiverfolk = false} = state;
@@ -33,38 +34,38 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
     const isIronWill = traits.some(({id, isEnabled}) => id === 'iron-will' && isEnabled);
     const isBlitz = traits.some(({id, isEnabled}) => id === 'blitz' && isEnabled);
     const levelToRecruit = {
-        'beginner': 'three',
-        'expert': 'four',
-        'master': 'five',
-        'boss': 'five',
+        'beginner': '3',
+        'expert': '4',
+        'master': '5',
+        'boss': '5',
     }
     const canBuyServices = isRivetfolkPlaying || isHumanRiverfolk;
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
-        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, if available, and replace the order card. If multiple cards exist, pick a Bird card, then pick the one with the most victory points for the item. If multiple, choose randomly. If there are no craftable items available and the order card is not Bird, buy any available Bird card. If there are multiple, choose randomly.':''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player has fewer victory points than you do and the order card has no craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick a Bird card, then pick the one with the most VP for the item. If multiple, choose randomly.{orderedSuit !== 'bird' ? ' If there are no craftable items available, buy any available Bird card. If there are multiple, choose randomly.': ''}</div>:''}</>} />,
     ]
 
     const daylightSteps = orderedSuit === 'bird' ? [
-        <Step title="Battle" description={<>in all clearings.{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you have 2 or fewer warriors in a clearing, and at least 1 Riverfolk warrior is present there, then buy Mercenaries.': ''}</>}
+        <Step title="Battle" description={<>in all clearings.{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}</>}
         substeps={<Steps type="I" steps={
             [
                 <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with most pieces there, then with most points there.</i>}/>
             ]
 
         }/>}/>,
-        <Step title="Recruit" description={<>{levelToRecruit[level]} warriors evenly among the two lowest priority clearings you rule. If you rule only one clearing, place all warriors there. Score <OneVP /> for every two warriors that could not be recruited.</>}/>,
-        <Step title="Build" description={<>a {birdBuild} in the clearing you rule with the most Marquise warriors.{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you did not build, and buying Mercenaries would allow you to rule and build, then buy Mercenaries and build.': ''}</>} />,
+        <Step title="Recruit" description={<>{levelToRecruit[level]} warriors evenly among the two lowest priority clearings you rule. If you rule only one clearing, place all warriors there. Score <OneVP /> for every 2 warriors that could not be recruited.</>}/>,
+        <Step title="Build" description={<>a {birdBuild} in the clearing you rule with the most Marquise warriors.{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>} />,
         <Step title="Move" description={<>all but 3 of your warriors from each <Suit suit={orderedSuit} /> clearing to the adjacent clearing with the most enemy pieces. Each warrior may only move once during this action. After completing all moves, also <b>Battle</b> in all clearings you moved into.</>}/>,
     ]: [
-        <Step title="Battle" description={<>in each <Suit suit={orderedSuit} /> clearing.{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you have 2 or fewer warriors in a clearing, and at least 1 Riverfolk warrior is present there, then buy Mercenaries.': ''}</>}
+        <Step title="Battle" description={<>in each <Suit suit={orderedSuit} /> clearing.{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}</>}
         substeps={
         <Steps type="I" steps={
             [
                 <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with most pieces there, then with most points there.</i>}/>
             ]}/>} />,
         <Step title="Recruit" description={<>{levelToRecruit[level]} warriors evenly among ordered clearings you rule. Score <OneVP /> for every two warriors that could not be recruited.</>}/>,
-        <Step title="Build" description={<>a {suitToBuilding[orderedSuit]} in the clearing you rule with the most Marquise warriors.{canBuyServices ? ' If the Riverfolk player has fewer points than you do, you did not build, and buying Mercenaries would allow you to rule and build, then buy Mercenaries and build.': ''}</>} />,
+        <Step title="Build" description={<>a {suitToBuilding[orderedSuit]} in the clearing you rule with the most Marquise warriors.{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>} />,
         <Step title="Move" description={<>all but 3 of your warriors from each <Suit suit={orderedSuit} /> clearing to the adjacent clearing with the most enemy pieces. Each warrior may only move once during this action.</>}/>,
     ];
     
@@ -78,8 +79,8 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
     }
 
     const eveningSteps = [
-        <Step title="Expand." description={<>If you did not place a building this turn and would <b>Score</b> less than 3 victory points. Discard and draw a new order card, then repeat Daylight.{ isIronWill ? <div style={{paddingLeft: '26px'}}><b>Fortifiers: </b>You may only <b>Expand</b> twice per turn.</div> : <> You may only <b>Expand</b> once per turn.</>}</>}/>,
-        <Step title="Score" description={<>victory points of rightmost empty space on the {orderedSuit === 'bird' ? birdBuild: suitToBuilding[orderedSuit]} Buildings track. (<Number value={pointsToScore} />)</>} />,
+        <Step title="Expand." description={<>If you did not place a building this turn and would <b>Score</b> less than 3 victory points. Discard and draw a new order card, then repeat Daylight.{ isIronWill ? <div style={{paddingLeft: '26px'}}><b>(Iron Will) </b>You may only <b>Expand</b> twice per turn.</div> : <> You may only <b>Expand</b> once per turn.</>}</>}/>,
+        <Step title="Score" description={<>victory points of rightmost empty space on the {orderedSuit === 'bird' ? birdBuild: suitToBuilding[orderedSuit]} Buildings Track. (<Number value={pointsToScore} />)</>} />,
         <Step title="Discard" description="the order card."/>,
     ];
 
@@ -104,12 +105,15 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
                             <Steps
                                 steps={
                                     [
-                                        <Step title="Gather Warriors." description="Form a supply of 25 warriors."/>,
+                                        <Step title="Gather Warriors." description="Form a supply of 25 warriors near you."/>,
+                                        <Step title="Place Keep." description="Place the Keep token in a random corner clearing."/>,
+                                        <Step title="Garrison." description="Place a warrior in each clearing except the clearing in the diagonally opposite corner from the clearing with the Keep tken. Place an extra warrior in the clearing with the Keep token."/>,
+                                        <Step title="Place Starting Buildings." description="Randomly place 1 sawmill, 1 workshop, and 1 recruiter among the clearings adjacent to the clearing with the Keep token, with only one building per clearing."/>,
                                     ]
                                 }
                             />
                         </Card >
-                        <Level faction="dc-mechanical-marquise-2point0" level={level} labels={{'beginner': 'three', 'expert': 'four', 'master': 'five'}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        <Level faction="dc-mechanical-marquise-2point0" level={level} labels={{'beginner': <>Whenever you <b>Recruit</b>, place 3 warriors.</>, 'expert': <>Whenever you <b>Recruit</b>, place 4 warriors.</>, 'master': <>Whenever you <b>Recruit</b>, place 5 warriors.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
                         {!isRivetfolkPlaying && (<Card title="Human Riverfolk">
                             <label htmlFor="dc-mechanical-marquise-2point0"><input id="dc-mechanical-marquise-2point0" type="checkbox" onChange={() => updateState({...state, isHumanRiverfolk: !isHumanRiverfolk})} checked={isHumanRiverfolk} /> Check this box if there is a human Riverfolk player in the game.</label>
                         </Card>)}
