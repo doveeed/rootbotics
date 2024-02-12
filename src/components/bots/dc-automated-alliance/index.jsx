@@ -27,7 +27,7 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
-        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <><br/><b>Riverfolk:</b> if the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, if available, and replace the order card. If multiple cards exist, pick a Bird card, then pick the one with the most victory points for the item. If multiple, choose randomly. If there are no craftable items available and the order card is not Bird, buy any available Bird card. If there are multiple, choose randomly. <b>Use Riverfolk warriors to pay.</b></>:''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <><br/><b>(Riverfolk)</b> if the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, if available, and replace the order card. If multiple cards exist, pick a Bird card, then pick the one with the most victory points for the item. If multiple, choose randomly. If there are no craftable items available and the order card is not Bird, buy any available Bird card. If there are multiple, choose randomly. <b>Use Riverfolk warriors to pay.</b></>:''}</>} />,
     ]
 
     if (orderedSuit !== 'bird' && numPlacedSympathy > 0 && !buildings[orderedSuit]?.isPlaced) {
@@ -57,7 +57,7 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
     ];
 
     if (isBossMode) {
-        eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP /> for every two players (rounded up).</>} />)
+        eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP /> for every two human players (rounded up).</>} />)
     }
     
 
