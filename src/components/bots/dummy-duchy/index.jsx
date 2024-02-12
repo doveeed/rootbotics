@@ -146,8 +146,8 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                                 type="1"
                                 steps={[
                                     <Step
-                                        title="Dig."
-                                        description={<>If there are {isOverwhelm ? '3': '4'} or more warriors in the burrow:<br/>Place a tunnel and move {isOverwhelm ? 3: 4} warriors from your burrow into such a <Suit suit={orderedSuit} /> clearing with no tunnel and none of your buildings.{isOverwhelm ? <div style={{paddingLeft: '26px'}}><b>Overwhelm:</b> Repeat once.</div>: ''}</>}
+                                        title={<>Dig.{isOverwhelm ? <> <b>(Overwhelm)</b></>: ''}</>}
+                                        description={<>If there are {isOverwhelm ? '3': '4'} or more warriors in the burrow:<br/>Place a tunnel and move {isOverwhelm ? 3: 4} warriors from your burrow into such a <Suit suit={orderedSuit} /> clearing with no tunnel and none of your buildings.{isOverwhelm ?  ' Repeat once.': ''}</>}
                                         substeps={
                                             <Steps 
                                                 type="I"
@@ -160,7 +160,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                                     />,
                                     <Step 
                                         title="Battle"
-                                        description={<>in each each <Suit suit={orderedSuit} /> clearing.{isCaptainSwayed ? <div style={{paddingLeft: '26px'}}><b>Captian:</b> deal an extra hit in clearings with a tunnel.</div>: ''}{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}</>}
+                                        description={<>in each each <Suit suit={orderedSuit} /> clearing.{isCaptainSwayed ? <div style={{paddingLeft: '26px'}}><b>(Captain)</b> deal an extra hit in clearings with a tunnel.</div>: ''}{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}</>}
                                         substeps={
                                             <Steps 
                                                 type="I"
