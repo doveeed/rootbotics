@@ -183,6 +183,24 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                                 isEnabled: true,
                                 name: 'Poor Manual Dexterity',
                             },
+                            {
+                                id: 'wildfire',
+                                isDefault: false,
+                                isEnabled: false,
+                                name: 'Wildfire',
+                            },
+                            {
+                                id: 'veterans',
+                                isDefault: false,
+                                isEnabled: false,
+                                name: 'Veterans',
+                            },
+                            {
+                                id: 'popularity',
+                                isDefault: false,
+                                isEnabled: false,
+                                name: 'Popularity',
+                            }
                         ],
                         buildings: {
                             fox: {suit: 'fox', isPlaced: false},
