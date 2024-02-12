@@ -16,10 +16,10 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
     const isBossMode = level === 'boss';
     const isFerocious = traits.some(({id, isEnabled}) => id === 'ferocious' && isEnabled);
     const levelToRecruit = {
-        'beginner': 'zero warriors',
-        'expert': 'one warrior',
-        'master': 'two warriors',
-        'boss': 'two warriors',
+        'beginner': '0 warriors',
+        'expert': '1 warrior',
+        'master': '2 warriors',
+        'boss': '2 warriors',
     }
 
     const levelToPoints = {
@@ -55,7 +55,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
                             <Steps
                                 steps={
                                     [
-                                        <Step title="Gather Warriors." description="Form a supply of 15 warriors."/>,
+                                        <Step title="Gather Pieces." description="Form a supply of 15 warriors, 3 fox, rabbit, and mouse trade post tokens near you."/>,
                                         <Step title="Place Warriors." description="Place 1 warrior in each clearing on the river."/>,
                                         <Step title="Gain Starting Payments." description="Place 1 warrior in your Payments box."/>,
                                         <Step title="Stock Market." description="Draw 5 cards and add them to your Market."/>,
@@ -63,7 +63,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
                                 }
                             />
                         </Card >
-                        <Level faction="rivetfolk-company" level={level} labels={{beginner: 'one', expert: 'two', master: 'three'}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        <Level faction="rivetfolk-company" level={level} labels={{beginner: <>Whenever you <b>Build</b>, place <b>1 warrior</b> in the clearing. Score <b>1 VP</b> when you have Shield Protectionism in effect.</>, expert: <>Whenever you <b>Build</b>, place <b>2 warriors</b> in the clearing. Score <b>2 VP</b> when you have Shield Protectionism in effect.</>, master: <>Whenever you <b>Build</b>, place <b>3 warrior</b> in the clearing. Score <b>3 VP</b> when you have Shield Protectionism in effect.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
                     </>
                 )}
                 <Card title='Traits'>
