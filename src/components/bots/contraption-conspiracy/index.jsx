@@ -10,6 +10,7 @@ import Number from "../../number";
 import Level from '../../level';
 import Trait from '../../trait';
 import OneVP from '../../one-vp';
+import { CONSTANTS } from '../../../utils';
 
 
 export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
@@ -32,7 +33,7 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
-        <Step title="Craft" description={<>order card for <OneVP/> if it shows an available item.{canBuyServices ? ' If the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, if available, and replace the order card. If multiple cards exist, pick the one with the most victory points for the item. If multiple, choose randomly.':''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP/> if it shows an available item.{canBuyServices ? CONSTANTS.riverfolkHandCardText:''}</>} />,
         <Step 
             title="Recruit"
             description={<>{levelToRecruit[level]} in each of two <Suit suit={orderedSuit} /> clearings.</>}
@@ -197,7 +198,7 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
                                 steps={[
                                     <Step
                                         title="Battle"
-                                        description={<>in each <Suit suit={orderedSuit} /> clearing with two or more Corvid warriors.{canBuyServices ? '  If the Riverfolk player has fewer points than you do, you have 2 or fewer warriors there, and at least 1 Riverfolk warrior is present, then buy Mercenaries.': ''}</>}
+                                        description={<>in each <Suit suit={orderedSuit} /> clearing with two or more Corvid warriors.{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}</>}
                                         substeps={
                                             <Steps 
                                                 type="I"
