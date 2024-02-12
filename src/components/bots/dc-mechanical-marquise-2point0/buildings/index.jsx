@@ -2,7 +2,6 @@ import Sawmill from '../../../../assets/sawmill.png';
 import Workshop from '../../../../assets/workshop.png';
 import Recruiter from '../../../../assets/recruiter.png';
 import Card from '../../../card';
-import Suit from '../../../suit';
 
 export default function Buildings({buildings = {}, onUpdateBuildings}) {
     const {sawmill = [], workshop = [], recruiter = []} = buildings;
@@ -18,7 +17,7 @@ export default function Buildings({buildings = {}, onUpdateBuildings}) {
         <Card title='Buildings'>
             <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
                 <div style={{display: "flex", gap: '2%', flexWrap: "wrap", width: '100%'}}>
-                    <div style={{width: '60px', display: 'flex', alignItems: 'center', justifyContent: 'left'}}><Suit suit="fox" /></div>
+                    <div style={{width: '60px', display: 'flex', alignItems: 'center', justifyContent: 'left', paddingRight: '10px'}}>Sawmills</div>
                     {sawmill.map(({id, isPlaced, type, points}, index) => (
                         <div  key={id} style={{position: "relative", cursor: "pointer", display: 'flex', flex: '1'}} onClick={() => handleClick({index, type})}>
                             <img style={{opacity: isPlaced ? '50%' : '100%', borderRadius: '15%'}} src={Sawmill} width="100%" alt="sawmill" />
@@ -29,7 +28,7 @@ export default function Buildings({buildings = {}, onUpdateBuildings}) {
                     ))}
                 </div>
                 <div style={{display: "flex", gap: '2%', flexWrap: "wrap", width: '100%'}}>
-                <div style={{width: '60px', display: 'flex', alignItems: 'center', justifyContent: 'left'}}><Suit suit="rabbit" /></div>
+                <div style={{width: '60px', display: 'flex', alignItems: 'center', justifyContent: 'left', paddingRight: '10px'}}>Workshops</div>
                 {workshop.map(({id, isPlaced, type, points}, index) => (
                         <div  key={id} style={{position: "relative", cursor: "pointer", display: 'flex', flex: '1'}} onClick={() => handleClick({index, type})}>
                             <img style={{opacity: isPlaced ? '50%' : '100%', borderRadius: '15%'}} src={Workshop} width="100%" alt="workshop" />
@@ -40,7 +39,7 @@ export default function Buildings({buildings = {}, onUpdateBuildings}) {
                     ))}
                 </div>
                 <div style={{display: "flex", gap: '2%', flexWrap: "wrap", width: '100%'}}>
-                <div style={{width: '60px', display: 'flex', alignItems: 'center', justifyContent: 'left'}}><Suit suit="mouse" /></div>
+                <div style={{width: '60px', display: 'flex', alignItems: 'center', justifyContent: 'left', paddingRight: '10px'}}>Recruiters</div>
                 {recruiter.map(({id, isPlaced, type, points}, index) => (
                         <div  key={id} style={{position: "relative", cursor: "pointer", display: 'flex', flex: '1'}} onClick={() => handleClick({index, type})}>
                             <img style={{opacity: isPlaced ? '50%' : '100%', borderRadius: '15%'}} src={Recruiter} width="100%" alt="recruiter" />
