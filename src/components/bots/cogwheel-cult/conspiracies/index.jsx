@@ -11,7 +11,7 @@ export default function Conspiracies({canBuyServices, index, isSpiteful, isFanat
 
     return (
     <div>
-        <div style={{marginBottom: '16px'}}>To <b>Perform Conspiracies</b>, remove all warriors in the Acolytes box one by one. For each warrior move the Outcast marker along the Conspiracy track from left to right and preform the Conspiracy it lands on when the Outcast marker moves off the end of the track, place it back on the leftmost slot of the track. Do not remove Acolytes if the action can't be taken.</div>
+        <div style={{marginBottom: '16px'}}>To <b>Perform Conspiracies</b>, remove all warriors in the Acolytes box one by one. For each warrior move the Outcast marker along the Conspiracy track from left to right and preform the Conspiracy it lands on when the Outcast marker moves off the end of the track, place it back on the left-most slot of the track. Do not remove Acolytes if the action can't be taken.</div>
             <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '16px'}}>
                 {conspiracies.map((name, i) => {
                     return (
