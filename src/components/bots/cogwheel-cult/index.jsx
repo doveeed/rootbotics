@@ -48,7 +48,7 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
     ];
 
     if (canBuyServices) {
-        daylightSteps.unshift(<Step title="" description={<>If there are less than {levelToCards[level]} cards in Lost Souls, buy non-bird cards until this is no longer the case. Do this even if the Riverfolk or Rivetflok player has more victory points than you.</>}/>)
+        daylightSteps.unshift(<Step title="(Riverfolk)" description={<>If there are less than {levelToCards[level]} cards in Lost Souls, buy non-Bird cards until this is no longer the case. Do this even if the Riverfolk or Rivetflok player has more victory points than you.</>}/>)
     }
 
     const eveningSteps = [
@@ -104,12 +104,12 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
                         <Card title="Ordered suit">
                             <Order order={orderedSuit} onChangeOrder={(newOrder) => updateState({...state, orderedSuit:newOrder})}/>
                         </Card>
+                        <Gardens gardens={gardens} onUpdateGardens={(gardens) => {updateState({...state, gardens})}}/>
                         <Card
                             title="Conspiracy Track"
                         >
                             <Conspiracies canBuyServices={canBuyServices} isSpiteful={isSpiteful} isFanatics={isFanatics} index={conspiracyIndex} onUpdateConspiracyIndex={(newIndex) => updateState({...state, conspiracyIndex: newIndex})} orderedSuit={orderedSuit}/>
                         </Card>
-                        <Gardens gardens={gardens} onUpdateGardens={(gardens) => {updateState({...state, gardens})}}/>
                         <Card title="Birdsong" headerBackgroundColor="#f6a045" headerColor="white">
                             <Steps
                                 type="1"
