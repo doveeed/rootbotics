@@ -66,7 +66,7 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
     ];
 
     if (isBossMode) {
-        eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP /> for every two players (rounded up).</>} />)
+        eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP /> for every two human players (rounded up).</>} />)
     }
 
     return (
@@ -197,7 +197,7 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
                                 steps={[
                                     <Step
                                         title="Battle"
-                                        description={<>in each <Suit suit={orderedSuit} /> clearing with two or more Corvid warriors.{canBuyServices ? '  If the Riverfolk player has fewer points than you do, you have two or fewer warriors there, and at least one Riverfolk warrior is present, then buy Mercenaries.': ''}</>}
+                                        description={<>in each <Suit suit={orderedSuit} /> clearing with two or more Corvid warriors.{canBuyServices ? '  If the Riverfolk player has fewer points than you do, you have 2 or fewer warriors there, and at least 1 Riverfolk warrior is present, then buy Mercenaries.': ''}</>}
                                         substeps={
                                             <Steps 
                                                 type="I"
