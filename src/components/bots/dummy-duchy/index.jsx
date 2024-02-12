@@ -11,6 +11,7 @@ import Ministers, {ministerNameActionMapping} from './ministers';
 import Buildings from './buildings';
 import OneVP from '../../one-vp';
 import Tunnels from "./tunnels";
+import { CONSTANTS } from "../../../utils";
 
 
 export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
@@ -42,7 +43,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
 
     const birdsongSteps = [
         <Step title="Reveal" description={<>the top card of the deck as order card.</>} />,
-        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> if the Riverfolk player has fewer points than you do and the order card has no craftable item, buy a craftable item from the Riverfolk, and replace the order card. If multiple cards exist, pick the one with the most victory points for the item. If multiple, choose randomly.</div>:''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? CONSTANTS.riverfolkHandCardText:''}</>} />,
         <Step 
             title="Recruit"
             description={<>{totalRecruit} {totalRecruit === 1 ? 'warrior':  'warriors'}, in the Burrow.</>}
@@ -50,7 +51,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
     ];
 
     if (canBuyServices) {
-        birdsongSteps.unshift(<Step title="Riverfolk." description={<>If the Riverfolk player has fewer points than you do and there is an "Ambush" card in the Riverfolk Market, immediately buy it and place it in front of you.</>} />)
+        birdsongSteps.unshift(<Step title="(Riverfolk)" description={<>If the Riverfolk player has fewer victory points than you do and there is an "Ambush" card in the Riverfolk Market, immediately buy it and place it in front of you.</>} />)
     };
 
     const eveningSteps = [
@@ -97,10 +98,10 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                             <Steps
                                 steps={
                                     [
-                                        <Step title="Gather Pieces." description="Form supplies of 20 warriors, 3 citadel bulidings, 3 market buildings, and 3 tunnel tokens"/>,
+                                        <Step title="Gather Pieces." description="Form supplies of 20 warriors, 3 citadel bulidings, 3 market buildings, and 3 tunnel tokens near you."/>,
                                         <Step title="Prepare the Burrow." description="Place the Burrow near the map."/>,
                                         <Step title="Surface." description="Place 2 warriors and 1 tunnel in a corner clearing that is not the starting corner clearing of another bot and, if possible, is diagonally opposite from a starting corner clearing. Then place 2 warriros in each clearing adjacent to the chosen corner clearing, exept the Burrow."/>,
-                                        <Step title="Sway Starting Ministers." description="Draw 2 cards and discard them. For each, sway the topmost maching unswayed minister on the minister track."/>,
+                                        <Step title="Sway Starting Ministers." description="Draw 2 cards and discard them. For each, sway the topmost maching unswayed minister on the Minister Track."/>,
                                     ]
                                 }
                             />
@@ -159,7 +160,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                                     />,
                                     <Step 
                                         title="Battle"
-                                        description={<>in each each <Suit suit={orderedSuit} /> clearing.{isCaptainSwayed ? <div style={{paddingLeft: '26px'}}><b>Captian:</b> deal an extra hit in clearings with a tunnel.</div>: ''}{canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> if the Riverfolk player has fewer points than you do, you have 2 or fewer warriors in a clearing, and at least 1 Riverfolk warrior is present there, then buy Mercenaries.</div>: ''}</>}
+                                        description={<>in each each <Suit suit={orderedSuit} /> clearing.{isCaptainSwayed ? <div style={{paddingLeft: '26px'}}><b>Captian:</b> deal an extra hit in clearings with a tunnel.</div>: ''}{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}</>}
                                         substeps={
                                             <Steps 
                                                 type="I"
@@ -169,7 +170,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                                             />
                                         }
                                     />,
-                                    <Step title="Build" description={<>in such a clearing that you rule with most Duchy warriors. Place a Citadel if you have more than 8 warriors in your supply, otherwise place a Market. {numPlacedMarkets + numPlacedCitadels === 6 ? '': <>Score <OneVP /> if you can't place a building while there are still buildings on this board.</>}{canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> if the Riverfolk player has fewer points than you do, you did not build, and buying Mercenaries would allow you to rule and build, then buy Mercenaries and build.</div>: ''}{isInvaders ? <div style={{paddingLeft: '26px'}}><b>(Invaders)</b> If you cannot build due to no free building slots, battle in all clearings.</div>: ''}</>} />,
+                                    <Step title="Build" description={<>in such a clearing that you rule with most Duchy warriors. Place a Citadel if you have more than 8 warriors in your supply, otherwise place a Market. {numPlacedMarkets + numPlacedCitadels === 6 ? '': <>Score <OneVP /> if you can't place a building while there are still buildings on this board.</>}{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}{isInvaders ? <div style={{paddingLeft: '26px'}}><b>(Invaders)</b> If you cannot build due to no free building slots, battle in all clearings.</div>: ''}</>} />,
                                     <Step
                                         title="Ministers."
                                         description={<>Take the actions of all Swayed Ministers from top to bottom. <i>(Captain and Foremole are always active and have no action)</i></>}
