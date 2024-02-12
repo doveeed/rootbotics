@@ -57,10 +57,10 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
     const eveningSteps = [
         <Step 
             title="Rally."
-            description={<>In each <Suit suit={orderedSuit} /> clearing without a Citadel or Market and less than 3 Duchy warriors, move your warriors into an adjacent clearing with a Citadel or a Market. If there is no such clearing, instead place the warriors into the Burrow. Then in each clearing you rule with more than 4 Duchy warriors, place all but 4 of your Warriors from that clearing into the burrow.</>}
+            description={<>In each <Suit suit={orderedSuit} /> clearing without a citadel or market and less than 3 Duchy warriors, move your warriors into an adjacent clearing with a citadel or a market. If there is no such clearing, instead place the warriors into the Burrow. Then in each clearing you rule with more than 4 Duchy warriors, place all but 4 of your Warriors from that clearing into the burrow.</>}
             substeps={<Steps type='I' steps={[<Step title={<i><b>Target Clearing Tie:</b></i>} description={<><i>Such a clearing with the least of your warriors.</i></>}/>]}/>}    
         />,
-        <Step title="Score" description={<><OneVP /> per Market on the map. (<Number value={numPlacedMarkets} />)</>}/>,
+        <Step title="Score" description={<><OneVP /> per market on the map. (<Number value={numPlacedMarkets} />)</>}/>,
     ];
 
     if (lowestOrderedUnswayed || highestUnswayed) {
@@ -98,7 +98,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                             <Steps
                                 steps={
                                     [
-                                        <Step title="Gather Pieces." description="Form supplies of 20 warriors, 3 citadel bulidings, 3 market buildings, and 3 tunnel tokens near you."/>,
+                                        <Step title="Gather Pieces." description="Form supplies of 20 warriors, 3 citadels, 3 markets, and 3 tunnel tokens near you."/>,
                                         <Step title="Prepare the Burrow." description="Place the Burrow near the map."/>,
                                         <Step title="Surface." description="Place 2 warriors and 1 tunnel in a corner clearing that is not the starting corner clearing of another bot and, if possible, is diagonally opposite from a starting corner clearing. Then place 2 warriros in each clearing adjacent to the chosen corner clearing, exept the Burrow."/>,
                                         <Step title="Sway Starting Ministers." description="Draw 2 cards and discard them. For each, sway the topmost maching unswayed minister on the Minister Track."/>,
@@ -109,7 +109,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                         <Card title="Minister Track">
                             <Ministers ministers={ministers} onUpdateMinisters={(newMinisters) => updateState({...state, ministers: newMinisters})} />
                         </Card>
-                        <Level faction="dummy-duchy" level={level} labels={{beginner: 'one', expert: 'two', master: 'three'}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        <Level faction="dummy-duchy" level={level} labels={{beginner: <>Whenever you <b>Recruit</b>, place <b>1 warrior</b> in the Burrow.</>, expert: <>Whenever you <b>Recruit</b>, place <b>2 warriors</b> in the Burrow.</>, master: <>Whenever you <b>Recruit</b>, place <b>3 warriors</b> in the Burrow.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
                         {!isRivetfolkPlaying && (<Card title="Human Riverfolk">
                             <label htmlFor="dummy-duchy-human-riverfolk"><input id="dummy-duchy-human-riverfolk" type="checkbox" onChange={() => updateState({...state, isHumanRiverfolk: !isHumanRiverfolk})} checked={isHumanRiverfolk} /> Check this box if there is a human Riverfolk player in the game.</label>
                         </Card>)}
@@ -170,7 +170,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                                             />
                                         }
                                     />,
-                                    <Step title="Build" description={<>in such a clearing that you rule with most Duchy warriors. Place a Citadel if you have more than 8 warriors in your supply, otherwise place a Market. {numPlacedMarkets + numPlacedCitadels === 6 ? '': <>Score <OneVP /> if you can't place a building while there are still buildings on this board.</>}{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}{isInvaders ? <div style={{paddingLeft: '26px'}}><b>(Invaders)</b> If you cannot build due to no free building slots, battle in all clearings.</div>: ''}</>} />,
+                                    <Step title="Build" description={<>in such a clearing that you rule with most Duchy warriors. Place a citadel if you have more than 8 warriors in your supply, otherwise place a market. {numPlacedMarkets + numPlacedCitadels === 6 ? '': <>Score <OneVP /> if you can't place a building while there are still buildings on this board.</>}{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}{isInvaders ? <div style={{paddingLeft: '26px'}}><b>(Invaders)</b> If you cannot build due to no free building slots, battle in all clearings.</div>: ''}</>} />,
                                     <Step
                                         title="Ministers."
                                         description={<>Take the actions of all Swayed Ministers from top to bottom. <i>(Captain and Foremole are always active and have no action)</i></>}
