@@ -13,7 +13,7 @@ export default function Gardens({gardens, onUpdateGardens} ) {
     } 
 
     return (
-        <Card title="Gardens">
+        <Card title="Gardens Track">
             <div>
                 <div style={{marginBottom: '1rem'}}><i>When a garden is removed from the map, discard the top card in your Lost Souls.</i></div>
                 <div style={{display: "flex", gap: '1rem', flexWrap: "wrap", marginBottom: '1rem', width: '100%'}}>{mouse.map(({id, type, isPlaced, points}, index) => {
