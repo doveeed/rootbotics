@@ -14,7 +14,7 @@ export default function Buildings({buildings = {}, onUpdateBuildings}) {
     } 
 
     return (
-        <Card title='Buildings'>
+        <Card title='Buildings Track'>
             <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
                 <div style={{display: "flex", gap: '2%', flexWrap: "wrap", width: '100%'}}>
                     <div style={{width: '60px', display: 'flex', alignItems: 'center', justifyContent: 'left', paddingRight: '10px'}}>Sawmills</div>
