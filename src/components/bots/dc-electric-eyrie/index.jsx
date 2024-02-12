@@ -188,11 +188,11 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
     daylightSteps.push(<Step title="Build." description={<>Place a roost in the clearing you rule of highest priority with no roost. If you cannot place a roost, you fall into Turmoil.{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>}/>)
 
     if (isSwoop) {
-        daylightSteps.push(<Step title="(Swoop)" description="Recruit two warriors in the highest priority clearing in which you have no pices."/>)
+        daylightSteps.push(<Step title="(Swoop)" description="Recruit 2 warriors in the highest priority clearing in which you have no pieces."/>)
     }
     
     const eveningSteps = [
-        <Step title="Score" description={<>victory points listed on the rightmost empty space on the Roosts Track. (<Number value={pointsToScore} />)</>} />,
+        <Step title="Score" description={<>victory points listed on the right-most empty space on the Roosts Track. (<Number value={pointsToScore} />)</>} />,
     ];
 
     if (isBossMode) {
@@ -217,7 +217,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
                                 steps={
                                     [
                                         <Step title="Gather Pieces." description="Form a supply of 20 warriors and 7 roosts near you."/>,
-                                        <Step title="Place Warriors." description="Place 1 roost and 6 warriors in the corner clearing diagonally opposite from the clearing with the Keep token. If the Marquise is not playing, place those pieces in a random corner clearing."/>,
+                                        <Step title="Place Warriors." description="Place 1 roost and 6 warriors in the corner clearing diagonally opposite from the clearing with the keep token. If the Marquise is not playing, place those pieces in a random corner clearing."/>,
                                         <Step title="Tuck Viziers." description="Set the Bird card count 2 in the Decree (fox, mouse, and rabbit should be 0)." />
                                     ]
                                 }
