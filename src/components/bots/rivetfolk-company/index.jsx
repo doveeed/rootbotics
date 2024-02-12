@@ -14,6 +14,7 @@ import OneVP from "../../one-vp";
 export default function RivetfolkCompany({state = {}, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', tradeposts = {}} = state;
     const isBossMode = level === 'boss';
+    const isFerocious = traits.some(({id, isEnabled}) => id === 'ferocious' && isEnabled);
     const levelToRecruit = {
         'beginner': 'zero warriors',
         'expert': 'one warrior',
@@ -138,7 +139,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
                                         title="Organise."
                                         description={<>Check conditions in Protectionism box now.<br/>Shield: Score <Number value={levelToPoints[level]} /> and place two warriors into such a clearing with your presence and most enemy pieces.</>}
                                     />,
-                                    <Step title="Battle" description={<><br/>Shield: in all clearings, then skip to Evening.<br/>Sword: in all <Suit suit={orderedSuit} /> clearings.</>}
+                                    <Step title="Battle" description={<><br/>Shield: in all clearings, then skip to Evening.<br/>Sword: in all <Suit suit={orderedSuit} /> clearings.{isFerocious ? <div style={{paddingLeft: '26px'}}><b>(Ferocious)</b> You can deal a maximum of 3 Rolled Hits</div>: ''}</>}
                                         substeps={
                                             <Steps 
                                                 type="I"
