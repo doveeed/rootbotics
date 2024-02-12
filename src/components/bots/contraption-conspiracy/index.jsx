@@ -22,10 +22,10 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
     const isVendetta = traits.find(({id}) => id === 'vendetta').isEnabled;
     const isGamble = traits.find(({id}) => id === 'gamble').isEnabled;
     const levelToRecruit = {
-        'beginner': 'one warrior',
-        'expert': 'two warriors',
-        'master': 'three warriors',
-        'boss': 'three warriors',
+        'beginner': '1 warrior',
+        'expert': '2 warriors',
+        'master': '3 warriors',
+        'boss': '3 warriors',
     }
     const canBuyServices = isRivetfolkPlaying || isHumanRiverfolk;
     const flippedPlots = plots.filter(({flipped}) => flipped);
@@ -44,7 +44,7 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
                         <Step title={<i>Clearing Tie:</i>} description={<i>Such a clearing without a plot token, then with the most Corvid warriors.</i>}/>,
                         <Step 
                             title={<i>Warrior Limit:</i>}
-                            description={<i>If you run out of warriors to place, immediately perform "The Plot Thickens" before placing the remaining warriors.</i>}
+                            description={<i>If you run out of warriors to place, immediately perform <b>The Plot Thickens</b> before placing the remaining warriors.</i>}
                         />
                     ]}
                 />
@@ -52,13 +52,13 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
         />,
         <Step 
         title="Flip"
-        description={<>each plot token <i>(no warrior needed in clearing).</i> {isGamble ? 'First, have the human player with the most pieces there resolve the Gamble. ': ''}For each flip, gain <OneVP /> per face-up plot on the map (<Number value={flippedPlots.length} />), then resolve its flip effect.{isVendetta ? ' (each plot has the immediate effect of a Bomb)': ''}</>}
+        description={<>each plot token <i>(no warrior needed in clearing).</i> For each flip, gain <OneVP /> per face-up plot on the map (<Number value={flippedPlots.length} />), then resolve its flip effect.{isGamble ? <div style={{paddingLeft: '26px'}}><b>(Gamble)</b> First, have the human player with the most pieces there resolve the Gamble. </div>: ''}{isVendetta ? <div style={{paddingLeft: '26px'}}><b>(Vendetta)</b> Each plot has the immediate effect of a Bomb</div>: ''}</>}
         />
     
     ];
 
     if (canBuyServices) {
-        birdsongSteps.unshift(<Step title='Buy Favor Card' description={<>If the Riverfolk player has fewer points than you do and there is a "Favor" card in the Riverfolk Market, immediately buy and resolve its effect.</>} />)
+        birdsongSteps.unshift(<Step title='(Riverfolk)' description={<>If the Riverfolk player has fewer victory points than you do and there is a "Favor" card in the Riverfolk Market, immediately buy and resolve its effect.</>} />)
     }
     
     const eveningSteps = [
@@ -219,10 +219,10 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
                                             />
                                         }
                                     />,
-                                    <Step title="Plot." description={<>Remove one Corvid warrior from the <Suit suit={orderedSuit} /> clearing with the most Corvid warriors and no plot token to place a random face-down plot token there.{isMastermind ? ' Repeat once.': ''}</>} />,
+                                    <Step title="Plot." description={<>Remove 1 Corvid warrior from the <Suit suit={orderedSuit} /> clearing with the most Corvid warriors and no plot token to place a random face-down plot token there.{isMastermind ? ' Repeat once.': ''}</>} />,
                                     <Step
                                         title="The Plot Thickens."
-                                        description="If there is such a clearing that has no plot token and more than two Corvid warriors, then remove one Corvid warrior and place a random facedown plot token there."
+                                        description="If there is such a clearing that has no plot token and more than two Corvid warriors, then remove 1 Corvid warrior and place a random facedown plot token there."
                                         substeps={
                                             <Steps type="I" steps={[<Step title={<i>Clearing Tie:</i>} description={<i>Place the token in the clearing with the most Corvid warriors.</i>}/>]} />
                                         }
@@ -240,11 +240,10 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
                             <Steps 
                                 type="1"
                                 steps={[
-                                    <Step title="Bomb." description={<>When flipped, remove all human pieces in its clearing <i>(remove two pieces of each bot in the clearing, warriors first, instead of all their pieces.)</i>, then swap this token with a random plot token from your supply, placing the swapped plot face up. <i>(The replacement token does not trigger, and it can be another bomb.)</i></>}/>,
+                                    <Step title="Bomb." description={<>When flipped, remove all human pieces in its clearing <i>(remove 2 pieces of each bot in the clearing, warriors first, instead of all their pieces.)</i>, then swap this token with a random plot token from your supply, placing the swapped plot face up. <i>(The replacement token does not trigger, and it can be another bomb.)</i></>}/>,
                                     <Step title="Snare." description={<>While face up, enemy pieces cannot be placed in or moved from its clearing <i>(as normal)</i>. <i>Bots ignore snare tokens for the purpose of targeting clearings to place or move pieces. If a bot would place in a clearing with a snare or move out of a clearing with a snare, remove the snare but do not perform this part of the action.</i></>} />,
-                                    <Step title="Extortion." description="When flipped, each player with any faction pieces in its clearing must discard one card at random."/>,
-                                    <Step title="Raid." description={<>When removed, place one warrior in each
-                                        adjacent clearing <i>(as normal)</i>.</>} />,
+                                    <Step title="Extortion." description="When flipped, each player with any faction pieces in its clearing must discard 1 card at random."/>,
+                                    <Step title="Raid." description={<>When removed, place 1 warrior in each adjacent clearing <i>(as normal)</i>.</>} />,
                                 ]}
                             />
                         </Card>
