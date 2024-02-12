@@ -32,7 +32,7 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
     ]
 
     if (orderedSuit !== 'bird' && numPlacedSympathy > 0 && !buildings[orderedSuit]?.isPlaced) {
-        birdsongSteps.push(<Step title="Revolt." description={<>Remove all enemy pieces from the <Suit suit={orderedSuit} /> sympathetic clearing with the most enemy pices, and place the <Suit suit={orderedSuit}/> base there.</>}/>)
+        birdsongSteps.push(<Step title="Revolt." description={<>Remove all enemy pieces from the <Suit suit={orderedSuit} /> sympathetic clearing with the most enemy pieces, and place the <Suit suit={orderedSuit}/> base there.</>}/>)
     }
     
 
@@ -46,7 +46,7 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
     ];
 
     if (orderedSuit === 'bird' && numPlacedSympathy > 0 && !(fox?.isPlaced && rabbit?.isPlaced && mouse?.isPlaced)) {
-        daylightSteps.push(<Step title="Surprise Revolt." description={<>Remove all enemy pieces from the <Suit suit={orderedSuit} /> sympathetic clearing with the most enemy pices, and place the <Suit suit={orderedSuit}/> base there.</>}/>)
+        daylightSteps.push(<Step title="Surprise Revolt." description={<>Remove all enemy pieces from the <Suit suit={orderedSuit} /> sympathetic clearing with the most enemy pieces, and place the <Suit suit={orderedSuit}/> base there.</>}/>)
     }
 
     daylightSteps.push(<Step title="Public Pity." description={<>If you did not revolt this turn, <b>Spread Sympathy</b> {numPlacedSympathy < 5 ? 'twice': 'once'}.</>}/>)
@@ -83,12 +83,12 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
                             <Steps
                                 steps={
                                     [
-                                        <Step title="Gather Pieces." description="Form a supply of 10 warriors, 3 base buildings, and 10 sympathy tokens near you."/>,
+                                        <Step title="Gather Pieces." description="Form a supply of 10 warriors, 3 bases, and 10 sympathy tokens near you."/>,
                                     ]
                                 }
                             />
                         </Card >
-                        <Level faction="dc-automated-alliance" level={level} labels={{'beginner': 'four', 'expert': 'three', 'master': 'two'}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        <Level faction="dc-automated-alliance" level={level} labels={{'beginner': <>You <b>Organize</b> in each clearing with a base and <b>4 or more</b> Alliance warriors.</>, 'expert': <>You <b>Organize</b> in each clearing with a base and <b>3 or more</b> Alliance warriors.</>, 'master': <>You <b>Organize</b> in each clearing with a base and <b>2 or more</b> Alliance warriors.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
                         {!isRivetfolkPlaying && (<Card title="Human Riverfolk">
                             <label htmlFor="dc-automated-alliance"><input id="dc-automated-alliance" type="checkbox" onChange={() => updateState({...state, isHumanRiverfolk: !isHumanRiverfolk})} checked={isHumanRiverfolk} /> Check this box if there is a human Riverfolk player in the game.</label>
                         </Card>)}
