@@ -87,14 +87,13 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
                             <Steps
                                 steps={
                                     [
-                                        <Step title="Gather Warriors." description="Form a Supply of 15 near you."/>,
-                                        <Step title="Get Plots." description="Form a Supply of 8 plot tokens near you. Turn them facedown."/>,
+                                        <Step title="Gather Warriors and Plots." description="Form a supplies of 15 warriors and 8 face-down plot tokens near you."/>,
                                         <Step title="Place Starting Warriors." description="Place 1 warrior in the lowest priority clearing of each suit (total of 3)."/>
                                     ]
                                 }
                             />
                         </Card >
-                        <Level faction="contraption-conspiracy" level={level} labels={{beginner: 'one', expert: 'two', master: 'three'}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        <Level faction="contraption-conspiracy" level={level} labels={{beginner: <>Whenever you <b>Recruit</b>, place <b>1 warrior</b> in each clearing.</>, expert: <>Whenever you <b>Recruit</b>, place <b>2 warriors</b> in each clearing.</>, master: <>Whenever you <b>Recruit</b>, place <b>3 warriors</b> in each clearing.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
                         {!isRivetfolkPlaying && (<Card title="Human Riverfolk">
                             <label htmlFor="contraption-conspiracy-human-riverfolk"><input id="contraption-conspiracy-human-riverfolk" type="checkbox" onChange={() => updateState({...state, isHumanRiverfolk: !isHumanRiverfolk})} checked={isHumanRiverfolk} /> Check this box if there is a human Riverfolk player in the game.</label>
                         </Card>)}
