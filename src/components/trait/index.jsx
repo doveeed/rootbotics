@@ -26,7 +26,7 @@ const traitIdDescriptionMap = {
     'martyrs': 'Whenever you perform a ritual for a Bird card in Daylight, move an aditional warrior from the supply to your Acolytes.',
     'mastermind': 'Perform "Plot" twice each turn.',
     'nimble': 'You can move regardless of who rules your clearing.',
-    'nobility': 'Turmoil is now triggered if you are unable to place a roost or if you are unable to place a warrior. Whenever you fall into Turmoil, you do not lose victory points. Instead, you score on victory pount per bird card in the Decree.',
+    'nobility': 'Turmoil is now triggered if you are unable to place a roost or if you are unable to place a warrior. Whenever you fall into Turmoil, you do not lose victory points. Instead, you score on victory pount per Bird card in the Decree.',
     'overwhelm': <>The <b>Dig</b> action requires and moves only 3 warriors (instead of 4), and is repeated a second time each turn.</>,
     'pilgrims': 'You rule any clearing where you have any gardens.',
     'poor-manual-dexterity': <>You have no hand of cards. You cannot discard cards. If a human would take a card from you, they draw a card instead. If a human would give a card to you, they discard it, and you score <OneVP />.</>,
