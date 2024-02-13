@@ -43,7 +43,7 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
-        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player has fewer victory points than you do and the order card has no craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick a Bird card, then pick the one with the most VP for the item. If multiple, choose randomly.{orderedSuit !== 'bird' ? ' If there are no craftable items available, buy any available Bird card. If there are multiple, choose randomly.': ''}</div>:''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick a Bird card, then pick the one with the most VP for the item. If multiple, choose randomly.{orderedSuit !== 'bird' ? ' If there are no craftable items available, buy any available Bird card. If there are multiple, choose randomly.': ''}</div>:''}</>} />,
     ]
 
     const daylightSteps = orderedSuit === 'bird' ? [
