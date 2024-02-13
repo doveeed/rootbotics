@@ -29,7 +29,7 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
-        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <div styl={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player has fewer victory points than you do and the order card has no available craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick a Bird card, then pick the one with the most VP for the item. If multiple, choose randomly.{ orderedSuit !== 'bird' ? ' If there are no cards with available craftable items, buy any available Bird card. If multiple, choose randomly.' : ''} <b>Use Riverfolk warriors to pay.</b></div>:''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <div styl={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no available craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick a Bird card, then pick the one with the most VP for the item. If multiple, choose randomly.{ orderedSuit !== 'bird' ? ' If there are no cards with available craftable items, buy any available Bird card. If multiple, choose randomly.' : ''} <b>Use Riverfolk warriors to pay.</b></div>:''}</>} />,
     ]
 
     if (orderedSuit !== 'bird' && numPlacedSympathy > 0 && !buildings[orderedSuit]?.isPlaced) {
