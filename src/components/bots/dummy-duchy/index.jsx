@@ -51,7 +51,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
     ];
 
     if (canBuyServices) {
-        birdsongSteps.unshift(<Step title="(Riverfolk)" description={<>If the Riverfolk player has fewer victory points than you do and there is an "Ambush" card in the Riverfolk Market, immediately buy it and place it in front of you.</>} />)
+        birdsongSteps.unshift(<Step title="(Riverfolk)" description={<>If the Riverfolk player does not have more victory points than you do and there is an "Ambush" card in the Riverfolk Market, immediately buy it and place it in front of you.</>} />)
     };
 
     const eveningSteps = [
