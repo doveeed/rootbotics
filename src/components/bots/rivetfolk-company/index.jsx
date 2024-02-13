@@ -9,6 +9,7 @@ import Level from '../../level';
 import Trait from '../../trait';
 import TradePosts from './trade-posts';
 import OneVP from "../../one-vp";
+import { getFactionColor } from "../../../utils";
 
 
 export default function RivetfolkCompany({state = {}, onDelete = () => {}, updateState = () => {}}) {
@@ -46,7 +47,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor="#56c3bc"
+                backgroundColor={getFactionColor('rivetfolk-company')}
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
@@ -63,7 +64,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
                                 }
                             />
                         </Card >
-                        <Level faction="rivetfolk-company" level={level} labels={{beginner: <>Whenever you <b>Build</b>, place <b>1 warrior</b> in the clearing. Score <b>1 VP</b> when you have Shield Protectionism in effect.</>, expert: <>Whenever you <b>Build</b>, place <b>2 warriors</b> in the clearing. Score <b>2 VP</b> when you have Shield Protectionism in effect.</>, master: <>Whenever you <b>Build</b>, place <b>3 warrior</b> in the clearing. Score <b>3 VP</b> when you have Shield Protectionism in effect.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        <Level faction="rivetfolk-company" level={level} labels={{beginner: <>Whenever you <b>Build</b>, place <b>0 warriors</b> in the clearing. Score <b>0 VP</b> when you have Shield Protectionism in effect.</>, expert: <>Whenever you <b>Build</b>, place <b>1 warrior</b> in the clearing. Score <b>1 VP</b> when you have Shield Protectionism in effect.</>, master: <>Whenever you <b>Build</b>, place <b>2 warriors</b> in the clearing. Score <b>2 VP</b> when you have Shield Protectionism in effect.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
                     </>
                 )}
                 <Card title='Traits'>
