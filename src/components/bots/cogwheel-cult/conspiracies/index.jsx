@@ -44,7 +44,7 @@ export default function Conspiracies({canBuyServices, index, isSpiteful, isFanat
                     <><Step
                         title=""
                         description={<>Remove an enemy warrior in a <Suit suit={orderedSuit} /> clearing and place a Lizard warrior there.</>}
-                        substeps={<Steps type="I" steps={[<Step title={<i>Player Tie:</i>} description={<i>Target the clearing with the most enemy buildings.</i>} />, <Step title={<i>Clearing Tie:</i>} description={<i>Target the player with the most victory points</i>} />]}/>}
+                        substeps={<Steps type="I" steps={[<Step title={<i>Player Tie:</i>} description={<i>Target the player with the most victory points</i>} />, <Step title={<i>Clearing Tie:</i>} description={<i>Target the clearing with the most enemy buildings.</i>} />]}/>}
                     />
                     {isFanatics && (<Step title="(Fanatics)" description={<>Battle in the clearing in which you removed an enemy warrior. <b>Deal an extra hit.</b></>} substeps={<Steps type="I"  steps={[<Step title={<i>Player Tie:</i>} description={<i>Target the player with the most defensless buildings, then with the most victory points.</i>}/>]}/>}/>)}
                     </>
@@ -62,7 +62,7 @@ export default function Conspiracies({canBuyServices, index, isSpiteful, isFanat
                     <Step
                         title=""
                         description={<>Remove an enemy building in a <Suit suit={orderedSuit} /> clearing and place a matching garden there.</>}
-                        substeps={<Steps type="I" steps={[<Step title={<i>Player Tie:</i>} description={<i>Target the player with the most victory points.</i>} />, <Step title={<i>Clearing Tie:</i>} description={<i>Target clearing with least enemy warriors.</i>} />]}/>}
+                        substeps={<Steps type="I" steps={[<Step title={<i>Player Tie:</i>} description={<i>Target the player with the most victory points.</i>} />, <Step title={<i>Clearing Tie:</i>} description={<i>Target the clearing with the least enemy warriors.</i>} />]}/>}
                     />
                 )}
             </div>
