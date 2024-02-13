@@ -10,7 +10,7 @@ import Trait from '../../trait';
 import Buildings from "./buildings";
 import Decree from "./decree";
 import OneVP from "../../one-vp";
-import { CONSTANTS } from "../../../utils";
+import { CONSTANTS, getFactionColor } from "../../../utils";
 
 export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, traits = [], level = 'expert', buildings = [], isHumanRiverfolk = false, decree = {}} = state;
@@ -206,7 +206,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor="#406eb1"
+                backgroundColor={getFactionColor('dc-electric-eyrie')}
                 color="white"
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
@@ -233,7 +233,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
                     </>
                 )}
                 <Card title='Traits'>
-                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={'cogwheel-cult'} isSetup={isSetup} onUpdate={(isEnabled) => {
+                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={'dc-electric-eyrie'} isSetup={isSetup} onUpdate={(isEnabled) => {
                         const before = traits.slice(0,index);
                         const after = traits.slice(index + 1);
                         updateState({...state, traits: [...before, {...trait, isEnabled}, ...after]})
