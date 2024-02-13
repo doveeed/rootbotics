@@ -77,7 +77,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
                 {isSetup && (
                     <>
                         <Card title='Services'>
-                            <Step title='' description='At the start of their Birdsong, other human players may purchase one service plus one per clearing with a trade post and any of their pieces. (Bot players may purchase services at any point during their turn and there is no limit to the number of services they can buy. They do not buy any services if the Rivetfolk have more points than they do. Subtract 1 from the price of serviecs for bot players. Unless explicitly stated, bot players do not buy the River Boats service.)' />
+                            <Step title='' description='At the start of their Birdsong, other human players may purchase one service plus one per clearing with a trade post and any of their pieces. (Bot players may purchase services at any point during their turn and there is no limit to the number of services they can buy. They do not buy any services if the Riverfolk player has more points than they do. Subtract 1 from the price of serviecs for bot players. Unless explicitly stated, bot players do not buy the River Boats service.)' />
                             <Step title='' description="Services are paid for by placing warriors from the supply into your Payments. Use your own warriors for factions that have no warriors. The cost of services depends on the buyer's score:" />
                             <div style={{display: 'flex', flexWrap: 'wrap', marginBottom: '0.5rem'}}>
                                 <div style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>0 to 9: <div style={{borderRadius: '50%', border: '4px solid black', width: '1.5rem', height: '1.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, marginLeft: '1rem'}}><b>2</b></div></div>
@@ -137,7 +137,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
                                         }
                                     />,
                                     <Step
-                                        title="Organise."
+                                        title="Organize."
                                         description={<>Check conditions in Protectionism box now.<br/>Shield: Score <Number value={levelToPoints[level]} /> and place two warriors into such a clearing with your presence and most enemy pieces.</>}
                                     />,
                                     <Step title="Battle" description={<><br/>Shield: in all clearings, then skip to Evening.<br/>Sword: in all <Suit suit={orderedSuit} /> clearings.{isFerocious ? <div style={{paddingLeft: '26px'}}><b>(Ferocious)</b> You can deal a maximum of 3 Rolled Hits</div>: ''}</>}
