@@ -10,6 +10,7 @@ import Trait from '../../trait';
 import Buildings from "./buildings";
 import OneVP from "../../one-vp";
 import Sympathy from "./sympathy";
+import { getFactionColor } from "../../../utils";
 
 export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', buildings = {}, sympathy = [], isHumanRiverfolk = false} = state;
@@ -73,7 +74,7 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor="#6db456"
+                backgroundColor={getFactionColor('dc-automated-alliance')}
                 color="white"
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
@@ -95,7 +96,7 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
                     </>
                 )}
                 <Card title='Traits'>
-                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={'cogwheel-cult'} isSetup={isSetup} onUpdate={(isEnabled) => {
+                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={'dc-automated-alliance'} isSetup={isSetup} onUpdate={(isEnabled) => {
                         const before = traits.slice(0,index);
                         const after = traits.slice(index + 1);
                         updateState({...state, traits: [...before, {...trait, isEnabled}, ...after]})
