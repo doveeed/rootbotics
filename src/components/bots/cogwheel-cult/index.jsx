@@ -12,7 +12,7 @@ import Gardens from "./gardens";
 import Suited from "../../../assets/suited.png";
 import Bird from "../../../assets/bird.png";
 import OneVP from "../../one-vp";
-import { CONSTANTS } from "../../../utils";
+import { CONSTANTS, getFactionColor } from "../../../utils";
 
 export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', conspiracyIndex = 4, gardens = {}, isHumanRiverfolk = false} = state;
@@ -70,7 +70,7 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor="#f4e274"
+                backgroundColor={getFactionColor('cogwheel-cult')}
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
