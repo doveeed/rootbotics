@@ -11,7 +11,7 @@ import Ministers, {ministerNameActionMapping} from './ministers';
 import Buildings from './buildings';
 import OneVP from '../../one-vp';
 import Tunnels from "./tunnels";
-import { CONSTANTS } from "../../../utils";
+import { CONSTANTS, getFactionColor } from "../../../utils";
 
 
 export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
@@ -89,7 +89,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor="#e5bc9d"
+                backgroundColor={getFactionColor('dummy-duchy')}
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
