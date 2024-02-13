@@ -41,13 +41,13 @@ export default function Ministers ({ministers, onUpdateMinisters
                 }
                 return (
                     <div  key={`${level}-${suit}-${index}`}>
-                        <label style={{display: "flex", alignItems: 'start', marginBottom: '8px'}} htmlFor={`${level}-${suit}-${index}`}>
+                        <label style={{display: "flex", alignItems: 'start', marginBottom: '8px', cursor: 'pointer'}} htmlFor={`${level}-${suit}-${index}`}>
                         <input type="checkbox" checked={isSwayed} id={`${level}-${suit}-${index}`}
                         onChange={() => {
                             const before = ministers.slice(0,index);
                             const after = ministers.slice(index + 1);
                             onUpdateMinisters([...before, {suit, name, action, level, isSwayed: !isSwayed}, ...after])
-                        }}/>
+                        }} style={{accentColor: backgroundColor}} />
                         <div style={{minWidth: '144px', backgroundColor, borderRadius: '4px', padding: '0 8px', margin: '0px 8px', display: 'flex', justifyContent: 'center'}}><b>{name}</b></div>
                         <div style={{flex: 1}}>{ministerNameActionMapping[name]}</div>
                         </label>
