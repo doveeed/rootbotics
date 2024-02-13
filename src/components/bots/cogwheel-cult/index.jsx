@@ -48,14 +48,14 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
     ];
 
     if (canBuyServices) {
-        daylightSteps.unshift(<Step title="(Riverfolk)" description={<>If there are less than {levelToCards[level]} cards in Lost Souls, buy non-Bird cards until this is no longer the case. Do this even if the Riverfolk or Rivetflok player has more victory points than you.</>}/>)
+        daylightSteps.unshift(<Step title="(Riverfolk)" description={<>If there are less than {levelToCards[level]} cards in Lost Souls, buy non-Bird cards until this is no longer the case. Do this even if the Riverfolk player has more victory points than you.</>}/>)
     }
 
     const eveningSteps = [
         <Step title="Score" description={<>points of right-most empty garden space on the Gardens Track. (<Number value={gardenPoints} />)</>}/>,
         <Step title="Discard Lost Souls." description=""/>,
         <Step title="Return" description="revealed cards to Lost Souls"/>,
-        <Step title="Reveal" description={<>the top card of the deck and craft it for <OneVP/> if it shows an available item. {canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player has fewer victory points than you do and the order card has no craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly. <b>Do not buy a Bird card.</b> Then add it to Lost Souls.</div>:''}</>}/>
+        <Step title="Reveal" description={<>the top card of the deck and craft it for <OneVP/> if it shows an available item. {canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly. <b>Do not buy a Bird card.</b> Then add it to Lost Souls.</div>:''}</>}/>
     ];
 
     if (isBossMode) {
