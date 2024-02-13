@@ -18,5 +18,5 @@ export default function Suit({suit}) {
             backgroundColor = 'none';
 
     }
-    return (<b style={{backgroundColor, padding: '0px 4px', borderRadius: '4px', fontSize: '1rem'}}>{suit}</b>);
+    return (<b style={{backgroundColor, padding: '0px 4px', borderRadius: '4px', fontSize: '1rem', textTransform: 'capitalize'}}>{suit}</b>);
 }
