@@ -58,7 +58,7 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
     ];
 
     if (canBuyServices) {
-        birdsongSteps.unshift(<Step title='(Riverfolk)' description={<>If the Riverfolk player has fewer victory points than you do and there is a "Favor" card in the Riverfolk Market, immediately buy and resolve its effect.</>} />)
+        birdsongSteps.unshift(<Step title='(Riverfolk)' description={<>If the Riverfolk player does not have more victory points than you do and there is a "Favor" card in the Riverfolk Market, immediately buy and resolve its effect.</>} />)
     }
     
     const eveningSteps = [
@@ -87,7 +87,7 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
                             <Steps
                                 steps={
                                     [
-                                        <Step title="Gather Warriors and Plots." description="Form a supplies of 15 warriors and 8 face-down plot tokens near you."/>,
+                                        <Step title="Gather Warriors and Plots." description="Form supplies of 15 warriors and 8 face-down plot tokens near you."/>,
                                         <Step title="Place Starting Warriors." description="Place 1 warrior in the lowest priority clearing of each suit (total of 3)."/>
                                     ]
                                 }
