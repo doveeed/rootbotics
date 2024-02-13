@@ -10,7 +10,7 @@ import Number from "../../number";
 import Level from '../../level';
 import Trait from '../../trait';
 import OneVP from '../../one-vp';
-import { CONSTANTS } from '../../../utils';
+import { CONSTANTS, getFactionColor } from '../../../utils';
 
 
 export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
@@ -77,7 +77,7 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor="#3c2d90"
+                backgroundColor={getFactionColor('contraption-conspiracy')}
                 color="white"
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
