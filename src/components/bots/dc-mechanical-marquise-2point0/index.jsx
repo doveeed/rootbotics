@@ -9,7 +9,7 @@ import Level from '../../level';
 import Trait from '../../trait';
 import Buildings from "./buildings";
 import OneVP from "../../one-vp";
-import { CONSTANTS } from "../../../utils";
+import { CONSTANTS, getFactionColor } from "../../../utils";
 
 export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', buildings = {}, isHumanRiverfolk = false} = state;
@@ -96,7 +96,7 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor="#e27b38"
+                backgroundColor={getFactionColor('dc-mechanical-marquise-2point0')}
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
@@ -120,7 +120,7 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
                     </>
                 )}
                 <Card title='Traits'>
-                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={'cogwheel-cult'} isSetup={isSetup} onUpdate={(isEnabled) => {
+                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={'dc-mechanical-marquise-2point0'} isSetup={isSetup} onUpdate={(isEnabled) => {
                         const before = traits.slice(0,index);
                         const after = traits.slice(index + 1);
                         updateState({...state, traits: [...before, {...trait, isEnabled}, ...after]})
