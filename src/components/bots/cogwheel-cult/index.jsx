@@ -13,8 +13,9 @@ import Suited from "../../../assets/suited.png";
 import Bird from "../../../assets/bird.png";
 import OneVP from "../../one-vp";
 import { CONSTANTS, getFactionColor } from "../../../utils";
+import HumanRiverfolk from "../../human-riverfolk";
 
-export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
+export default function CogwheelCult({faction, state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', conspiracyIndex = 4, gardens = {}, isHumanRiverfolk = false} = state;
     const {mouse = [], rabbit = [], fox = []} = gardens;
     const isBossMode = level === 'boss';
@@ -32,7 +33,7 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
     const canBuyServices = isRivetfolkPlaying || isHumanRiverfolk;
 
     const birdsongSteps = [
-        <Step title="Outcasts." description="The most common suit in Lost Souls becomes the order. In case of a tie, Bird becomes the order."/>,
+        <Step title="Outcasts." description={<>The most common suit in Lost Souls becomes the order. In case of a tie, <Suit suit="bird" /> becomes the order.</>} />,
         <Step title="Perform Conspiracies" description={<>in <Suit suit={orderedSuit} /> clearings.</>} />,
     ]
 
@@ -48,14 +49,14 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
     ];
 
     if (canBuyServices) {
-        daylightSteps.unshift(<Step title="(Riverfolk)" description={<>If there are less than {levelToCards[level]} cards in Lost Souls, buy non-Bird cards until this is no longer the case. Do this even if the Riverfolk player has more victory points than you.</>}/>)
+        daylightSteps.unshift(<Step title="(Riverfolk)" description={<>If there are less than {levelToCards[level]} cards in Lost Souls, buy <Suit suit={'fox'} />, <Suit suit={'rabbit'} />, and <Suit suit={'mouse'} /> cards until this is no longer the case. Do this even if the Riverfolk player has more victory points than you.</>}/>)
     }
 
     const eveningSteps = [
-        <Step title="Score" description={<>points of right-most empty garden space on the Gardens Track. (<Number value={gardenPoints} />)</>}/>,
+        <Step title="Score" description={<>victory points of right-most empty garden space on the Gardens Track. (<Number value={gardenPoints} />)</>}/>,
         <Step title="Discard Lost Souls." description=""/>,
         <Step title="Return" description="revealed cards to Lost Souls"/>,
-        <Step title="Reveal" description={<>the top card of the deck and craft it for <OneVP/> if it shows an available item. {canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly. <b>Do not buy a Bird card.</b> Then add it to Lost Souls.</div>:''}</>}/>
+        <Step title="Reveal" description={<>the top card of the deck and craft it for <OneVP/> if it shows an available item. {canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no available craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly. <b>Do not buy a <Suit suit="bird" /> card.</b> Then add it to Lost Souls.</div>:''}</>}/>
     ];
 
     if (isBossMode) {
@@ -70,7 +71,7 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor={getFactionColor('cogwheel-cult')}
+                backgroundColor={getFactionColor(faction)}
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
@@ -86,14 +87,12 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
                                 }
                             />
                         </Card >
-                        <Level faction="cogwheel-cult" level={level} labels={{'beginner': <>At the start of Daylight, Reveal the top <b>3 cards</b> from the lost Souls pile.</>, 'expert': <>At the start of Daylight, Reveal the top <b>4 cards</b> from the lost Souls pile.</>, 'master': <>At the start of Daylight, Reveal the top <b>5 cards</b> from the lost Souls pile.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
-                        {!isRivetfolkPlaying && (<Card title="Human Riverfolk">
-                            <label htmlFor="cogwheel-cult-human-riverfolk"><input id="cogwheel-cult-human-riverfolk" type="checkbox" onChange={() => updateState({...state, isHumanRiverfolk: !isHumanRiverfolk})} checked={isHumanRiverfolk} /> Check this box if there is a human Riverfolk player in the game.</label>
-                        </Card>)}
+                        <Level faction={faction} level={level} labels={{'beginner': <>At the start of Daylight, Reveal the top <b>3 cards</b> from the lost Souls pile.</>, 'expert': <>At the start of Daylight, Reveal the top <b>4 cards</b> from the lost Souls pile.</>, 'master': <>At the start of Daylight, Reveal the top <b>5 cards</b> from the lost Souls pile.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        {!isRivetfolkPlaying && (<HumanRiverfolk faction={faction} onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
                     </>
                 )}
                 <Card title='Traits'>
-                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={'cogwheel-cult'} isSetup={isSetup} onUpdate={(isEnabled) => {
+                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={faction} isSetup={isSetup} onUpdate={(isEnabled) => {
                         const before = traits.slice(0,index);
                         const after = traits.slice(index + 1);
                         updateState({...state, traits: [...before, {...trait, isEnabled}, ...after]})
@@ -126,7 +125,7 @@ export default function CogwheelCult({state = {}, isRivetfolkPlaying, onDelete =
                                 <div style={{display: 'flex'}}>
                                     <div ><img src={Suited} alt="rabbit, fox, mouse cards" width="48px" style={{margin: '0 0.5rem 0 1rem'}} /></div>
                                     <div>
-                                        <Step title='' description={<>Place a warrior into clearing matching the revealeed card. Then if you rule the clearing, also place a matching garden in the clearing.{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>}
+                                        <Step title='' description={<>Place a warrior into clearing matching the revealed card. Then if you rule the clearing, also place a matching garden in the clearing.{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>}
                                             substeps={<Steps type='I' steps={
                                                 [<Step title={<i>Clearing Tie:</i>} description={<i>Place warrior into clearing with free building slots, then most enemy buildings.</i>} />]
                                             }/>}
