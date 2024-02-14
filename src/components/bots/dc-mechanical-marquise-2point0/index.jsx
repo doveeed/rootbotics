@@ -10,8 +10,9 @@ import Trait from '../../trait';
 import Buildings from "./buildings";
 import OneVP from "../../one-vp";
 import { CONSTANTS, getFactionColor } from "../../../utils";
+import HumanRiverfolk from "../../human-riverfolk";
 
-export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
+export default function DCMechanicalMarquise2point0({faction, state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', buildings = {}, isHumanRiverfolk = false} = state;
     const {sawmill = [], workshop = [], recruiter = []} = buildings;
     const numBuiltSawmills = sawmill.filter(({isPlaced}) => isPlaced).length;
@@ -43,14 +44,14 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
-        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick a Bird card, then pick the one with the most VP for the item. If multiple, choose randomly.{orderedSuit !== 'bird' ? ' If there are no craftable items available, buy any available Bird card. If there are multiple, choose randomly.': ''}</div>:''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no available craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick a <Suit suit="bird" /> card, then pick the one with the most VP for the item. If multiple, choose randomly.{orderedSuit !== 'bird' ? <> If there are no available craftable items available, buy any available <Suit suit="bird" /> card. If there are multiple, choose randomly.</>: ''}</div>:''}</>} />,
     ]
 
     const daylightSteps = orderedSuit === 'bird' ? [
         <Step title="Battle" description={<>in all clearings.{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}</>}
         substeps={<Steps type="I" steps={
             [
-                <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with most pieces there, then with most points there.</i>}/>
+                <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with the most pieces there, then with the most victory points.</i>}/>
             ]
 
         }/>}/>,
@@ -62,7 +63,7 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
         substeps={
         <Steps type="I" steps={
             [
-                <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with most pieces there, then with most points there.</i>}/>
+                <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with the most pieces there, then with the most victory points.</i>}/>
             ]}/>} />,
         <Step title="Recruit" description={<>{levelToRecruit[level]} warriors evenly among ordered clearings you rule. Score <OneVP /> for every two warriors that could not be recruited.</>}/>,
         <Step title="Build" description={<>a {suitToBuilding[orderedSuit]} in the clearing you rule with the most Marquise warriors.{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>} />,
@@ -73,7 +74,7 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
         daylightSteps.push(<Step title="(Blitz)" description="Select the highest priority clearing you rule with out any enemy pieces. Move all but 1 warirer from the clearing and battle in the destination if oponents are present."
         substeps={<Steps type="I" steps={[
             <Step title={<i>Destination Tie:</i>} description={<i>Move to such a clearing with the most enemy pieces there.</i>}/>,
-            <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with most pieces there, then with most victory points there.</i>}/>
+            <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with the most pieces there, then with the most victory points.</i>}/>
         ]} />}
         />)
     }
@@ -96,7 +97,7 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor={getFactionColor('dc-mechanical-marquise-2point0')}
+                backgroundColor={getFactionColor(faction)}
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
@@ -113,14 +114,12 @@ export default function DCMechanicalMarquise2point0({state = {}, isRivetfolkPlay
                                 }
                             />
                         </Card >
-                        <Level faction="dc-mechanical-marquise-2point0" level={level} labels={{'beginner': <>Whenever you <b>Recruit</b>, place <b>3 warriors</b>.</>, 'expert': <>Whenever you <b>Recruit</b>, place <b>4 warriors</b>.</>, 'master': <>Whenever you <b>Recruit</b>, place <b>5 warriors</b>.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
-                        {!isRivetfolkPlaying && (<Card title="Human Riverfolk">
-                            <label htmlFor="dc-mechanical-marquise-2point0"><input id="dc-mechanical-marquise-2point0" type="checkbox" onChange={() => updateState({...state, isHumanRiverfolk: !isHumanRiverfolk})} checked={isHumanRiverfolk} /> Check this box if there is a human Riverfolk player in the game.</label>
-                        </Card>)}
+                        <Level faction={faction} level={level} labels={{'beginner': <>Whenever you <b>Recruit</b>, place <b>3 warriors</b>.</>, 'expert': <>Whenever you <b>Recruit</b>, place <b>4 warriors</b>.</>, 'master': <>Whenever you <b>Recruit</b>, place <b>5 warriors</b>.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        {!isRivetfolkPlaying && (<HumanRiverfolk faction={faction} onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
                     </>
                 )}
                 <Card title='Traits'>
-                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={'dc-mechanical-marquise-2point0'} isSetup={isSetup} onUpdate={(isEnabled) => {
+                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={faction} isSetup={isSetup} onUpdate={(isEnabled) => {
                         const before = traits.slice(0,index);
                         const after = traits.slice(index + 1);
                         updateState({...state, traits: [...before, {...trait, isEnabled}, ...after]})
