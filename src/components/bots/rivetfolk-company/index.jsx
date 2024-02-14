@@ -12,7 +12,7 @@ import OneVP from "../../one-vp";
 import { getFactionColor } from "../../../utils";
 
 
-export default function RivetfolkCompany({state = {}, onDelete = () => {}, updateState = () => {}}) {
+export default function RivetfolkCompany({faction, state = {}, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', tradeposts = {}} = state;
     const isBossMode = level === 'boss';
     const isFerocious = traits.some(({id, isEnabled}) => id === 'ferocious' && isEnabled);
@@ -32,7 +32,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
 
     const eveningSteps = [
         <Step title="Score" description={<><OneVP /> per warrior of the player with the most warriors in your payment, and return them. Keep any other warriors.</>}/>,
-        <Step title="Racketeering" description={<>Shield or Sword: From each clearing move all but two Riverfolk warriors to the payments box.</>}/>,
+        <Step title="Racketeering" description={<>Shield or Sword: From each clearing move all but 2 Riverfolk warriors to the payments box.</>}/>,
         <Step title="Discard" description="the left-most card in the Market." substeps={<Steps type='I' steps={[<Step title={<>Shield:</>} description='Discard the left-most card again.'/>]}/>}/>
     ];
 
@@ -47,7 +47,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor={getFactionColor('rivetfolk-company')}
+                backgroundColor={getFactionColor(faction)}
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
@@ -64,11 +64,11 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
                                 }
                             />
                         </Card >
-                        <Level faction="rivetfolk-company" level={level} labels={{beginner: <>Whenever you <b>Build</b>, place <b>0 warriors</b> in the clearing. Score <b>0 VP</b> when you have Shield Protectionism in effect.</>, expert: <>Whenever you <b>Build</b>, place <b>1 warrior</b> in the clearing. Score <b>1 VP</b> when you have Shield Protectionism in effect.</>, master: <>Whenever you <b>Build</b>, place <b>2 warriors</b> in the clearing. Score <b>2 VP</b> when you have Shield Protectionism in effect.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        <Level faction={faction} level={level} labels={{beginner: <>Whenever you <b>Build</b>, place <b>0 warriors</b> in the clearing. Score <b>0 VP</b> when you have Shield Protectionism in effect.</>, expert: <>Whenever you <b>Build</b>, place <b>1 warrior</b> in the clearing. Score <b>1 VP</b> when you have Shield Protectionism in effect.</>, master: <>Whenever you <b>Build</b>, place <b>2 warriors</b> in the clearing. Score <b>2 VP</b> when you have Shield Protectionism in effect.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
                     </>
                 )}
                 <Card title='Traits'>
-                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={'rivetfolk-company'} isSetup={isSetup} onUpdate={(isEnabled) => {
+                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={faction} isSetup={isSetup} onUpdate={(isEnabled) => {
                         const before = traits.slice(0,index);
                         const after = traits.slice(index + 1);
                         updateState({...state, traits: [...before, {...trait, isEnabled}, ...after]})
@@ -77,7 +77,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
                 {isSetup && (
                     <>
                         <Card title='Services'>
-                            <Step title='' description='At the start of their Birdsong, other human players may purchase one service plus one per clearing with a trade post and any of their pieces. (Bot players may purchase services at any point during their turn and there is no limit to the number of services they can buy. They do not buy any services if the Riverfolk player has more points than they do. Subtract 1 from the price of serviecs for bot players. Unless explicitly stated, bot players do not buy the River Boats service.)' />
+                            <Step title='' description='At the start of their Birdsong, other human players may purchase one service plus one per clearing with a trade post and any of their pieces. (Bot players may purchase services at any point during their turn and there is no limit to the number of services they can buy. They do not buy any services if the Riverfolk player has more victory points than they do. Subtract 1 from the price of serviecs for bot players. Unless explicitly stated, bot players do not buy the River Boats service.)' />
                             <Step title='' description="Services are paid for by placing warriors from the supply into your Payments. Use your own warriors for factions that have no warriors. The cost of services depends on the buyer's score:" />
                             <div style={{display: 'flex', flexWrap: 'wrap', marginBottom: '0.5rem'}}>
                                 <div style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>0 to 9: <div style={{borderRadius: '50%', border: '4px solid black', width: '1.5rem', height: '1.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, marginLeft: '1rem'}}><b>2</b></div></div>
@@ -138,7 +138,7 @@ export default function RivetfolkCompany({state = {}, onDelete = () => {}, updat
                                     />,
                                     <Step
                                         title="Organize."
-                                        description={<>Check conditions in Protectionism box now.<br/>Shield: Score <Number value={levelToPoints[level]} /> and place two warriors into such a clearing with your presence and most enemy pieces.</>}
+                                        description={<>Check conditions in Protectionism box now.<br/>Shield: Score <Number value={levelToPoints[level]} /> and place 2 warriors into such a clearing with your presence and the most enemy pieces.</>}
                                     />,
                                     <Step title="Battle" description={<><br/>Shield: in all clearings, then skip to Evening.<br/>Sword: in all <Suit suit={orderedSuit} /> clearings.{isFerocious ? <div style={{paddingLeft: '26px'}}><b>(Ferocious)</b> You can deal a maximum of 3 Rolled Hits</div>: ''}</>}
                                         substeps={
