@@ -11,8 +11,9 @@ import Buildings from "./buildings";
 import OneVP from "../../one-vp";
 import Sympathy from "./sympathy";
 import { getFactionColor } from "../../../utils";
+import HumanRiverfolk from "../../human-riverfolk";
 
-export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
+export default function DCAutomatedAlliance({faction, state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', buildings = {}, sympathy = [], isHumanRiverfolk = false} = state;
     const {fox, rabbit, mouse} = buildings;
     const isBossMode = level === 'boss';
@@ -20,16 +21,16 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
     const numPlacedSympathy = sympathy.filter(({isPlaced}) => isPlaced).length;
     
     const levelToOrganize = {
-        'beginner': 'four or more',
-        'expert': 'three or more',
-        'master': 'two or more',
-        'boss': 'two or more',
+        'beginner': '4 or more',
+        'expert': '3 or more',
+        'master': '2 or more',
+        'boss': '2 or more',
     }
     const canBuyServices = isRivetfolkPlaying || isHumanRiverfolk;
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
-        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <div styl={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no available craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick a Bird card, then pick the one with the most VP for the item. If multiple, choose randomly.{ orderedSuit !== 'bird' ? ' If there are no cards with available craftable items, buy any available Bird card. If multiple, choose randomly.' : ''} <b>Use Riverfolk warriors to pay.</b></div>:''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <div styl={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no available craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick a <Suit suit="bird" /> card, then pick the one with the most VP for the item. If multiple, choose randomly.{ orderedSuit !== 'bird' ? <> If there are no cards with available craftable items, buy any available <Suit suit="bird" /> card. If multiple, choose randomly.</> : ''} <b>Use Riverfolk warriors to pay.</b></div>:''}</>} />,
     ]
 
     if (orderedSuit !== 'bird' && numPlacedSympathy > 0 && !buildings[orderedSuit]?.isPlaced) {
@@ -47,7 +48,7 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
     ];
 
     if (orderedSuit === 'bird' && numPlacedSympathy > 0 && !(fox?.isPlaced && rabbit?.isPlaced && mouse?.isPlaced)) {
-        daylightSteps.push(<Step title="Surprise Revolt." description={<>Remove all enemy pieces from the <Suit suit={orderedSuit} /> sympathetic clearing with the most enemy pieces, and place the <Suit suit={orderedSuit}/> base there.</>}/>)
+        daylightSteps.push(<Step title="Surprise Revolt." description={<>Remove all enemy pieces from the sympathetic clearing with the most enemy pieces, and place the corresponding base there.</>}/>)
     }
 
     daylightSteps.push(<Step title="Public Pity." description={<>If you did not revolt this turn, <b>Spread Sympathy</b> {numPlacedSympathy < 5 ? 'twice': 'once'}.</>}/>)
@@ -63,7 +64,7 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
     }
 
     if (isWildfire) {
-        eveningSteps.push(<Step title="(Wildfire)" description={<>Immediately <b>Spread Sympathy</b>. Do not score points for placing this sympathy token.</>}/>)
+        eveningSteps.push(<Step title="(Wildfire)" description={<>Immediately <b>Spread Sympathy</b>. Do not score victory points for placing this sympathy token.</>}/>)
     }
     
 
@@ -74,7 +75,7 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor={getFactionColor('dc-automated-alliance')}
+                backgroundColor={getFactionColor(faction)}
                 color="white"
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
@@ -89,14 +90,12 @@ export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onD
                                 }
                             />
                         </Card >
-                        <Level faction="dc-automated-alliance" level={level} labels={{'beginner': <>You <b>Organize</b> in each clearing with a base and <b>4 or more</b> Alliance warriors.</>, 'expert': <>You <b>Organize</b> in each clearing with a base and <b>3 or more</b> Alliance warriors.</>, 'master': <>You <b>Organize</b> in each clearing with a base and <b>2 or more</b> Alliance warriors.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
-                        {!isRivetfolkPlaying && (<Card title="Human Riverfolk">
-                            <label htmlFor="dc-automated-alliance"><input id="dc-automated-alliance" type="checkbox" onChange={() => updateState({...state, isHumanRiverfolk: !isHumanRiverfolk})} checked={isHumanRiverfolk} /> Check this box if there is a human Riverfolk player in the game.</label>
-                        </Card>)}
+                        <Level faction={faction} level={level} labels={{'beginner': <>You <b>Organize</b> in each clearing with a base and <b>4 or more</b> Alliance warriors.</>, 'expert': <>You <b>Organize</b> in each clearing with a base and <b>3 or more</b> Alliance warriors.</>, 'master': <>You <b>Organize</b> in each clearing with a base and <b>2 or more</b> Alliance warriors.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        {!isRivetfolkPlaying && (<HumanRiverfolk faction={faction} onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
                     </>
                 )}
                 <Card title='Traits'>
-                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={'dc-automated-alliance'} isSetup={isSetup} onUpdate={(isEnabled) => {
+                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={faction} isSetup={isSetup} onUpdate={(isEnabled) => {
                         const before = traits.slice(0,index);
                         const after = traits.slice(index + 1);
                         updateState({...state, traits: [...before, {...trait, isEnabled}, ...after]})
