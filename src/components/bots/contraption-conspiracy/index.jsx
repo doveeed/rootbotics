@@ -11,9 +11,10 @@ import Level from '../../level';
 import Trait from '../../trait';
 import OneVP from '../../one-vp';
 import { CONSTANTS, getFactionColor } from '../../../utils';
+import HumanRiverfolk from '../../human-riverfolk';
 
 
-export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
+export default function ContraptionConspiracy({faction, state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
 
 
     const {isSetup = false, orderedSuit = 'bird', plots = [], traits = [], level = 'expert', isHumanRiverfolk = false} = state;
@@ -52,7 +53,7 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
         />,
         <Step 
         title="Flip"
-        description={<>each plot token <i>(no warrior needed in clearing).</i> For each flip, gain <OneVP /> per face-up plot on the map (<Number value={flippedPlots.length} />), then resolve its flip effect.{isGamble ? <div style={{paddingLeft: '26px'}}><b>(Gamble)</b> First, have the human player with the most pieces there resolve the Gamble. </div>: ''}{isVendetta ? <div style={{paddingLeft: '26px'}}><b>(Vendetta)</b> Each plot has the immediate effect of a Bomb</div>: ''}</>}
+        description={<>each plot token <i>(no warrior needed in clearing).</i> For each flip, gain <OneVP /> per face-up plot on the map (<Number value={flippedPlots.length} />), then resolve its flip effect.{isGamble ? <div style={{paddingLeft: '26px'}}><b>(Gamble)</b> First, have the human player with the most pieces there resolve the <b>Gamble</b> trait. </div>: ''}{isVendetta ? <div style={{paddingLeft: '26px'}}><b>(Vendetta)</b> Each plot has the immediate effect of a Bomb</div>: ''}</>}
         />
     
     ];
@@ -77,7 +78,7 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor={getFactionColor('contraption-conspiracy')}
+                backgroundColor={getFactionColor(faction)}
                 color="white"
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
@@ -93,14 +94,12 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
                                 }
                             />
                         </Card >
-                        <Level faction="contraption-conspiracy" level={level} labels={{beginner: <>Whenever you <b>Recruit</b>, place <b>1 warrior</b> in each clearing.</>, expert: <>Whenever you <b>Recruit</b>, place <b>2 warriors</b> in each clearing.</>, master: <>Whenever you <b>Recruit</b>, place <b>3 warriors</b> in each clearing.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
-                        {!isRivetfolkPlaying && (<Card title="Human Riverfolk">
-                            <label htmlFor="contraption-conspiracy-human-riverfolk"><input id="contraption-conspiracy-human-riverfolk" type="checkbox" onChange={() => updateState({...state, isHumanRiverfolk: !isHumanRiverfolk})} checked={isHumanRiverfolk} /> Check this box if there is a human Riverfolk player in the game.</label>
-                        </Card>)}
+                        <Level faction={faction} level={level} labels={{beginner: <>Whenever you <b>Recruit</b>, place <b>1 warrior</b> in each clearing.</>, expert: <>Whenever you <b>Recruit</b>, place <b>2 warriors</b> in each clearing.</>, master: <>Whenever you <b>Recruit</b>, place <b>3 warriors</b> in each clearing.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        {!isRivetfolkPlaying && (<HumanRiverfolk faction={faction} onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
                     </>
                 )}
                 <Card title='Traits'>
-                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={'contraption-conspiracy'} isSetup={isSetup} onUpdate={(isEnabled) => {
+                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={faction} isSetup={isSetup} onUpdate={(isEnabled) => {
                         const before = traits.slice(0,index);
                         const after = traits.slice(index + 1);
                         updateState({...state, traits: [...before, {...trait, isEnabled}, ...after]})
@@ -201,29 +200,29 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
                                         substeps={
                                             <Steps 
                                                 type="I"
-                                                steps={[<Step title={<i>Defender Tie:</i>} description={<i>Battle the player with most buildings and tokens there, then with the most points there.</i>}/>]}
+                                                steps={[<Step title={<i>Defender Tie:</i>} description={<i>Battle the player with the most buildings and tokens there, then with the most victory points.</i>}/>]}
                                             />
                                         }
                                     />,
                                     <Step 
                                         title="Move"
-                                        description={<>all but two of your warriors from each <Suit suit={orderedSuit} /> clearing with a face-up plot token to an adjacent clearing without a plot token.</>}
+                                        description={<>all but 2 of your warriors from each <Suit suit={orderedSuit} /> clearing with a face-up plot token to an adjacent clearing without a plot token.</>}
                                         substeps={
                                             <Steps 
                                                 type="I"
                                                 steps={[
                                                     <Step title={<i>Clearing Tie:</i>} description={<i>Move to the clearing with the most Corvid warriors.</i>}/>,
-                                                    <Step title={<i>No Clearing:</i>} description={<i>If there is no adjacent clearing without a plot, move to lowest priority clearing.</i>}/>,
+                                                    <Step title={<i>No Clearing:</i>} description={<i>If there is no adjacent clearing without a plot, move to the lowest priority clearing.</i>}/>,
                                                 ]}
                                             />
                                         }
                                     />,
-                                    <Step title="Plot." description={<>Remove 1 Corvid warrior from the <Suit suit={orderedSuit} /> clearing with the most Corvid warriors and no plot token to place a random face-down plot token there.{isMastermind ? ' Repeat once.': ''}</>} />,
+                                    <Step title="Plot." description={<>Remove 1 Corvid warrior from the <Suit suit={orderedSuit} /> clearing with the most Corvid warriors and no plot token to place a random face-down plot token there.{isMastermind ? <div style={{paddingLeft: '26px'}}><b>(Mastermind)</b> Repeat once.</div>: ''}</>} />,
                                     <Step
                                         title="The Plot Thickens."
-                                        description="If there is such a clearing that has no plot token and more than two Corvid warriors, then remove 1 Corvid warrior and place a random facedown plot token there."
+                                        description="If there is such a clearing that has no plot token and more than two Corvid warriors, then remove 1 Corvid warrior and place a random face-down plot token there."
                                         substeps={
-                                            <Steps type="I" steps={[<Step title={<i>Clearing Tie:</i>} description={<i>Place the token in the clearing with the most Corvid warriors.</i>}/>]} />
+                                            <Steps type="I" steps={[<Step title={<i>Clearing Tie:</i>} description={<i>Place the plot token in the clearing with the most Corvid warriors.</i>}/>]} />
                                         }
                                     />
                                 ]}
@@ -239,8 +238,8 @@ export default function ContraptionConspiracy({state = {}, isRivetfolkPlaying, o
                             <Steps 
                                 type="1"
                                 steps={[
-                                    <Step title="Bomb." description={<>When flipped, remove all human pieces in its clearing <i>(remove 2 pieces of each bot in the clearing, warriors first, instead of all their pieces.)</i>, then swap this token with a random plot token from your supply, placing the swapped plot face up. <i>(The replacement token does not trigger, and it can be another bomb.)</i></>}/>,
-                                    <Step title="Snare." description={<>While face up, enemy pieces cannot be placed in or moved from its clearing <i>(as normal)</i>. <i>Bots ignore snare tokens for the purpose of targeting clearings to place or move pieces. If a bot would place in a clearing with a snare or move out of a clearing with a snare, remove the snare but do not perform this part of the action.</i></>} />,
+                                    <Step title="Bomb." description={<>When flipped, remove all human pieces in its clearing <i>(remove 2 pieces of each bot in the clearing, warriors first, instead of all their pieces.)</i>, then swap this plot token with a random plot token from your supply, placing the swapped plot face up. <i>(The replacement plot token does not trigger, and it can be another bomb.)</i></>}/>,
+                                    <Step title="Snare." description={<>While face up, enemy pieces cannot be placed in or moved from its clearing <i>(as normal)</i>. <i>Bots ignore snare plot tokens for the purpose of targeting clearings to place or move pieces. If a bot would place in a clearing with a snare or move out of a clearing with a snare, remove the snare but do not perform this part of the action.</i></>} />,
                                     <Step title="Extortion." description="When flipped, each player with any faction pieces in its clearing must discard 1 card at random."/>,
                                     <Step title="Raid." description={<>When removed, place 1 warrior in each adjacent clearing <i>(as normal)</i>.</>} />,
                                 ]}
