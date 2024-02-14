@@ -11,8 +11,9 @@ import Buildings from "./buildings";
 import Decree from "./decree";
 import OneVP from "../../one-vp";
 import { CONSTANTS, getFactionColor } from "../../../utils";
+import HumanRiverfolk from "../../human-riverfolk";
 
-export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
+export default function DCElectricEyrie({faction, state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, traits = [], level = 'expert', buildings = [], isHumanRiverfolk = false, decree = {}} = state;
     const {fox, mouse, rabbit, bird} = decree;
     const isBossMode = level === 'boss';
@@ -33,7 +34,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
-        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <>{isBuyDecreeCard ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk) </b>If the Riverfolk player has fewer points than you do, there is a {fox === 0 ? <><Suit suit='fox' /> </>:''}{mouse === 0 ? <><Suit suit="mouse" /> </>:''}{rabbit === 0 ? <><Suit suit="rabbit" /> </>:''}card in the Market, and the order card suit is {fox > 0 ? <><Suit suit='fox' /> </>:''}{mouse > 0 ? <><Suit suit="mouse" /> </>:''}{rabbit > 0 ? <><Suit suit="rabbit" /> </>:''}{<> <Suit suit="bird" /></>}, buy a {fox === 0 ? <><Suit suit='fox' /> </>:''}{mouse === 0 ? <><Suit suit="mouse" /> </>:''}{rabbit === 0 ? <><Suit suit="rabbit" /> </>:''}card from the Market and replace the order card. If there are multpile, choose one at random.</div>: ''}{CONSTANTS.riverfolkHandCardText}</>:''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <>{isBuyDecreeCard ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk) </b>If the Riverfolk player does not have more victory points than you do, there is a {fox === 0 ? <><Suit suit='fox' /> </>:''}{mouse === 0 ? <><Suit suit="mouse" /> </>:''}{rabbit === 0 ? <><Suit suit="rabbit" /> </>:''}card in the Market, and the order card suit is {fox > 0 ? <><Suit suit='fox' /> </>:''}{mouse > 0 ? <><Suit suit="mouse" /> </>:''}{rabbit > 0 ? <><Suit suit="rabbit" /> </>:''}{<> <Suit suit="bird" /></>}, buy a {fox === 0 ? <><Suit suit='fox' /> </>:''}{mouse === 0 ? <><Suit suit="mouse" /> </>:''}{rabbit === 0 ? <><Suit suit="rabbit" /> </>:''}card from the Market and replace the order card. If there are multpile, choose one at random.</div>: ''}{CONSTANTS.riverfolkHandCardText}</>:''}</>} />,
         <Step title="Add" description="the order card to the matching Decree column." />
     ]
 
@@ -125,11 +126,11 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
         daylightSteps.push(
             <Step 
                 title="Battle"
-                description={<>in a <Suit suit="fox" /> clearing.{ fox >= mouse && fox >= rabbit && fox >= bird ? <b> Deal 1 extra hit.</b> : ''}{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}{isWarTax ? CONSTANTS.eyrieWarTaxText : ''}</>}
+                description={<>in a <Suit suit="fox" /> clearing.{ fox >= mouse && fox >= rabbit && fox >= bird ? <b> Deal 1 extra Hit.</b> : ''}{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}{isWarTax ? CONSTANTS.eyrieWarTaxText : ''}</>}
                 substeps={<Steps type="I"
                     steps={[
                     <Step title={<i>Clearing Tie:</i>} description={<i>Battle in such a clearing with no roost, then most defensless buildings.</i>} />,
-                    <Step title={<i>Defender Tie:</i>} description={<i>Battle such a player with most buildings there, then most pieces there.</i>} />,
+                    <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with the most buildings there, then the most pieces there.</i>} />,
                 ]}
             />}
         />
@@ -140,11 +141,11 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
         daylightSteps.push(
             <Step 
                 title="Battle"
-                description={<>in a <Suit suit="mouse" /> clearing.{ mouse >= fox && mouse >= rabbit && mouse >= bird ? <b> Deal 1 extra hit.</b> : ''}{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}{isWarTax ? CONSTANTS.eyrieWarTaxText : ''}</>}
+                description={<>in a <Suit suit="mouse" /> clearing.{ mouse >= fox && mouse >= rabbit && mouse >= bird ? <b> Deal 1 extra Hit.</b> : ''}{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}{isWarTax ? CONSTANTS.eyrieWarTaxText : ''}</>}
                 substeps={<Steps type="I"
                     steps={[
-                    <Step title={<i>Clearing Tie:</i>} description={<i>Battle in such a clearing with no roost, then most defensless buildings.</i>} />,
-                    <Step title={<i>Defender Tie:</i>} description={<i>Battle such a player with most buildings there, then most pieces there.</i>} />,
+                    <Step title={<i>Clearing Tie:</i>} description={<i>Battle in such a clearing with no roost, then the most defensless buildings.</i>} />,
+                    <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with the most buildings there, then the most pieces there.</i>} />,
                 ]}
             />}
         />
@@ -155,11 +156,11 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
         daylightSteps.push(
             <Step 
                 title="Battle"
-                description={<>in a <Suit suit="rabbit" /> clearing.{ rabbit >= fox && rabbit >= mouse && rabbit >= bird ? <b> Deal 1 extra hit.</b> : ''}{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}{isWarTax ? CONSTANTS.eyrieWarTaxText : ''}</>}
+                description={<>in a <Suit suit="rabbit" /> clearing.{ rabbit >= fox && rabbit >= mouse && rabbit >= bird ? <b> Deal 1 extra Hit.</b> : ''}{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}{isWarTax ? CONSTANTS.eyrieWarTaxText : ''}</>}
                 substeps={<Steps type="I"
                     steps={[
-                    <Step title={<i>Clearing Tie:</i>} description={<i>Battle in such a clearing with no roost, then most defensless buildings.</i>} />,
-                    <Step title={<i>Defender Tie:</i>} description={<i>Battle such a player with most buildings there, then most pieces there.</i>} />,
+                    <Step title={<i>Clearing Tie:</i>} description={<i>Battle in such a clearing with no roost, then the most defensless buildings.</i>} />,
+                    <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with the most buildings there, then the most pieces there.</i>} />,
                 ]}
             />}
         />
@@ -170,11 +171,11 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
         daylightSteps.push(
             <Step 
                 title="Battle"
-                description={<>in a <Suit suit="bird" /> clearing.{ bird >= fox && bird >= mouse && bird >= rabbit ? <b> Deal 1 extra hit.</b> : ''}{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}{isWarTax ? CONSTANTS.eyrieWarTaxText : ''}</>}
+                description={<>in a <Suit suit="bird" /> clearing.{ bird >= fox && bird >= mouse && bird >= rabbit ? <b> Deal 1 extra Hit.</b> : ''}{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}{isWarTax ? CONSTANTS.eyrieWarTaxText : ''}</>}
                 substeps={<Steps type="I"
                     steps={[
-                    <Step title={<i>Clearing Tie:</i>} description={<i>Battle in such a clearing with no roost, then most defensless buildings.</i>} />,
-                    <Step title={<i>Defender Tie:</i>} description={<i>Battle such a player with most buildings there, then most pieces there.</i>} />,
+                    <Step title={<i>Clearing Tie:</i>} description={<i>Battle in such a clearing with no roost, then the most defensless buildings.</i>} />,
+                    <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with the most buildings there, then the most pieces there.</i>} />,
                 ]}
             />}
         />
@@ -206,7 +207,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor={getFactionColor('dc-electric-eyrie')}
+                backgroundColor={getFactionColor(faction)}
                 color="white"
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
@@ -218,7 +219,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
                                     [
                                         <Step title="Gather Pieces." description="Form a supply of 20 warriors and 7 roosts near you."/>,
                                         <Step title="Place Warriors." description="Place 1 roost and 6 warriors in the corner clearing diagonally opposite from the clearing with the keep token. If the Marquise is not playing, place those pieces in a random corner clearing."/>,
-                                        <Step title="Tuck Viziers." description="Set the Bird card count 2 in the Decree (fox, mouse, and rabbit should be 0)." />
+                                        <Step title="Tuck Viziers." description={<>Set the <Suit suit="bird" /> card count 2 in the Decree (<Suit suit="fox" />, <Suit suit="rabbit" />, and <Suit suit="mouse" /> should be 0).</>} />
                                     ]
                                 }
                             />
@@ -226,14 +227,12 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
                         <Card title="Decree">
                             <Decree decree={decree} onUpdateDecree={(newDecree) => updateState({...state, decree: newDecree})}/>
                         </Card>
-                        <Level faction="dc-electric-eyrie" level={level} labels={{'beginner': <>Whenever you <b>Recruit</b> for Bird, place <b>one fewer</b> warrior than the card count.</>, 'expert': <>Whenever you <b>Recruit</b> for Bird, place <b>the same</b> number of warriors as the card count.</>, 'master': <>Whenever you <b>Recruit</b> for Bird, place <b>one more</b> warrior than the card count.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
-                        {!isRivetfolkPlaying && (<Card title="Human Riverfolk">
-                            <label htmlFor="dc-electric-eyrie"><input id="dc-electric-eyrie" type="checkbox" onChange={() => updateState({...state, isHumanRiverfolk: !isHumanRiverfolk})} checked={isHumanRiverfolk} /> {CONSTANTS.humanRiverfolkLabelText}</label>
-                        </Card>)}
+                        <Level faction={faction} level={level} labels={{'beginner': <>Whenever you <b>Recruit</b> for <Suit suit="bird" />, place <b>one fewer</b> warrior than the card count.</>, 'expert': <>Whenever you <b>Recruit</b> for <Suit suit="bird" />, place <b>the same</b> number of warriors as the card count.</>, 'master': <>Whenever you <b>Recruit</b> for <Suit suit="bird" />, place <b>one more</b> warrior than the card count.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        {!isRivetfolkPlaying && (<HumanRiverfolk faction={faction} onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
                     </>
                 )}
                 <Card title='Traits'>
-                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={'dc-electric-eyrie'} isSetup={isSetup} onUpdate={(isEnabled) => {
+                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={faction} isSetup={isSetup} onUpdate={(isEnabled) => {
                         const before = traits.slice(0,index);
                         const after = traits.slice(index + 1);
                         updateState({...state, traits: [...before, {...trait, isEnabled}, ...after]})
@@ -269,7 +268,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
                             <Steps
                                 type="1"
                                 steps={[
-                                    <Step title={<>Humiliate:</>} description={<>{isNobility ? <><b>(Nobility) </b>Score</> : 'Lose'} 1 point per Bird card <i>(including Viziers)</i> in the Decree. (<Number value={bird} isNegative={isNobility ? false : true}/>)</>}/>,
+                                    <Step title={<>Humiliate:</>} description={<>{isNobility ? <><b>(Nobility) </b>Score</> : 'Lose'} 1 point per <Suit suit="bird" /> card <i>(including Viziers)</i> in the Decree. (<Number value={bird} isNegative={isNobility ? false : true}/>)</>}/>,
                                     <Step title="Purge:" description={<>Discard Decree, except Viziers.</>}/>,
                                     <Step title="Rest:" description={<>Go to Evening.</>}/>
                                 ]}
