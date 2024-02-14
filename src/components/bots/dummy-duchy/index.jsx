@@ -12,9 +12,10 @@ import Buildings from './buildings';
 import OneVP from '../../one-vp';
 import Tunnels from "./tunnels";
 import { CONSTANTS, getFactionColor } from "../../../utils";
+import HumanRiverfolk from "../../human-riverfolk";
 
 
-export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
+export default function DummyDuchy({faction, state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], ministers, buildings = [], tunnels = [], level = 'expert', isHumanRiverfolk = false} = state;
     const isBossMode = level === 'boss';
     const isOverwhelm = traits.find(({id}) => id === 'overwhelm').isEnabled;
@@ -89,7 +90,7 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor={getFactionColor('dummy-duchy')}
+                backgroundColor={getFactionColor(faction)}
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
@@ -109,14 +110,12 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                         <Card title="Minister Track">
                             <Ministers ministers={ministers} onUpdateMinisters={(newMinisters) => updateState({...state, ministers: newMinisters})} />
                         </Card>
-                        <Level faction="dummy-duchy" level={level} labels={{beginner: <>Whenever you <b>Recruit</b>, place <b>1 warrior</b> in the Burrow.</>, expert: <>Whenever you <b>Recruit</b>, place <b>2 warriors</b> in the Burrow.</>, master: <>Whenever you <b>Recruit</b>, place <b>3 warriors</b> in the Burrow.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
-                        {!isRivetfolkPlaying && (<Card title="Human Riverfolk">
-                            <label htmlFor="dummy-duchy-human-riverfolk"><input id="dummy-duchy-human-riverfolk" type="checkbox" onChange={() => updateState({...state, isHumanRiverfolk: !isHumanRiverfolk})} checked={isHumanRiverfolk} /> Check this box if there is a human Riverfolk player in the game.</label>
-                        </Card>)}
+                        <Level faction={faction} level={level} labels={{beginner: <>Whenever you <b>Recruit</b>, place <b>1 warrior</b> in the Burrow.</>, expert: <>Whenever you <b>Recruit</b>, place <b>2 warriors</b> in the Burrow.</>, master: <>Whenever you <b>Recruit</b>, place <b>3 warriors</b> in the Burrow.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        {!isRivetfolkPlaying && (<HumanRiverfolk faction={faction} onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
                     </>
                 )}
                 <Card title='Traits'>
-                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={'dummy-duchy'} isSetup={isSetup} onUpdate={(isEnabled) => {
+                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={faction} isSetup={isSetup} onUpdate={(isEnabled) => {
                         const before = traits.slice(0,index);
                         const after = traits.slice(index + 1);
                         updateState({...state, traits: [...before, {...trait, isEnabled}, ...after]})
@@ -160,17 +159,17 @@ export default function DummyDuchy({state = {}, isRivetfolkPlaying, onDelete = (
                                     />,
                                     <Step 
                                         title="Battle"
-                                        description={<>in each each <Suit suit={orderedSuit} /> clearing.{isCaptainSwayed ? <div style={{paddingLeft: '26px'}}><b>(Captain)</b> deal an extra hit in clearings with a tunnel.</div>: ''}{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}</>}
+                                        description={<>in each <Suit suit={orderedSuit} /> clearing.{isCaptainSwayed ? <div style={{paddingLeft: '26px'}}><b>(Captain)</b> deal an extra Hit in clearings with a tunnel.</div>: ''}{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}</>}
                                         substeps={
                                             <Steps 
                                                 type="I"
                                                 steps={[
-                                                    <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with the most buildings, then most pieces, then with the most points there.</i>}/>,
+                                                    <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with the most buildings, then the most pieces, then with the most victory points.</i>}/>,
                                                 ]}
                                             />
                                         }
                                     />,
-                                    <Step title="Build" description={<>in such a clearing that you rule with most Duchy warriors. Place a citadel if you have more than 8 warriors in your supply, otherwise place a market. {numPlacedMarkets + numPlacedCitadels === 6 ? '': <>Score <OneVP /> if you can't place a building while there are still buildings on this board.</>}{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}{isInvaders ? <div style={{paddingLeft: '26px'}}><b>(Invaders)</b> If you cannot build due to no free building slots, battle in all clearings.</div>: ''}</>} />,
+                                    <Step title="Build" description={<>in such a clearing that you rule with the most Duchy warriors. Place a citadel if you have more than 8 warriors in your supply, otherwise place a market. {numPlacedMarkets + numPlacedCitadels === 6 ? '': <>Score <OneVP /> if you can't place a building while there are still buildings on this board.</>}{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}{isInvaders ? <div style={{paddingLeft: '26px'}}><b>(Invaders)</b> If you cannot build due to no free building slots, battle in all clearings.</div>: ''}</>} />,
                                     <Step
                                         title="Ministers."
                                         description={<>Take the actions of all Swayed Ministers from top to bottom. <i>(Captain and Foremole are always active and have no action)</i></>}
