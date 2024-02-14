@@ -1,7 +1,7 @@
 
 export const CONSTANTS = {
     eyrieNobilityText: <div style={{paddingLeft: '26px'}}><b>(Nobility)</b> If you cannot place a warrior, you fall into Turmoil.</div>,
-    eyrieWarTaxText:  <div style={{paddingLeft: '26px'}}><b>(War Tax)</b> If you destroy a token or building, the owner of the token or building loses 1 victory point.</div>,
+    eyrieWarTaxText:  <div style={{paddingLeft: '26px'}}><b>(War Tax)</b> If you remove a token or building, the owner of the token or building loses 1 victory point.</div>,
     humanRiverfolkLabelText: 'Check this box if there is a human Riverfolk player in the game',
     riverfolkHandCardText: <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no available craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly.</div>,
     riverfolkMercenariesBattleText: <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do, you have 2 or fewer warriors there, the Riverfolk is not the defender, and at least 1 Riverfolk warrior is present, then buy Mercenaries.</div>,
