@@ -42,7 +42,7 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                 <Steps
                     type="I"
                     steps={[
-                        <Step title={<i>Clearing Tie:</i>} description={<i>Such a clearing without a plot token, then with the most Corvid warriors.</i>}/>,
+                        <Step title={<i>Clearing Tie:</i>} description={<i>The clearing without a plot token, then with the most Corvid warriors.</i>}/>,
                         <Step 
                             title={<i>Warrior Limit:</i>}
                             description={<i>If you run out of warriors to place, immediately perform <b>The Plot Thickens</b> before placing the remaining warriors.</i>}
