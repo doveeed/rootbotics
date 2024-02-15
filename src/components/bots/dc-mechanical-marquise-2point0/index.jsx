@@ -73,7 +73,7 @@ export default function DCMechanicalMarquise2point0({faction, state = {}, isRive
     if (isBlitz) {
         daylightSteps.push(<Step title="(Blitz)" description="Select the highest priority clearing you rule with out any enemy pieces. Move all but 1 warirer from the clearing and battle in the destination if oponents are present."
         substeps={<Steps type="I" steps={[
-            <Step title={<i>Destination Tie:</i>} description={<i>Move to such a clearing with the most enemy pieces there.</i>}/>,
+            <Step title={<i>Destination Tie:</i>} description={<i>Move to the clearing with the most enemy pieces there.</i>}/>,
             <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with the most pieces there, then with the most victory points.</i>}/>
         ]} />}
         />)
