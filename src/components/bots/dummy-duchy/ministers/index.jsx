@@ -10,7 +10,7 @@ export const ministerNameActionMapping = {
     'Duchess of Mud': <>Score <img src={VP2} alt="two victory points" width={24} style={{marginBottom: '-4px'}}/> if all tunnels are on the map.</>,
     'Earl of Stone': <>Score <OneVP /> per citadel on the map.</>,
     'Foremole': <>You have an additional revealed <img src={Mole} alt="Duchy warrior" height={24} width={24} style={{marginBottom: '-6px'}}/>.</>,
-    'Marshal': 'Place a warrior from your supply into such a clearing that has at least one of your buildings and the least of your warriors.',
+    'Marshal': 'Place a warrior from your supply into the clearing that has at least one of your buildings and the least of your warriors.',
     'Mayor': <>Return a warrior to your supply from the clearing you rule with the most of your warriors. Score <OneVP />.</>,
 }
 
