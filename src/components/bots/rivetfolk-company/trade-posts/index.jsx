@@ -14,7 +14,7 @@ export default function TradePosts({tradeposts = {}, onUpdateTradePosts}) {
     };
     
     return (
-        <Card title='Trade Posts'>
+        <Card title='Trade posts'>
             <div style={{marginBottom: '1rem'}}>Whenever a player removes a trade post, return half their warriors from the Payments box (rounded up).</div>
             <div style={{maxWidth: '400px', margin: '0 auto'}}>
                 <div style={{display: "flex", gap: '1rem', flexWrap: "wrap", marginBottom: '1rem',}}>
