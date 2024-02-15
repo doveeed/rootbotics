@@ -54,7 +54,7 @@ export default function CogwheelCult({faction, state = {}, isRivetfolkPlaying, o
 
     const eveningSteps = [
         <Step title="Score" description={<>victory points of right-most empty garden space on the Gardens Track. (<Number value={gardenPoints} />)</>}/>,
-        <Step title="Discard Lost Souls." description=""/>,
+        <Step title="Discard Lost Souls." description="Discard all cards in your Lost Souls pile." />,
         <Step title="Return" description="revealed cards to Lost Souls"/>,
         <Step title="Reveal" description={<>the top card of the deck and craft it for <OneVP/> if it shows an available item. {canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no available craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly. <b>Do not buy a <Suit suit="bird" /> card.</b> Then add it to Lost Souls.</div>:''}</>}/>
     ];
@@ -127,7 +127,7 @@ export default function CogwheelCult({faction, state = {}, isRivetfolkPlaying, o
                                     <div>
                                         <Step title='' description={<>Place a warrior into clearing matching the revealed card. Then if you rule the clearing, also place a matching garden in the clearing.{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>}
                                             substeps={<Steps type='I' steps={
-                                                [<Step title={<i>Clearing Tie:</i>} description={<i>Place warrior into clearing with free building slots, then most enemy buildings.</i>} />]
+                                                [<Step title={<i>Clearing Tie:</i>} description={<i>Place the warrior into the clearing with any free building slots, then the most enemy buildings.</i>} />]
                                             }/>}
                                         />
                                     </div>
