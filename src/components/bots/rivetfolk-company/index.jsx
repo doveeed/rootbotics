@@ -9,6 +9,8 @@ import Level from '../../level';
 import Trait from '../../trait';
 import TradePosts from './trade-posts';
 import OneVP from "../../one-vp";
+import Shield from '../../../assets/shield.png';
+import Sword from '../../../assets/sword.png';
 import { getFactionColor } from "../../../utils";
 
 
@@ -31,9 +33,9 @@ export default function RivetfolkCompany({faction, state = {}, onDelete = () => 
     }
 
     const eveningSteps = [
-        <Step title="Score" description={<><OneVP /> per warrior of the player with the most warriors in your payment, and return them. Keep any other warriors.</>}/>,
-        <Step title="Racketeering" description={<>Shield or Sword: From each clearing move all but 2 Riverfolk warriors to the payments box.</>}/>,
-        <Step title="Discard" description="the left-most card in the Market." substeps={<Steps type='I' steps={[<Step title={<>Shield:</>} description='Discard the left-most card again.'/>]}/>}/>
+        <Step title="Score" description={<><OneVP /> per warrior of the player with the most warriors in your Payments box, and return them. Keep any other warriors.</>}/>,
+        <Step title="Racketeering" description={<><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} /> or <img src={Sword} alt="Sword Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: From each clearing move all but 2 Riverfolk warriors to the Payments box.</>}/>,
+        <Step title="Discard" description={<>the left-most card in the Market.<div style={{paddingLeft: '26px'}}><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: Discard the left-most card again.</div></>} />
     ];
 
     if (isBossMode) {
@@ -78,7 +80,7 @@ export default function RivetfolkCompany({faction, state = {}, onDelete = () => 
                     <>
                         <Card title='Services'>
                             <Step title='' description='At the start of their Birdsong, other human players may purchase one service plus one per clearing with a trade post and any of their pieces. (Bot players may purchase services at any point during their turn and there is no limit to the number of services they can buy. They do not buy any services if the Riverfolk player has more victory points than they do. Subtract 1 from the price of serviecs for bot players. Unless explicitly stated, bot players do not buy the River Boats service.)' />
-                            <Step title='' description="Services are paid for by placing warriors from the supply into your Payments. Use your own warriors for factions that have no warriors. The cost of services depends on the buyer's score:" />
+                            <Step title='' description="Services are paid for by placing warriors from the supply into your Payments box. Use your own warriors for factions that have no warriors. The cost of services depends on the buyer's score:" />
                             <div style={{display: 'flex', flexWrap: 'wrap', marginBottom: '0.5rem'}}>
                                 <div style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>0 to 9: <div style={{borderRadius: '50%', border: '4px solid black', width: '1.5rem', height: '1.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, marginLeft: '1rem'}}><b>2</b></div></div>
                                 <div style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>10 to 19:  <div style={{borderRadius: '50%', border: '4px solid black', width: '1.5rem', height: '1.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, marginLeft: '1rem'}}><b>3</b></div></div>
@@ -89,7 +91,7 @@ export default function RivetfolkCompany({faction, state = {}, onDelete = () => 
                             <Step title='Mercenaries:' description='For battle and rule in Daylight and Evening, buyer treats Riverfolk warriors as their own. In battle, they must split Hits between their own pieces and Riverfolk warriors.' />
                         </Card>
                         <Card title='Protectionism'>
-                            <div>If either of these conditions are met, they stay in effect until the end of your turn.<br/> If Payments is empty, activate all effects marked with Shield.<br/>If there are no warriors in your supply activate all effects marked with Sword.</div>
+                            <div>If either of these conditions are met, they stay in effect until the end of your turn.<br/><br/>If the Payments box is empty, activate all effects marked with <img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />.<br/>If there are no warriors in your supply activate all effects marked with <img src={Sword} alt="Sword Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />.</div>
                         </Card>
                         <TradePosts tradeposts={tradeposts} onUpdateTradePosts={(newTradePosts) => {updateState({...state, tradeposts: newTradePosts})}}/>
                         <Card title="Ordered suit">
@@ -121,7 +123,7 @@ export default function RivetfolkCompany({faction, state = {}, onDelete = () => 
                                             <Steps 
                                                 type="I"
                                                 steps={[
-                                                    <Step title={<i>Clearing Tie:</i>} description={<i>Clearing with pieces of the player with the most warriors in Payments.</i>}/>,
+                                                    <Step title={<i>Clearing Tie:</i>} description={<i>Clearing with pieces of the player with the most warriors in the Payments box.</i>}/>,
                                                 ]}
                                             />
                                         }
@@ -138,14 +140,14 @@ export default function RivetfolkCompany({faction, state = {}, onDelete = () => 
                                     />,
                                     <Step
                                         title="Organize."
-                                        description={<>Check conditions in Protectionism box now.<br/>Shield: Score <Number value={levelToPoints[level]} /> and place 2 warriors into such a clearing with your presence and the most enemy pieces.</>}
+                                        description={<>Check conditions in Protectionism box now.<div style={{paddingLeft: '26px'}}><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: Score <Number value={levelToPoints[level]} /> and place 2 warriors into the clearing with your presence and the most enemy pieces.</div></>}
                                     />,
-                                    <Step title="Battle" description={<><br/>Shield: in all clearings, then skip to Evening.<br/>Sword: in all <Suit suit={orderedSuit} /> clearings.{isFerocious ? <div style={{paddingLeft: '26px'}}><b>(Ferocious)</b> You can deal a maximum of 3 Rolled Hits</div>: ''}</>}
+                                    <Step title="Battle" description={<><div style={{paddingLeft: '26px'}}><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: in all clearings, then skip to Evening.</div><div style={{paddingLeft: '26px'}}><img src={Sword} alt="Sword Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: in all <Suit suit={orderedSuit} /> clearings.</div>{isFerocious ? <div style={{paddingLeft: '26px'}}><b>(Ferocious)</b> You can deal a maximum of 3 Rolled Hits</div>: ''}</>}
                                         substeps={
                                             <Steps 
                                                 type="I"
                                                 steps={[
-                                                    <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with least warriors in payments.</i>}/>,
+                                                    <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with least warriors in the Payments box.</i>}/>,
                                                 ]}
                                             />
                                         }
