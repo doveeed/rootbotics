@@ -30,7 +30,7 @@ export default function DCAutomatedAlliance({faction, state = {}, isRivetfolkPla
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
-        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <div styl={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no available craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick a <Suit suit="bird" /> card, then pick the one with the most VP for the item. If multiple, choose randomly.{ orderedSuit !== 'bird' ? <> If there are no cards with available craftable items, buy any available <Suit suit="bird" /> card. If multiple, choose randomly.</> : ''} <b>Use Riverfolk warriors to pay.</b></div>:''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no available craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick a <Suit suit="bird" /> card, then pick the one with the most VP for the item. If multiple, choose randomly.{ orderedSuit !== 'bird' ? <> If there are no cards with available craftable items, buy any available <Suit suit="bird" /> card. If multiple, choose randomly.</> : ''} <b>Use Riverfolk warriors to pay.</b></div>:''}</>} />,
     ]
 
     if (orderedSuit !== 'bird' && numPlacedSympathy > 0 && !buildings[orderedSuit]?.isPlaced) {
@@ -43,7 +43,8 @@ export default function DCAutomatedAlliance({faction, state = {}, isRivetfolkPla
         substeps={
         <Steps type="I" steps={
             [
-                <Step title={<i>Clearing Tie:</i>} description={<i>{orderedSuit === 'bird' ? <>Place into the lowest priority clearing.</> : <>Avoid clearings with 3 or more warriors of a single player, then place in <Suit suit={orderedSuit} /> clearing.</>}</i>}/>
+                <Step title={<i>Clearing Tie:</i>} description={<i>{orderedSuit === 'bird' ? <>Place into the lowest priority clearing.</> : <>Avoid clearings with 3 or more warriors of a single player, then place in <Suit suit={orderedSuit} /> clearing.</>}</i>}/>,
+                <Step title={<i>Cannot Spread:</i>} description={<i>If there are no available sympathy tokens, score 5 victory points instead.</i>}/>
             ]}/>} />,
     ];
 
