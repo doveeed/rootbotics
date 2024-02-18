@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Component } from "react";
 import ContraptionConspiracy from "./components/bots/contraption-conspiracy";
 import Menu from "./components/menu";
 import DummyDuchy from "./components/bots/dummy-duchy";
@@ -10,6 +10,32 @@ import DCElectricEyrie from "./components/bots/dc-electric-eyrie";
 import DCAutomatedAlliance from "./components/bots/dc-automated-alliance";
 import Map from "./components/map";
 
+
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // You can also log the error to an error reporting service
+    console.log(error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return <div style={{display: 'flex', flex: '1', alignItems: 'center', justifyContent: 'center'}}><h1>Something went wrong.</h1></div>;
+    }
+
+    return this.props.children; 
+  }
+}
 
 function App() {
 
@@ -43,61 +69,63 @@ function App() {
         
         <Menu bots={bots} onAddBot={(newBot) => {handleUpdateBots([...bots, {...newBot}])}} />
       </header>
-      <main style={{flex: 1, display: 'flex', flexDirection: 'column'}}>
-        {isNoBots && (<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1, minHeight: 'calc(100vh - 80px)'}}>Click + to add a bot.</div>)}
-      {bots.map((bot,index) => {
-        const {faction, state, key} = bot;
-        let Faction;
-        switch (faction) {
-          case 'cogwheel-cult':
-            Faction = CogwheelCult;
-            break;
-          case 'contraption-conspiracy':
-            Faction = ContraptionConspiracy;
-            break;
-          case 'dc-automated-alliance':
-            Faction = DCAutomatedAlliance;
-            break;
-          case 'dc-electric-eyrie':
-            Faction = DCElectricEyrie;
-            break;
-          case 'dc-mechanical-marquise-2point0':
-            Faction = DCMechanicalMarquise2point0;
-            break;
-          case 'dummy-duchy':
-            Faction = DummyDuchy;
-            break;
-          case 'rivetfolk-company':
-            Faction = RivetfolkCompany;
-            break;
-          default:
-            return null;
-        }
-        return (
-          <Faction
-            key={key}
-            faction={faction}
-            state={state}
-            isRivetfolkPlaying={isRivetfolkPlaying}
-            onDelete={() => {
-              const before = bots.slice(0,index);
-              const after = bots.slice(index + 1);
-              handleUpdateBots([...before, ...after])
-            }}
-            updateState={(newState) => {
-              const before = bots.slice(0,index);
-              const after = bots.slice(index + 1);
-              handleUpdateBots([...before,{...bot, state: {...newState}}, ...after])
-            }}
-          />
-        );
-      })}
-      </main>
-      {isNoBots && (
-          <div style={{padding: '0.5rem 1rem', display: 'flex',flexDirection: 'column', gap: '2rem', maxWidth: '740px', margin: '0 auto'}}>
-            {maps.map (map => <Map key={map} type={map} />)}
-          </div>
-        )}
+      <ErrorBoundary>
+        <main style={{flex: 1, display: 'flex', flexDirection: 'column'}}>
+          {isNoBots && (<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1, minHeight: 'calc(100vh - 80px)'}}>Click + to add a bot.</div>)}
+        {bots.map((bot,index) => {
+          const {faction, state, key} = bot;
+          let Faction;
+          switch (faction) {
+            case 'cogwheel-cult':
+              Faction = CogwheelCult;
+              break;
+            case 'contraption-conspiracy':
+              Faction = ContraptionConspiracy;
+              break;
+            case 'dc-automated-alliance':
+              Faction = DCAutomatedAlliance;
+              break;
+            case 'dc-electric-eyrie':
+              Faction = DCElectricEyrie;
+              break;
+            case 'dc-mechanical-marquise-2point0':
+              Faction = DCMechanicalMarquise2point0;
+              break;
+            case 'dummy-duchy':
+              Faction = DummyDuchy;
+              break;
+            case 'rivetfolk-company':
+              Faction = RivetfolkCompany;
+              break;
+            default:
+              return null;
+          }
+          return (
+            <Faction
+              key={key}
+              faction={faction}
+              state={state}
+              isRivetfolkPlaying={isRivetfolkPlaying}
+              onDelete={() => {
+                const before = bots.slice(0,index);
+                const after = bots.slice(index + 1);
+                handleUpdateBots([...before, ...after])
+              }}
+              updateState={(newState) => {
+                const before = bots.slice(0,index);
+                const after = bots.slice(index + 1);
+                handleUpdateBots([...before,{...bot, state: {...newState}}, ...after])
+              }}
+            />
+          );
+        })}
+          {isNoBots && (
+            <div style={{padding: '0.5rem 1rem', display: 'flex',flexDirection: 'column', gap: '2rem', maxWidth: '740px', margin: '0 auto'}}>
+              {maps.map (map => <Map key={map} type={map} />)}
+            </div>
+          )}
+        </main>
+      </ErrorBoundary>
         <footer>
         <button style={{width: '100%', backgroundColor: '#fcf8e8', border: 'none', cursor: 'pointer', padding: '24px 16px'}} onClick={() => {window.scrollTo(0,0)}}>Back to top</button>
       </footer>
