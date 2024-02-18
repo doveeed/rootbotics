@@ -14,25 +14,25 @@ export function getFactionColor(faction) {
 
     switch (faction) {
         case 'dc-mechanical-marquise-2point0':
-            color = '#e27b38';
+            color = '#d17131';
             break;
         case 'dc-electric-eyrie':
-            color = '#406eb1';
+            color = '#3764a2';
             break;
         case 'dc-automated-alliance':
-            color = '#6db456';
+            color = '#5da84c';
             break;
         case 'cogwheel-cult':
-            color = '#f4e274';
+            color = '#e0d92a';
             break;
         case 'rivetfolk-company':
-            color = '#56c3bc';
+            color = '#54b4ac';
             break;
         case 'dummy-duchy':
-            color = '#e5bc9d';
+            color = '#e6bf9e';
             break;
         case 'contraption-conspiracy':
-            color = '#3c2d90';
+            color = '#4c246c';
             break;
         default:
             break;
