@@ -27,7 +27,7 @@ const traitIdDescriptionMap = {
     'market': 'The Market is a row of 5 cards visible to all players. While players can freely look at the cards at all times, the order of the Market has to be maintained as new cards are added to the right side.',
     'martyrs': <>Whenever you perform a ritual for a <Suit suit="bird" /> card in Daylight, move an aditional warrior from the supply to your Acolytes.</>,
     'mastermind': 'Perform "Plot" twice each turn.',
-    'nimble': 'You can move regardless of who rules your clearing.',
+    'nimble': 'You can move regardless of who rules your origin or destination clearing.',
     'nobility': <>Turmoil is now triggered if you are unable to place a roost or if you are unable to place a warrior. Whenever you fall into Turmoil, you do not lose victory points. Instead, you score 1 victory point per <Suit suit="bird" /> card in the Decree.</>,
     'overwhelm': <>The <b>Dig</b> action requires and moves only 3 warriors (instead of 4), and is repeated a second time each turn.</>,
     'pilgrims': 'You rule any clearing where you have any gardens.',
