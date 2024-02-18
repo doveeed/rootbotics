@@ -10,8 +10,14 @@ import Trait from '../../trait';
 import Buildings from "./buildings";
 import OneVP from "../../one-vp";
 import Sympathy from "./sympathy";
+import SympathyImg from "../../../assets/sympathy.png";
 import { getFactionColor } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
+import Button from "../../button";
+import Number from "../../number";
+import FoxBase from '../../../assets/fox-base.png';
+import MouseBase from '../../../assets/mouse-base.png';
+import RabbitBase from '../../../assets/rabbit-base.png';
 
 export default function DCAutomatedAlliance({faction, state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', buildings = {}, sympathy = [], isHumanRiverfolk = false} = state;
@@ -19,6 +25,7 @@ export default function DCAutomatedAlliance({faction, state = {}, isRivetfolkPla
     const isBossMode = level === 'boss';
     const isWildfire = traits.some(({id, isEnabled}) => id === 'wildfire' && isEnabled);
     const numPlacedSympathy = sympathy.filter(({isPlaced}) => isPlaced).length;
+    const sympathyVP = sympathy.findLast(({isPlaced}) => isPlaced)?.points ||  0;
     
     const levelToOrganize = {
         'beginner': '4 or more',
@@ -28,28 +35,42 @@ export default function DCAutomatedAlliance({faction, state = {}, isRivetfolkPla
     }
     const canBuyServices = isRivetfolkPlaying || isHumanRiverfolk;
 
+    const placeSypmathy = () => {
+        const index = sympathy.findIndex(({isPlaced}) => !isPlaced);
+        const before = sympathy.slice(0,index);
+        const after = sympathy.slice(index + 1);
+        updateState({...state, sympathy: [...before, {...sympathy[index], isPlaced: true},...after]});
+    }
+
+    const placeBase = (type) => {
+        updateState({...state, buildings: {...buildings, [type]: {...buildings[type], isPlaced: true}}})
+    }
+
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
         <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no available craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick a <Suit suit="bird" /> card, then pick the one with the most VP for the item. If multiple, choose randomly.{ orderedSuit !== 'bird' ? <> If there are no cards with available craftable items, buy any available <Suit suit="bird" /> card. If multiple, choose randomly.</> : ''} <b>Use Riverfolk warriors to pay.</b></div>:''}</>} />,
     ]
 
     if (orderedSuit !== 'bird' && numPlacedSympathy > 0 && !buildings[orderedSuit]?.isPlaced) {
-        birdsongSteps.push(<Step title="Revolt." description={<>Remove all enemy pieces from the <Suit suit={orderedSuit} /> sympathetic clearing with the most enemy pieces, and place the <Suit suit={orderedSuit}/> base there.</>}/>)
+        birdsongSteps.push(<Step title="Revolt." description={<>Remove all enemy pieces from the <Suit suit={orderedSuit} /> sympathetic clearing with the most enemy pieces, and place the <Suit suit={orderedSuit}/> base there. <Button onClick={() => placeBase(orderedSuit)} img={orderedSuit === 'fox' ? FoxBase: orderedSuit === 'mouse' ? MouseBase: RabbitBase} alt={`${orderedSuit} base`}>place the</Button></>}/>)
     }
     
 
     const daylightSteps = [
-        <Step title="Spread Sympathy." description={<>Place the left-most token from the sympathy track into an unsympathetic clearing adjacent to a sympathetic clearing.</>}
+        <Step title="Spread Sympathy." description={<>Place the left-most token from the sympathy track into an unsympathetic clearing adjacent to a sympathetic clearing.{numPlacedSympathy < 10 && (<> <Button onClick={placeSypmathy} img={SympathyImg} alt="sympathy token">place a</Button></>)} Score the number of victory points revealed for the placed sympathy. (<Number value={sympathyVP} />)</>}
         substeps={
         <Steps type="I" steps={
             [
                 <Step title={<i>Clearing Tie:</i>} description={<i>{orderedSuit === 'bird' ? <>Place into the lowest priority clearing.</> : <>Avoid clearings with 3 or more warriors of a single player, then place in <Suit suit={orderedSuit} /> clearing.</>}</i>}/>,
-                <Step title={<i>Cannot Spread:</i>} description={<i>If there are no available sympathy tokens, score 5 victory points instead.</i>}/>
+                <Step title={<i>Cannot Spread:</i>} description={<>If you cannot place a sympathy token <i>(because your Sympathy Track is empty, or because there is no clearing where you could place a sympathy token)</i>, score 5 victory points.</>}/>
             ]}/>} />,
     ];
 
-    if (orderedSuit === 'bird' && numPlacedSympathy > 0 && !(fox?.isPlaced && rabbit?.isPlaced && mouse?.isPlaced)) {
-        daylightSteps.push(<Step title="Surprise Revolt." description={<>Remove all enemy pieces from the sympathetic clearing with the most enemy pieces, and place the corresponding base there.</>}/>)
+    if (orderedSuit === 'bird' && numPlacedSympathy > 0 && !(fox.isPlaced && rabbit.isPlaced && mouse.isPlaced)) {
+        daylightSteps.push(<Step title="Surprise Revolt." description={<>Remove all enemy pieces from the sympathetic clearing with the most enemy pieces, and place the corresponding base there.
+        {!fox.isPlaced && (<> <Button onClick={() => placeBase('fox')} img={FoxBase} alt="fox base">place the</Button></>)}
+        {!rabbit.isPlaced && (<> <Button onClick={() => placeBase('rabbit')} img={RabbitBase} alt="rabbit base">place the</Button></>)}
+        {!mouse.isPlaced && (<> <Button onClick={() => placeBase('mouse')} img={MouseBase} alt="mouse base">place the</Button></>)}</>}/>)
     }
 
     daylightSteps.push(<Step title="Public Pity." description={<>If you did not revolt this turn, <b>Spread Sympathy</b> {numPlacedSympathy < 5 ? 'twice': 'once'}.</>}/>)
@@ -107,7 +128,7 @@ export default function DCAutomatedAlliance({faction, state = {}, isRivetfolkPla
                         <Card title="Ordered suit">
                             <Order order={orderedSuit} onChangeOrder={(newOrder) => updateState({...state, orderedSuit:newOrder})}/>
                         </Card>
-                        <Card title="Sympathy and Bases">
+                        <Card title="Sympathy Track and Bases">
                             <Sympathy sympathy={sympathy} onUpdateSympathy={(newSympathy) => updateState({...state, sympathy: newSympathy})}/>
                             <Buildings buildings={buildings} onUpdateBuildings={(newBuildings) => {updateState({...state, buildings: newBuildings})}}/>
                         </Card>
