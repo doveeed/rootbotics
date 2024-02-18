@@ -12,10 +12,14 @@ import OneVP from "../../one-vp";
 import Shield from '../../../assets/shield.png';
 import Sword from '../../../assets/sword.png';
 import { getFactionColor } from "../../../utils";
+import Button from "../../button";
+import FoxTradePost from '../../../assets/fox-trade-post.png';
+import MouseTradePost from '../../../assets/mouse-trade-post.png';
+import RabbitTradePost from '../../../assets/rabbit-trade-post.png';
 
 
 export default function RivetfolkCompany({faction, state = {}, onDelete = () => {}, updateState = () => {}}) {
-    const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', tradeposts = {}} = state;
+    const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', tradeposts = {}, protectionism = 'none'} = state;
     const isBossMode = level === 'boss';
     const isFerocious = traits.some(({id, isEnabled}) => id === 'ferocious' && isEnabled);
     const levelToRecruit = {
@@ -32,11 +36,79 @@ export default function RivetfolkCompany({faction, state = {}, onDelete = () => 
         'boss': 2,
     }
 
+    const suitToNumPlacedTradePosts = {
+        fox: tradeposts.fox.filter(({isPlaced}) => isPlaced).length,
+        mouse: tradeposts.mouse.filter(({isPlaced}) => isPlaced).length,
+        rabbit: tradeposts.rabbit.filter(({isPlaced}) => isPlaced).length,
+    }
+
+    const placeTradePost = (type) => {
+        const index = tradeposts[type].findIndex(({isPlaced}) => !isPlaced);
+        if (index === -1) {
+            return;
+        }
+        const before = tradeposts[type].slice(0,index);
+        const after = tradeposts[type].slice(index + 1);
+        updateState({...state, tradeposts: {...state.tradeposts, [type]: [...before, {...tradeposts[type][index], isPlaced: true},...after]}})
+    }
+
+    const daylightSteps = [
+        <Step 
+            title="Build"
+            description={<>a trade post in a <Suit suit={orderedSuit} /> clearing without one. Place {levelToRecruit[level]} into the same clearing.
+            {(orderedSuit === 'bird' || orderedSuit === 'fox') && suitToNumPlacedTradePosts['fox'] < 3 && (<> <Button img={FoxTradePost} alt={`fox trade post`} onClick={() => placeTradePost('fox')} >place a</Button></>)}
+            {(orderedSuit === 'bird' || orderedSuit === 'rabbit') && suitToNumPlacedTradePosts['rabbit'] < 3 && (<> <Button img={RabbitTradePost} alt={`rabbit trade post`} onClick={() => placeTradePost('fox')} >place a</Button></>)}
+            {(orderedSuit === 'bird' || orderedSuit === 'mouse') && suitToNumPlacedTradePosts['mouse'] < 3 && (<> <Button img={MouseTradePost} alt={`mouse trade post`} onClick={() => placeTradePost('fox')} >place a</Button></>)} Score the number of victory points revealed for the placed trade post.{orderedSuit !== 'bird' && (<> (<Number value={tradeposts[orderedSuit].findLast(({isPlaced}) => isPlaced)?.points || 0}/>)</>)}</>}
+            substeps={
+                <Steps 
+                    type="I"
+                    steps={[
+                        <Step title={<i>Clearing Tie:</i>} description={<i>Target the clearing with pieces of the player with the most warriors in the Payments box.</i>}/>,
+                    ]}
+                />
+            }
+        />,
+        <Step title="Recruit" description={<>1 warrior in each {orderedSuit === 'bird' ? 'River': <Suit suit={orderedSuit} />} clearing.</>}
+            substeps={
+                <Steps 
+                    type="I"
+                    steps={[
+                        <Step title={<i>Warrior Limit:</i>} description={<i>If you run out of warriors, place in highest clearing priority first.</i>}/>,
+                    ]}
+                />
+            }
+        />,
+        <Step
+            title="Organize."
+            description={
+            <>Check the Protectionism conditions now:
+            <br/>If the Payments box is empty, activate <img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} /> Protectionism.
+            <br/>If there are no warriors in your supply, activate <img src={Sword} alt="Sword Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} /> Protectionism. <Button onClick={() => updateState({...state, protectionism: 'shield'})} img={Shield} alt="shield protectionism" >Activate</Button> <Button onClick={() => updateState({...state, protectionism: 'sword'})} img={Sword} alt="sword protectionism" >Activate</Button> <Button onClick={() => updateState({...state, protectionism: 'none'})} >None</Button>{protectionism === 'shield' && (<div style={{paddingLeft: '26px'}}><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: Score <Number value={levelToPoints[level]} /> and place 2 warriors into the clearing with your presence and the most enemy pieces.</div>)}</>}
+        />,
+    ];
+
+    if (protectionism !== 'none') {
+        daylightSteps.push(<Step title="Battle" description={<>{protectionism === 'shield' && (<div style={{paddingLeft: '26px'}}><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: in all clearings.</div>)}{protectionism === 'sword' && (<div style={{paddingLeft: '26px'}}><img src={Sword} alt="Sword Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: in all <Suit suit={orderedSuit} /> clearings.</div>)}{isFerocious ? <div style={{paddingLeft: '26px'}}><b>(Ferocious)</b> You can deal a maximum of 3 Rolled Hits</div>: ''}</>}
+        substeps={
+            <Steps 
+                type="I"
+                steps={[
+                    <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with least warriors in the Payments box.</i>}/>,
+                ]}
+            />
+        }
+    />)
+    }
+
     const eveningSteps = [
         <Step title="Score" description={<><OneVP /> per warrior of the player with the most warriors in your Payments box, and return them. Keep any other warriors.</>}/>,
-        <Step title="Racketeering" description={<><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} /> or <img src={Sword} alt="Sword Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: From each clearing move all but 2 Riverfolk warriors to the Payments box.</>}/>,
-        <Step title="Discard" description={<>the left-most card in the Market.<div style={{paddingLeft: '26px'}}><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: Discard the left-most card again.</div></>} />
     ];
+
+    if (protectionism !== 'none') {
+        eveningSteps.push(<Step title="Racketeering" description={<div style={{paddingLeft: '26px'}}><img src={protectionism === 'shield' ? Shield : Sword} alt="Shield or Sword Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: From each clearing move all but 2 Riverfolk warriors to the Payments box.</div>}/>);
+    }
+
+    eveningSteps.push(<Step title="Discard" description={<>the left-most card in the Market.{protectionism === 'shield' && (<div style={{paddingLeft: '26px'}}><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: Discard the left-most card again.</div>)}</>} />)
 
     if (isBossMode) {
         eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP /> for every two human players (rounded up).</>} />)
@@ -91,7 +163,7 @@ export default function RivetfolkCompany({faction, state = {}, onDelete = () => 
                             <Step title='Mercenaries:' description='For battle and rule in Daylight and Evening, buyer treats Riverfolk warriors as their own. In battle, they must split Hits between their own pieces and Riverfolk warriors.' />
                         </Card>
                         <Card title='Protectionism'>
-                            <div>If either of these conditions are met, they stay in effect until the end of your turn.<br/><br/>If the Payments box is empty, activate all effects marked with <img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />.<br/>If there are no warriors in your supply activate all effects marked with <img src={Sword} alt="Sword Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />.</div>
+                            <div>If either of these conditions are met, they stay in effect until the end of your turn.<br/><br/>If the Payments box is empty, activate all effects marked with <img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />.<br/>If there are no warriors in your supply, activate all effects marked with <img src={Sword} alt="Sword Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />.</div>
                         </Card>
                         <TradePosts tradeposts={tradeposts} onUpdateTradePosts={(newTradePosts) => {updateState({...state, tradeposts: newTradePosts})}}/>
                         <Card title="Ordered suit">
@@ -114,45 +186,7 @@ export default function RivetfolkCompany({faction, state = {}, onDelete = () => 
                         <Card title="Daylight" headerBackgroundColor="#6db6dc" headerColor="white">
                             <Steps 
                                 type="1"
-                                steps={[
-                                   
-                                    <Step 
-                                        title="Build"
-                                        description={<>a trade post in a <Suit suit={orderedSuit} /> clearing without one. Place {levelToRecruit[level]} into the same clearing.</>}
-                                        substeps={
-                                            <Steps 
-                                                type="I"
-                                                steps={[
-                                                    <Step title={<i>Clearing Tie:</i>} description={<i>Clearing with pieces of the player with the most warriors in the Payments box.</i>}/>,
-                                                ]}
-                                            />
-                                        }
-                                    />,
-                                    <Step title="Recruit" description={<>1 warrior in each {orderedSuit === 'bird' ? 'River': <Suit suit={orderedSuit} />} clearing.</>}
-                                        substeps={
-                                            <Steps 
-                                                type="I"
-                                                steps={[
-                                                    <Step title={<i>Warrior Limit:</i>} description={<i>If you run out of warriors, place in highest clearing priority first.</i>}/>,
-                                                ]}
-                                            />
-                                        }
-                                    />,
-                                    <Step
-                                        title="Organize."
-                                        description={<>Check conditions in Protectionism box now.<div style={{paddingLeft: '26px'}}><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: Score <Number value={levelToPoints[level]} /> and place 2 warriors into the clearing with your presence and the most enemy pieces.</div></>}
-                                    />,
-                                    <Step title="Battle" description={<><div style={{paddingLeft: '26px'}}><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: in all clearings, then skip to Evening.</div><div style={{paddingLeft: '26px'}}><img src={Sword} alt="Sword Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: in all <Suit suit={orderedSuit} /> clearings.</div>{isFerocious ? <div style={{paddingLeft: '26px'}}><b>(Ferocious)</b> You can deal a maximum of 3 Rolled Hits</div>: ''}</>}
-                                        substeps={
-                                            <Steps 
-                                                type="I"
-                                                steps={[
-                                                    <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with least warriors in the Payments box.</i>}/>,
-                                                ]}
-                                            />
-                                        }
-                                    />
-                                ]}
+                                steps={daylightSteps}
                             />
                         </Card>
                         <Card title="Evening" headerBackgroundColor='#8a8892' headerColor='white'>
