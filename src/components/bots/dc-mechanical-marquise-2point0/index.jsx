@@ -11,6 +11,10 @@ import Buildings from "./buildings";
 import OneVP from "../../one-vp";
 import { CONSTANTS, getFactionColor } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
+import Button from "../../button";
+import Sawmill from "../../../assets/sawmill.png";
+import Workshop from "../../../assets/workshop.png";
+import Recruiter from "../../../assets/recruiter.png";
 
 export default function DCMechanicalMarquise2point0({faction, state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', buildings = {}, isHumanRiverfolk = false} = state;
@@ -18,15 +22,39 @@ export default function DCMechanicalMarquise2point0({faction, state = {}, isRive
     const numBuiltSawmills = sawmill.filter(({isPlaced}) => isPlaced).length;
     const numBuiltWorkshops = workshop.filter(({isPlaced}) => isPlaced).length;
     const numBuiltRecruiters = recruiter.filter(({isPlaced}) => isPlaced).length;
-    const birdBuild = numBuiltSawmills >= numBuiltWorkshops && numBuiltSawmills >= numBuiltRecruiters
+    const birdBuild = (numBuiltSawmills >= numBuiltWorkshops || numBuiltWorkshops === 6) && (numBuiltSawmills >= numBuiltRecruiters || numBuiltRecruiters === 6) && numBuiltSawmills < 6
         ? 'sawmill'
-        : numBuiltWorkshops > numBuiltSawmills && numBuiltWorkshops >= numBuiltRecruiters
+        : (numBuiltWorkshops > numBuiltSawmills || numBuiltSawmills === 6) && (numBuiltWorkshops >= numBuiltRecruiters || numBuiltRecruiters === 6) && numBuiltWorkshops < 6
         ? 'workshop'
         : 'recruiter';
     const suitToBuilding= {
         fox: 'sawmill',
         rabbit: 'workshop',
         mouse: 'recruiter',
+    }
+    const suitToImage = {
+        fox: Sawmill,
+        rabbit: Workshop,
+        mouse: Recruiter,
+    }
+    const buildingToImage = {
+        sawmill: Sawmill,
+        workshop: Workshop,
+        recruiter: Recruiter,
+    }
+    const placedBulidingCount = {
+        sawmill: numBuiltSawmills,
+        workshop: numBuiltWorkshops,
+        recruiter: numBuiltRecruiters,
+    }
+    const placeBuilding = (type) => {
+        const index = buildings[type].findIndex(({isPlaced}) => !isPlaced);
+        if (index === -1) {
+            return
+        }
+        const before = buildings[type].slice(0,index);
+        const after = buildings[type].slice(index + 1);
+        updateState({...state, buildings: {...buildings, [type]: [...before,{...buildings[type][index], isPlaced: true},...after]}})
     }
 
 
@@ -47,6 +75,7 @@ export default function DCMechanicalMarquise2point0({faction, state = {}, isRive
         <Step title="Craft" description={<>order card for <OneVP /> if it shows an available item.{canBuyServices ? <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no available craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick a <Suit suit="bird" /> card, then pick the one with the most VP for the item. If multiple, choose randomly.{orderedSuit !== 'bird' ? <> If there are no available craftable items available, buy any available <Suit suit="bird" /> card. If there are multiple, choose randomly.</>: ''}</div>:''}</>} />,
     ]
 
+    
     const daylightSteps = orderedSuit === 'bird' ? [
         <Step title="Battle" description={<>in all clearings.{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}</>}
         substeps={<Steps type="I" steps={
@@ -56,7 +85,7 @@ export default function DCMechanicalMarquise2point0({faction, state = {}, isRive
 
         }/>}/>,
         <Step title="Recruit" description={<>{levelToRecruit[level]} warriors evenly among the two lowest priority clearings you rule. If you rule only one clearing, place all warriors there. Score <OneVP /> for every 2 warriors that could not be recruited.</>}/>,
-        <Step title="Build" description={<>a {birdBuild} in the clearing you rule with the most Marquise warriors.{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>} />,
+        <Step title="Build" description={<>a {birdBuild} in the clearing you rule with the most Marquise warriors. {numBuiltSawmills + numBuiltWorkshops + numBuiltRecruiters < 18 && (<Button onClick={()=> {placeBuilding(birdBuild)}} img={buildingToImage[birdBuild]} alt={birdBuild}>place a</Button>)}{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>} />,
         <Step title="Move" description={<>all but 3 of your warriors from each <Suit suit={orderedSuit} /> clearing to the adjacent clearing with the most enemy pieces. Each warrior may only move once during this action. After completing all moves, also <b>Battle</b> in all clearings you moved into.</>}/>,
     ]: [
         <Step title="Battle" description={<>in each <Suit suit={orderedSuit} /> clearing.{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}</>}
@@ -66,7 +95,7 @@ export default function DCMechanicalMarquise2point0({faction, state = {}, isRive
                 <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with the most pieces there, then with the most victory points.</i>}/>
             ]}/>} />,
         <Step title="Recruit" description={<>{levelToRecruit[level]} warriors evenly among ordered clearings you rule. Score <OneVP /> for every two warriors that could not be recruited.</>}/>,
-        <Step title="Build" description={<>a {suitToBuilding[orderedSuit]} in the clearing you rule with the most Marquise warriors.{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>} />,
+        <Step title="Build" description={<>a {suitToBuilding[orderedSuit]} in the clearing you rule with the most Marquise warriors. {placedBulidingCount[suitToBuilding[orderedSuit]] < 6 && (<Button onClick={()=> {placeBuilding(suitToBuilding[orderedSuit])}} img={suitToImage[orderedSuit]} alt={suitToBuilding[orderedSuit]}>place a</Button>)}{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>} />,
         <Step title="Move" description={<>all but 3 of your warriors from each <Suit suit={orderedSuit} /> clearing to the adjacent clearing with the most enemy pieces. Each warrior may only move once during this action.</>}/>,
     ];
     
