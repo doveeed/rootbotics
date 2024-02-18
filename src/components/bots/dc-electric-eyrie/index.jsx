@@ -12,6 +12,8 @@ import Decree from "./decree";
 import OneVP from "../../one-vp";
 import { CONSTANTS, getFactionColor } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
+import Button from "../../button";
+import Roost from "../../../assets/roost.png";
 
 export default function DCElectricEyrie({faction, state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, traits = [], level = 'expert', buildings = [], isHumanRiverfolk = false, decree = {}} = state;
@@ -29,8 +31,17 @@ export default function DCElectricEyrie({faction, state = {}, isRivetfolkPlaying
     }
     const canBuyServices = isRivetfolkPlaying || isHumanRiverfolk;
     const pointsToScore = buildings.findLast(({isPlaced}) => isPlaced)?.points || 0;
+    const numPlacedRoosts = buildings.filter(({isPlaced}) => isPlaced).length;
 
     const isBuyDecreeCard = (fox === 0 || mouse === 0 || rabbit === 0);
+
+    const placeRoost = () => {
+        const index = buildings.findIndex(({isPlaced}) => !isPlaced);
+        const before = buildings.slice(0,index);
+        const after = buildings.slice(index + 1);
+        updateState({...state, buildings: [...before, { ...buildings[index], isPlaced: true }, ...after]});
+    
+    }
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
@@ -186,8 +197,12 @@ export default function DCElectricEyrie({faction, state = {}, isRivetfolkPlaying
         daylightSteps.push(<Step title="(Relentless)" description={<>Remove all defenseless buildings and tokens in any clearing where you have warriors.{isWarTax ? CONSTANTS.eyrieWarTaxText : ''}</>}/>)
     }
 
-    daylightSteps.push(<Step title="Build." description={<>Place a roost in the clearing you rule of highest priority with no roost. If you cannot place a roost, you fall into Turmoil.{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>}/>)
-
+    if (numPlacedRoosts < 7) {
+        daylightSteps.push(<Step title="Build." description={<>Place a roost in the clearing you rule of highest priority with no roost. If you cannot place a roost, you fall into Turmoil. <Button onClick={placeRoost} img={Roost} alt="roost">place a</Button>{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>}/>)
+    } else {
+        daylightSteps.push(<Step title="Fall into Turmoil" description="since there are no more roosts to place." />)
+    }
+    
     if (isSwoop) {
         daylightSteps.push(<Step title="(Swoop)" description="Recruit 2 warriors in the highest priority clearing in which you have no pieces."/>)
     }
@@ -269,7 +284,7 @@ export default function DCElectricEyrie({faction, state = {}, isRivetfolkPlaying
                                 type="1"
                                 steps={[
                                     <Step title={<>Humiliate:</>} description={<>{isNobility ? <><b>(Nobility) </b>Score</> : 'Lose'} 1 victory point per <Suit suit="bird" /> card <i>(including Viziers)</i> in the Decree. (<Number value={bird} isNegative={isNobility ? false : true}/>)</>}/>,
-                                    <Step title="Purge:" description={<>Discard Decree, except Viziers. <button onClick={()=> updateState({...state, decree: {fox: 0, mouse: 0, rabbit: 0, bird: 2}})}>Purge Decree</button></>}/>,
+                                    <Step title="Purge:" description={<>Discard Decree, except Viziers. <Button onClick={()=> updateState({...state, decree: {fox: 0, mouse: 0, rabbit: 0, bird: 2}})} >Purge Decree</Button></>}/>,
                                     <Step title="Rest:" description={<>Go to Evening.</>}/>
                                 ]}
                             />
