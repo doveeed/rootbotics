@@ -14,6 +14,11 @@ import Bird from "../../../assets/bird.png";
 import OneVP from "../../one-vp";
 import { CONSTANTS, getFactionColor } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
+import Button from "../../button";
+import MouseGarden from '../../../assets/mouse-garden.png';
+import RabbitGarden from '../../../assets/rabbit-garden.png';
+import FoxGarden from '../../../assets/fox-garden.png';
+
 
 export default function CogwheelCult({faction, state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', conspiracyIndex = 4, gardens = {}, isHumanRiverfolk = false} = state;
@@ -24,12 +29,27 @@ export default function CogwheelCult({faction, state = {}, isRivetfolkPlaying, o
     const isFanatics = traits.some(({id, isEnabled}) => id === 'fanatics' && isEnabled);
     const isSpiteful = traits.some(({id, isEnabled}) => id === 'spiteful' && isEnabled);
     const gardenPoints = Math.max(mouse.findLast(({isPlaced}) => isPlaced)?.points || 0, rabbit.findLast(({isPlaced}) => isPlaced)?.points || 0, fox.findLast(({isPlaced}) => isPlaced)?.points || 0);
+    const suitToNumPlacedGardens = {
+        fox: gardens.fox.filter(({isPlaced}) => isPlaced).length,
+        rabbit: gardens.rabbit.filter(({isPlaced}) => isPlaced).length,
+        mouse: gardens.mouse.filter(({isPlaced}) => isPlaced).length,
+    }
     const levelToCards = {
         'beginner': '3',
         'expert': '4',
         'master': '5',
         'boss': '5',
     }
+    const placeGarden = (type) => {
+        const index = gardens[type].findIndex(({isPlaced}) => !isPlaced);
+        if (index === -1) {
+            return;
+        }
+        const garden = gardens[type][index];
+        const before = gardens[type].slice(0,index);
+        const after = gardens[type].slice(index + 1);
+            updateState({...state, gardens: {...state.gardens, [type]: [...before, { ...garden, isPlaced: true }, ...after]}});
+    };
     const canBuyServices = isRivetfolkPlaying || isHumanRiverfolk;
 
     const birdsongSteps = [
@@ -100,12 +120,7 @@ export default function CogwheelCult({faction, state = {}, isRivetfolkPlaying, o
                 </Card>
                 {isSetup && (
                     <>
-                        <Gardens gardens={gardens} onUpdateGardens={(gardens) => {updateState({...state, gardens})}}/>
-                        <Card
-                            title="Conspiracy Track"
-                        >
-                            <Conspiracies canBuyServices={canBuyServices} isSpiteful={isSpiteful} isFanatics={isFanatics} index={conspiracyIndex} onUpdateConspiracyIndex={(newIndex) => updateState({...state, conspiracyIndex: newIndex})} orderedSuit={orderedSuit}/>
-                        </Card>
+                        <Gardens gardens={gardens} onUpdateGardens={(gardens) => {updateState({...state, gardens}) }}/>
                         <Card title="Ordered suit">
                             <Order order={orderedSuit} onChangeOrder={(newOrder) => updateState({...state, orderedSuit:newOrder})}/>
                         </Card>
@@ -116,6 +131,11 @@ export default function CogwheelCult({faction, state = {}, isRivetfolkPlaying, o
                             />
                             
                         </Card>
+                        <Card
+                            title="Conspiracy Track"
+                        >
+                            <Conspiracies canBuyServices={canBuyServices} isSpiteful={isSpiteful} isFanatics={isFanatics} index={conspiracyIndex} onUpdateConspiracyIndex={(newIndex) => updateState({...state, conspiracyIndex: newIndex})} orderedSuit={orderedSuit} suitToNumPlacedGardens={suitToNumPlacedGardens} onSanctify={placeGarden} />
+                        </Card>
                         <Card title="Daylight" headerBackgroundColor="#6db6dc" headerColor="white">
                             <Steps 
                                 type="1"
@@ -125,7 +145,12 @@ export default function CogwheelCult({faction, state = {}, isRivetfolkPlaying, o
                                 <div style={{display: 'flex'}}>
                                     <div ><img src={Suited} alt="rabbit, fox, mouse cards" width="48px" style={{margin: '0 0.5rem 0 1rem'}} /></div>
                                     <div>
-                                        <Step title='' description={<>Place a warrior into clearing matching the revealed card. Then if you rule the clearing, also place a matching garden in the clearing.{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>}
+                                        <Step title='' description={
+                                        <>Place a warrior into clearing matching the revealed card. Then if you rule the clearing, also place a matching garden in the clearing.
+                                        {suitToNumPlacedGardens.mouse < 5 && (<> <Button alt="mouse garden" img={MouseGarden} onClick={() => placeGarden('mouse')}>place a</Button></>) }
+                                        {suitToNumPlacedGardens.rabbit < 5 && (<> <Button alt="rabbit garden" img={RabbitGarden} onClick={() => placeGarden('rabbit')}>place a</Button></>) }
+                                        {suitToNumPlacedGardens.fox < 5 && (<> <Button alt="fox garden" img={FoxGarden} onClick={() => placeGarden('fox')}>place a</Button></>) }
+                                        {canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>}
                                             substeps={<Steps type='I' steps={
                                                 [<Step title={<i>Clearing Tie:</i>} description={<i>Place the warrior into the clearing with any free building slots, then the most enemy buildings.</i>} />]
                                             }/>}
