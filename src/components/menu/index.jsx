@@ -598,7 +598,8 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                                 {id: 'fox-2', type: 'fox', points: 1, isPlaced: false},
                                 {id: 'fox-3', type: 'fox', points: 2, isPlaced: false}
                             ],
-                        }
+                        },
+                        protectionism: 'none',
                     }
                 }
                 break;
