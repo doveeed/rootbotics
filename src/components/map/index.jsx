@@ -6,6 +6,7 @@ import RabbitSuitColored from '../../assets/rabbit-suit-colored.png';
 import FoxSuitColored from '../../assets/fox-suit-colored.png';
 import MouseSuitColored from '../../assets/mouse-suit-colored.png';
 import { useState } from 'react';
+import Button from '../button';
 
 const shuffle =(suits) => {
     const array = [...suits]
@@ -241,7 +242,7 @@ export default function Map({type}) {
             <div style={{position: 'relative'}}>
                 <img src={src} width="100%" alt="Fall map clearing priority setup"/>
                 {coordinates.map(({key,...rest}, index) => (
-                    <div style={{
+                    <div key={key} style={{
                         position: 'absolute',
                         display: 'flex',
                         alignItems: 'center',
@@ -256,6 +257,6 @@ export default function Map({type}) {
                     </div>
                 ))}
             </div>
-            {type !== 'fall' && <button style={{width: 'fit-content', cursor: 'pointer'}} onClick={() => updateSuits(shuffle(suits))}>Shuffle</button>}
+            {type !== 'fall' && <Button style={{width: 'fit-content'}} onClick={() => updateSuits(shuffle(suits))}>Shuffle</Button>}
        </div>)
 }
