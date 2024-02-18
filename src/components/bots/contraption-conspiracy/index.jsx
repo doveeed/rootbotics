@@ -1,4 +1,7 @@
-import Extortion from '../../../assets/extortion.png'
+import Bomb from '../../../assets/bomb.png';
+import Snare from '../../../assets/snare.png';
+import Extortion from '../../../assets/extortion.png';
+import Raid from '../../../assets/raid.png';
 import Step from "../../step";
 import Header from "../../header";
 import Card from "../../card";
@@ -12,6 +15,7 @@ import Trait from '../../trait';
 import OneVP from '../../one-vp';
 import { CONSTANTS, getFactionColor } from '../../../utils';
 import HumanRiverfolk from '../../human-riverfolk';
+import Button from '../../button';
 
 
 export default function ContraptionConspiracy({faction, state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
@@ -31,18 +35,27 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
     const canBuyServices = isRivetfolkPlaying || isHumanRiverfolk;
     const flippedPlots = plots.filter(({flipped}) => flipped);
     const numFlippedExtortions = flippedPlots.filter(({type}) => type === 'extortion').length;
+    const unflippedBombIndex = plots.findIndex(({flipped, type}) => !flipped && type === 'bomb');
+    const unflippedSnareIndex = plots.findIndex(({flipped, type}) => !flipped && type === 'snare');
+    const unflippedExtortionIndex = plots.findIndex(({flipped, type}) => !flipped && type === 'extortion');
+    const unflippedRaidIndex = plots.findIndex(({flipped, type}) => !flipped && type === 'raid');
 
+    const flipPlot = (index) => {
+         const before = plots.slice(0,index);
+         const after = plots.slice(index + 1);
+         updateState({...state, plots: [...before,{...plots[index], flipped: true}, ...after]})
+    }
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
         <Step title="Craft" description={<>order card for <OneVP/> if it shows an available item.{canBuyServices ? CONSTANTS.riverfolkHandCardText:''}</>} />,
         <Step 
             title="Recruit"
-            description={<>{levelToRecruit[level]} in each of two <Suit suit={orderedSuit} /> clearings.</>}
+            description={<>{levelToRecruit[level]} each in two <Suit suit={orderedSuit} /> clearings.</>}
             substeps={
                 <Steps
                     type="I"
                     steps={[
-                        <Step title={<i>Clearing Tie:</i>} description={<i>The clearing without a plot token, then with the most Corvid warriors.</i>}/>,
+                        <Step title={<i>Clearing Tie:</i>} description={<i>Target the clearing without a plot token, then with the most Corvid warriors.</i>}/>,
                         <Step 
                             title={<i>Warrior Limit:</i>}
                             description={<i>If you run out of warriors to place, immediately perform <b>The Plot Thickens</b> before placing the remaining warriors.</i>}
@@ -51,12 +64,20 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                 />
             }
         />,
-        <Step 
-        title="Flip"
-        description={<>each plot token <i>(no warrior needed in clearing).</i> For each flip, gain <OneVP /> per face-up plot on the map (<Number value={flippedPlots.length} />), then resolve its flip effect.{isGamble ? <div style={{paddingLeft: '26px'}}><b>(Gamble)</b> First, have the human player with the most pieces there resolve the <b>Gamble</b> trait. </div>: ''}{isVendetta ? <div style={{paddingLeft: '26px'}}><b>(Vendetta)</b> Each plot has the immediate effect of a Bomb</div>: ''}</>}
-        />
-    
     ];
+
+    if (flippedPlots.length < 8) {
+        birdsongSteps.push(
+            <Step 
+            title="Flip"
+            description={<>each plot token <i>(no warrior needed in clearing). </i>
+            {unflippedBombIndex  !== -1 && (<> <Button onClick={()=> flipPlot(unflippedBombIndex)} img={Bomb} alt="face-up Bomb plot token">place a</Button></>)}
+            {unflippedSnareIndex  !== -1 && (<> <Button onClick={()=> flipPlot(unflippedSnareIndex)} img={Snare} alt="face-up Snare plot token">place a</Button></>)}
+            {unflippedExtortionIndex  !== -1 && (<> <Button onClick={()=> flipPlot(unflippedExtortionIndex)} img={Extortion} alt="face-up Extortion plot token" >place a</Button></>)}
+            {unflippedRaidIndex  !== -1 && (<> <Button onClick={()=> flipPlot(unflippedRaidIndex)} img={Raid} alt="face-up Raid plot token">place a</Button></>)}
+            <> For each flip, gain <OneVP /> per face-up plot on the map</> (<Number value={flippedPlots.length} />), then resolve its flip effect.{isGamble ? <div style={{paddingLeft: '26px'}}><b>(Gamble)</b> First, have the human player with the most pieces there resolve the <b>Gamble</b> trait. </div>: ''}{isVendetta ? <div style={{paddingLeft: '26px'}}><b>(Vendetta)</b> Each plot has the immediate effect of a Bomb</div>: ''}</>}
+            />);
+    }
 
     if (canBuyServices) {
         birdsongSteps.unshift(<Step title='(Riverfolk)' description={<>If the Riverfolk player does not have more victory points than you do and there is a "Favor" card in the Riverfolk Market, immediately buy and resolve its effect.</>} />)
@@ -196,7 +217,7 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                 steps={[
                                     <Step
                                         title="Battle"
-                                        description={<>in each <Suit suit={orderedSuit} /> clearing with two or more Corvid warriors.{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}</>}
+                                        description={<>in each <Suit suit={orderedSuit} /> clearing with 2 or more Corvid warriors.{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}</>}
                                         substeps={
                                             <Steps 
                                                 type="I"
@@ -220,7 +241,7 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                     <Step title="Plot." description={<>Remove 1 Corvid warrior from the <Suit suit={orderedSuit} /> clearing with the most Corvid warriors and no plot token to place a random face-down plot token there.{isMastermind ? <div style={{paddingLeft: '26px'}}><b>(Mastermind)</b> Repeat once.</div>: ''}</>} />,
                                     <Step
                                         title="The Plot Thickens."
-                                        description="If there is such a clearing that has no plot token and more than two Corvid warriors, then remove 1 Corvid warrior and place a random face-down plot token there."
+                                        description="If there is such a clearing that has no plot token and more than 2 Corvid warriors, then remove 1 Corvid warrior and place a random face-down plot token there."
                                         substeps={
                                             <Steps type="I" steps={[<Step title={<i>Clearing Tie:</i>} description={<i>Place the plot token in the clearing with the most Corvid warriors.</i>}/>]} />
                                         }
