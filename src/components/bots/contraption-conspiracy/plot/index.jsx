@@ -45,3 +45,44 @@ export default function Plot ({type, flipped, onFlip}) {
     </div>
    </div>)
 }
+
+export function PlotPreview ({type, flipped}) {
+    let bgImg = 'none';
+
+    switch(type) {
+        case 'bomb':
+            bgImg = Bomb;
+            break;
+        case 'extortion':
+            bgImg = Extortion;
+            break;
+        case 'raid':
+            bgImg = Raid;
+            break;
+        case 'snare':
+            bgImg = Snare;
+            break;
+        default:
+            break;
+    }
+   return (
+    <div
+    style={{display: 'flex', flexGrow: '0', width: '2rem', position: 'relative',}}
+        
+    >
+        <img src={bgImg} width="100%" alt={`${type} plot`} style={{opacity: flipped ? '50%' : '100%'}} />
+        <div
+        style={{
+            width: '100%', 
+            height: '100%',
+            position: 'absolute',
+            top: 0,
+            border: `2px solid ${flipped ? '#3c2d90': 'transparent'}`,
+            borderRadius: '50%', 
+            boxSizing: 'border-box',
+            display: 'flex',
+        }}
+    >
+    </div>
+   </div>)
+}
