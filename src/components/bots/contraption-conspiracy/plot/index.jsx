@@ -2,6 +2,7 @@ import Bomb from '../../../../assets/bomb.png';
 import Extortion from '../../../../assets/extortion.png';
 import Raid from '../../../../assets/raid.png';
 import Snare from '../../../../assets/snare.png';
+import UnflippedPlot from '../../../../assets/plot.png';
 
 
 export default function Plot ({type, flipped, onFlip}) {
@@ -29,7 +30,7 @@ export default function Plot ({type, flipped, onFlip}) {
     onClick={onFlip}
         
     >
-        <img src={bgImg} width="100%" alt={`${type} plot`} style={{opacity: flipped ? '50%' : '100%'}} />
+        <img src={flipped ? bgImg : UnflippedPlot} width="100%" alt={`${type} plot`} />
         <div
         style={{
             width: '100%', 
@@ -70,7 +71,7 @@ export function PlotPreview ({type, flipped}) {
     style={{display: 'flex', flexGrow: '0', width: '2rem', position: 'relative',}}
         
     >
-        <img src={bgImg} width="100%" alt={`${type} plot`} style={{opacity: flipped ? '50%' : '100%'}} />
+        <img src={flipped ? bgImg : UnflippedPlot} width="100%" alt={`${type} plot`}/>
         <div
         style={{
             width: '100%', 
