@@ -7,7 +7,7 @@ import Suit from "../../suit";
 import Number from "../../number";
 import Level from '../../level';
 import Trait from '../../trait';
-import Buildings from "./buildings";
+import Buildings, { BuildingsPreview } from "./buildings";
 import OneVP from "../../one-vp";
 import { CONSTANTS, getFactionColor } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
@@ -85,7 +85,10 @@ export default function DCMechanicalMarquise2point0({faction, state = {}, isRive
 
         }/>}/>,
         <Step title="Recruit" description={<>{levelToRecruit[level]} warriors evenly among the two lowest priority clearings you rule. If you rule only one clearing, place all warriors there. Score <OneVP /> for every 2 warriors that could not be recruited.</>}/>,
-        <Step title="Build" description={<>a {birdBuild} in the clearing you rule with the most Marquise warriors. {numBuiltSawmills + numBuiltWorkshops + numBuiltRecruiters < 18 && (<Button onClick={()=> {placeBuilding(birdBuild)}} img={buildingToImage[birdBuild]} alt={birdBuild}>place a</Button>)}{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>} />,
+        <Step title="Build" 
+        description={<>a {birdBuild} in the clearing you rule with the most Marquise warriors. {numBuiltSawmills + numBuiltWorkshops + numBuiltRecruiters < 18 && (<Button onClick={()=> {placeBuilding(birdBuild)}} img={buildingToImage[birdBuild]} alt={birdBuild}>place a</Button>)}{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''} </>} 
+        substeps={<BuildingsPreview buildings={buildings} birdBuild={birdBuild} orderedSuit={orderedSuit}/>}
+        />,
         <Step title="Move" description={<>all but 3 of your warriors from each <Suit suit={orderedSuit} /> clearing to the adjacent clearing with the most enemy pieces. Each warrior may only move once during this action. After completing all moves, also <b>Battle</b> in all clearings you moved into.</>}/>,
     ]: [
         <Step title="Battle" description={<>in each <Suit suit={orderedSuit} /> clearing.{canBuyServices ? CONSTANTS.riverfolkMercenariesBattleText: ''}</>}
@@ -95,7 +98,9 @@ export default function DCMechanicalMarquise2point0({faction, state = {}, isRive
                 <Step title={<i>Defender Tie:</i>} description={<i>Battle the player with the most pieces there, then with the most victory points.</i>}/>
             ]}/>} />,
         <Step title="Recruit" description={<>{levelToRecruit[level]} warriors evenly among ordered clearings you rule. Score <OneVP /> for every two warriors that could not be recruited.</>}/>,
-        <Step title="Build" description={<>a {suitToBuilding[orderedSuit]} in the clearing you rule with the most Marquise warriors. {placedBulidingCount[suitToBuilding[orderedSuit]] < 6 && (<Button onClick={()=> {placeBuilding(suitToBuilding[orderedSuit])}} img={suitToImage[orderedSuit]} alt={suitToBuilding[orderedSuit]}>place a</Button>)}{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>} />,
+        <Step title="Build" 
+        description={<>a {suitToBuilding[orderedSuit]} in the clearing you rule with the most Marquise warriors. {placedBulidingCount[suitToBuilding[orderedSuit]] < 6 && (<Button onClick={()=> {placeBuilding(suitToBuilding[orderedSuit])}} img={suitToImage[orderedSuit]} alt={suitToBuilding[orderedSuit]}>place a</Button>)}{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>}
+        substeps={<BuildingsPreview buildings={buildings} birdBuild={birdBuild} orderedSuit={orderedSuit} />} />,
         <Step title="Move" description={<>all but 3 of your warriors from each <Suit suit={orderedSuit} /> clearing to the adjacent clearing with the most enemy pieces. Each warrior may only move once during this action.</>}/>,
     ];
     
@@ -156,10 +161,10 @@ export default function DCMechanicalMarquise2point0({faction, state = {}, isRive
                 </Card>
                 {isSetup && (
                     <>
+                        <Buildings buildings={buildings} onUpdateBuildings={(newBuildings) => {updateState({...state, buildings: newBuildings})}}/>
                         <Card title="Ordered suit">
                             <Order order={orderedSuit} onChangeOrder={(newOrder) => updateState({...state, orderedSuit:newOrder})}/>
                         </Card>
-                        <Buildings buildings={buildings} onUpdateBuildings={(newBuildings) => {updateState({...state, buildings: newBuildings})}}/>
                         <Card title="Birdsong" headerBackgroundColor="#f6a045" headerColor="white">
                             <Steps
                                 type="1"
