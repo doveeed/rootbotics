@@ -27,3 +27,26 @@ export default function Tunnels({tunnels, onUpdateTunnels}) {
             </div>
     )
 }
+
+export function TunnelsPreview({tunnels}) {
+    return (
+        <div style={{display: 'flex', margin: '1rem auto'}}>
+                <div style={{display: 'flex', gap: '0.25rem'}}>
+                    {tunnels.map(({id, isPlaced}) => (
+                        <div key={id} style={{position: 'relative', display: 'flex', flexGrow: '0', width: '2rem'}} >
+                        <img key={id} src={Tunnel} width="100%" alt='tunnel' style={{opacity: isPlaced ? '50%': '100%'}}/>
+                        <div style={{
+                                width: '100%',
+                                height: '100%',
+                                border: `2px solid ${isPlaced ? '#d2a88d': 'transparent'}`,
+                                borderRadius: '100%',
+                                position: 'absolute',
+                                boxSizing: 'border-box',
+                                top: 0,
+                            }}></div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+    )
+}
