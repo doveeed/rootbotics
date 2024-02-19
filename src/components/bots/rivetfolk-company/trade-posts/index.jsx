@@ -51,3 +51,42 @@ export default function TradePosts({tradeposts = {}, onUpdateTradePosts}) {
         </Card>
     );
 }
+
+export function TradePostsPreview({tradeposts = {}, orderedSuit}) {
+    const {mouse = [], rabbit, fox} = tradeposts;
+    
+    return (
+            <div style={{display: 'flex', flexDirection: 'column', gap: '0.25rem', margin: '1rem auto'}}>
+               {(orderedSuit === 'bird' || orderedSuit ==='fox') &&  (<div style={{display: "flex", gap: '0.25rem', flexWrap: "wrap"}}>
+                    {fox.map(({id, isPlaced, points}) => (
+                        <div  key={id} style={{position: "relative",  display: 'flex', flexGrow: '0', width: '2rem'}}>
+                            <img src={FoxTradePost} style={{opacity: isPlaced ? '50%' : '100%'}} width="100%" alt="fox trade post"/>
+                            <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
+                                fontSize: '1rem',
+                                fontWeight: 'bold', borderRadius: '50%', border: `2px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                        </div>
+                    ))}
+                </div>)}
+                {(orderedSuit === 'bird' || orderedSuit ==='rabbit') &&  (<div style={{display: "flex", gap: '0.25rem', flexWrap: "wrap"}}>
+                    {rabbit.map(({id, isPlaced, points}) => (
+                        <div  key={id} style={{position: "relative", display: 'flex', flexGrow: '0', width: '2rem'}}>
+                            <img src={RabbitTradePost} style={{opacity: isPlaced ? '50%' : '100%'}} width="100%" alt="rabbit trade post"/>
+                            <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
+                                fontSize: '1rem',
+                                fontWeight: 'bold', borderRadius: '50%', border: `2px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                        </div>
+                    ))}
+                </div>)}
+                {(orderedSuit === 'bird' || orderedSuit ==='mouse') &&  (<div style={{display: "flex", gap: '0.25rem', flexWrap: "wrap", }}>
+                    {mouse.map(({id, isPlaced, points}) => (
+                        <div  key={id} style={{position: "relative", display: 'flex', flexGrow: '0', width: '2rem'}}>
+                            <img src={MouseTradePost} style={{opacity: isPlaced ? '50%' : '100%'}} width="100%" alt="mouse trade post"/>
+                            <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
+                                fontSize: '1rem',
+                                fontWeight: 'bold', borderRadius: '50%', border: `2px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                        </div>
+                    ))}
+                </div>)}
+            </div>
+    );
+}
