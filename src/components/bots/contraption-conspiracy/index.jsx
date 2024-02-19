@@ -80,16 +80,19 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                         <PlotPreview key={key} type={type} flipped={flipped} />
                                     ))}
                                 </div>
+                                <div style={{backgroundColor: 'black', width: '1px', flexDirection: 'column', display: 'flex'}}></div>
                                 <div style={{display: 'flex', flexDirection: 'column', gap: '0.25rem'}}>
                                     {plots.filter((({type}) => type === 'snare')).map(({type, flipped, key}) => (
                                         <PlotPreview key={key} type={type} flipped={flipped} />
                                     ))}
                                 </div>
+                                <div style={{backgroundColor: 'black', width: '1px', flexDirection: 'column', display: 'flex'}}></div>
                                 <div style={{display: 'flex', flexDirection: 'column', gap: '0.25rem'}}>
                                     {plots.filter((({type}) => type === 'extortion')).map(({type, flipped, key}) => (
                                         <PlotPreview key={key} type={type} flipped={flipped} />
                                     ))}
                                 </div>
+                                <div style={{backgroundColor: 'black', width: '1px', flexDirection: 'column', display: 'flex'}}></div>
                                 <div style={{display: 'flex', flexDirection: 'column', gap: '0.25rem'}}>
                                     {plots.filter((({type}) => type === 'raid')).map(({type, flipped, key}) => (
                                         <PlotPreview key={key} type={type} flipped={flipped} />
@@ -155,6 +158,7 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                         <Card title="Plots">
                             <div style={{display: 'flex', gap: '1rem', maxWidth: '500px'}}>
                                 <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
+                                    <div style={{textAlign: 'center'}}>Bombs</div>
                                     {plots.filter((({type}) => type === 'bomb')).map(({type, flipped, key}) => (
                                         <Plot key={key} type={type} flipped={flipped} 
                                             onFlip={() => {
@@ -171,7 +175,9 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                         }/>
                                     ))}
                                 </div>
+                                <div style={{backgroundColor: 'black', width: '1px', flexDirection: 'column', display: 'flex'}}></div>
                                 <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
+                                <div style={{textAlign: 'center'}}>Snares</div>
                                 {plots.filter((({type}) => type === 'snare')).map(({type, flipped, key}) => (
                                         <Plot key={key} type={type} flipped={flipped} 
                                             onFlip={() => {
@@ -188,7 +194,9 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                         }/>
                                     ))}
                                 </div>
+                                <div style={{backgroundColor: 'black', width: '1px', flexDirection: 'column', display: 'flex'}}></div>
                                 <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
+                                <div style={{textAlign: 'center'}}>Extortions</div>
                                 {plots.filter((({type}) => type === 'extortion')).map(({type, flipped, key}) => (
                                         <Plot key={key} type={type} flipped={flipped} 
                                             onFlip={() => {
@@ -205,7 +213,9 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                         }/>
                                     ))}
                                 </div>
+                                <div style={{backgroundColor: 'black', width: '1px', flexDirection: 'column', display: 'flex'}}></div>
                                 <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
+                                <div style={{textAlign: 'center'}}>Raids</div>
                                 {plots.filter((({type}) => type === 'raid')).map(({type, flipped, key}) => (
                                         <Plot key={key} type={type} flipped={flipped} 
                                             onFlip={() => {
