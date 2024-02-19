@@ -7,7 +7,7 @@ import Suit from "../../suit";
 import Number from "../../number";
 import Level from '../../level';
 import Trait from '../../trait';
-import Buildings from "./buildings";
+import Buildings, { BuildingsPreview } from "./buildings";
 import Decree from "./decree";
 import OneVP from "../../one-vp";
 import { CONSTANTS, getFactionColor } from "../../../utils";
@@ -198,7 +198,11 @@ export default function DCElectricEyrie({faction, state = {}, isRivetfolkPlaying
     }
 
     if (numPlacedRoosts < 7) {
-        daylightSteps.push(<Step title="Build." description={<>Place a roost in the clearing you rule of highest priority with no roost. If you cannot place a roost, you fall into Turmoil. <Button onClick={placeRoost} img={Roost} alt="roost">place a</Button>{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>}/>)
+        daylightSteps.push(
+            <Step title="Build."
+                description={<>Place a roost in the clearing you rule of highest priority with no roost. If you cannot place a roost, you fall into Turmoil. <Button onClick={placeRoost} img={Roost} alt="roost">place a</Button>{canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>}
+                substeps={<BuildingsPreview buildings={buildings}/>}    
+            />)
     } else {
         daylightSteps.push(<Step title="Fall into Turmoil" description="since there are no more roosts to place." />)
     }
