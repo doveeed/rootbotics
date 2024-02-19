@@ -8,7 +8,7 @@ import Card from "../../card";
 import Steps from "../../steps";
 import Order from "../../order";
 import Suit from "../../suit";
-import Plot from "./plot";
+import Plot, { PlotPreview } from "./plot";
 import Number from "../../number";
 import Level from '../../level';
 import Trait from '../../trait';
@@ -64,20 +64,44 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                 />
             }
         />,
-    ];
-
-    if (flippedPlots.length < 8) {
-        birdsongSteps.push(
-            <Step 
+        <Step 
             title="Flip"
             description={<>each plot token <i>(no warrior needed in clearing). </i>
-            {unflippedBombIndex  !== -1 && (<> <Button onClick={()=> flipPlot(unflippedBombIndex)} img={Bomb} alt="face-up Bomb plot token">place a</Button></>)}
-            {unflippedSnareIndex  !== -1 && (<> <Button onClick={()=> flipPlot(unflippedSnareIndex)} img={Snare} alt="face-up Snare plot token">place a</Button></>)}
-            {unflippedExtortionIndex  !== -1 && (<> <Button onClick={()=> flipPlot(unflippedExtortionIndex)} img={Extortion} alt="face-up Extortion plot token" >place a</Button></>)}
-            {unflippedRaidIndex  !== -1 && (<> <Button onClick={()=> flipPlot(unflippedRaidIndex)} img={Raid} alt="face-up Raid plot token">place a</Button></>)}
-            <> For each flip, gain <OneVP /> per face-up plot on the map</> (<Number value={flippedPlots.length} />), then resolve its flip effect.{isGamble ? <div style={{paddingLeft: '26px'}}><b>(Gamble)</b> First, have the human player with the most pieces there resolve the <b>Gamble</b> trait. </div>: ''}{isVendetta ? <div style={{paddingLeft: '26px'}}><b>(Vendetta)</b> Each plot has the immediate effect of a Bomb</div>: ''}</>}
-            />);
-    }
+                {unflippedBombIndex  !== -1 && (<> <Button onClick={()=> flipPlot(unflippedBombIndex)} img={Bomb} alt="face-up Bomb plot token">place a</Button></>)}
+                {unflippedSnareIndex  !== -1 && (<> <Button onClick={()=> flipPlot(unflippedSnareIndex)} img={Snare} alt="face-up Snare plot token">place a</Button></>)}
+                {unflippedExtortionIndex  !== -1 && (<> <Button onClick={()=> flipPlot(unflippedExtortionIndex)} img={Extortion} alt="face-up Extortion plot token" >place a</Button></>)}
+                {unflippedRaidIndex  !== -1 && (<> <Button onClick={()=> flipPlot(unflippedRaidIndex)} img={Raid} alt="face-up Raid plot token">place a</Button></>)}
+                <> For each flip, gain <OneVP /> per face-up plot on the map (<Number value={flippedPlots.length} />), then resolve its flip effect.</>
+                {isGamble ? <div style={{paddingLeft: '26px'}}><b>(Gamble)</b> First, have the human player with the most pieces there resolve the <b>Gamble</b> trait. </div>: ''}
+                {isVendetta ? <div style={{paddingLeft: '26px'}}><b>(Vendetta)</b> Each plot has the immediate effect of a Bomb</div>: ''}
+                <div style={{display: 'flex', gap: '0.25rem', margin: '1rem auto'}}>
+                                <div style={{display: 'flex', flexDirection: 'column', gap: '0.25rem'}}>
+                                    {plots.filter((({type}) => type === 'bomb')).map(({type, flipped, key}) => (
+                                        <PlotPreview key={key} type={type} flipped={flipped} />
+                                    ))}
+                                </div>
+                                <div style={{display: 'flex', flexDirection: 'column', gap: '0.25rem'}}>
+                                    {plots.filter((({type}) => type === 'snare')).map(({type, flipped, key}) => (
+                                        <PlotPreview key={key} type={type} flipped={flipped} />
+                                    ))}
+                                </div>
+                                <div style={{display: 'flex', flexDirection: 'column', gap: '0.25rem'}}>
+                                    {plots.filter((({type}) => type === 'extortion')).map(({type, flipped, key}) => (
+                                        <PlotPreview key={key} type={type} flipped={flipped} />
+                                    ))}
+                                </div>
+                                <div style={{display: 'flex', flexDirection: 'column', gap: '0.25rem'}}>
+                                    {plots.filter((({type}) => type === 'raid')).map(({type, flipped, key}) => (
+                                        <PlotPreview key={key} type={type} flipped={flipped} />
+                                    ))}
+                                </div>
+
+                            </div>
+                </>
+            }
+            
+            />
+    ];
 
     if (canBuyServices) {
         birdsongSteps.unshift(<Step title='(Riverfolk)' description={<>If the Riverfolk player does not have more victory points than you do and there is a "Favor" card in the Riverfolk Market, immediately buy and resolve its effect.</>} />)
