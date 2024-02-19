@@ -7,9 +7,9 @@ import Order from "../../order";
 import Suit from "../../suit";
 import Level from '../../level';
 import Trait from '../../trait';
-import Buildings from "./buildings";
+import Buildings, { BuildingsPreview } from "./buildings";
 import OneVP from "../../one-vp";
-import Sympathy from "./sympathy";
+import Sympathy, { SympathyPreview } from "./sympathy";
 import SympathyImg from "../../../assets/sympathy.png";
 import { getFactionColor } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
@@ -59,18 +59,23 @@ export default function DCAutomatedAlliance({faction, state = {}, isRivetfolkPla
     const daylightSteps = [
         <Step title="Spread Sympathy." description={<>Place the left-most token from the sympathy track into an unsympathetic clearing adjacent to a sympathetic clearing.{numPlacedSympathy < 10 && (<> <Button onClick={placeSypmathy} img={SympathyImg} alt="sympathy token">place a</Button></>)} Score the number of victory points revealed for the placed sympathy. (<Number value={sympathyVP} />)</>}
         substeps={
-        <Steps type="I" steps={
-            [
-                <Step title={<i>Clearing Tie:</i>} description={<i>{orderedSuit === 'bird' ? <>Place into the lowest priority clearing.</> : <>Avoid clearings with 3 or more warriors of a single player, then place in <Suit suit={orderedSuit} /> clearing.</>}</i>}/>,
-                <Step title={<i>Cannot Spread:</i>} description={<>If you cannot place a sympathy token <i>(because your Sympathy Track is empty, or because there is no clearing where you could place a sympathy token)</i>, score 5 victory points.</>}/>
-            ]}/>} />,
+            <>
+                <Steps type="I" steps={
+                [
+                    <Step title={<i>Clearing Tie:</i>} description={<i>{orderedSuit === 'bird' ? <>Place into the lowest priority clearing.</> : <>Avoid clearings with 3 or more warriors of a single player, then place in <Suit suit={orderedSuit} /> clearing.</>}</i>}/>,
+                    <Step title={<i>Cannot Spread:</i>} description={<>If you cannot place a sympathy token <i>(because your Sympathy Track is empty, or because there is no clearing where you could place a sympathy token)</i>, score 5 victory points.</>}/>
+                ]}/>
+                <SympathyPreview sympathy={sympathy} />
+            </>
+        } />,
     ];
 
     if (orderedSuit === 'bird' && numPlacedSympathy > 0 && !(fox.isPlaced && rabbit.isPlaced && mouse.isPlaced)) {
         daylightSteps.push(<Step title="Surprise Revolt." description={<>Remove all enemy pieces from the sympathetic clearing with the most enemy pieces, and place the corresponding base there.
         {!fox.isPlaced && (<> <Button onClick={() => placeBase('fox')} img={FoxBase} alt="fox base">place the</Button></>)}
         {!rabbit.isPlaced && (<> <Button onClick={() => placeBase('rabbit')} img={RabbitBase} alt="rabbit base">place the</Button></>)}
-        {!mouse.isPlaced && (<> <Button onClick={() => placeBase('mouse')} img={MouseBase} alt="mouse base">place the</Button></>)}</>}/>)
+        {!mouse.isPlaced && (<> <Button onClick={() => placeBase('mouse')} img={MouseBase} alt="mouse base">place the</Button></>)}</>}
+        substeps={<BuildingsPreview buildings={buildings} />}/>)
     }
 
     daylightSteps.push(<Step title="Public Pity." description={<>If you did not revolt this turn, <b>Spread Sympathy</b> {numPlacedSympathy < 5 ? 'twice': 'once'}.</>}/>)
@@ -125,12 +130,12 @@ export default function DCAutomatedAlliance({faction, state = {}, isRivetfolkPla
                 </Card>
                 {isSetup && (
                     <>
-                        <Card title="Ordered suit">
-                            <Order order={orderedSuit} onChangeOrder={(newOrder) => updateState({...state, orderedSuit:newOrder})}/>
-                        </Card>
                         <Card title="Sympathy Track and Bases">
                             <Sympathy sympathy={sympathy} onUpdateSympathy={(newSympathy) => updateState({...state, sympathy: newSympathy})}/>
                             <Buildings buildings={buildings} onUpdateBuildings={(newBuildings) => {updateState({...state, buildings: newBuildings})}}/>
+                        </Card>
+                        <Card title="Ordered suit">
+                            <Order order={orderedSuit} onChangeOrder={(newOrder) => updateState({...state, orderedSuit:newOrder})}/>
                         </Card>
                         <Card title="Birdsong" headerBackgroundColor="#f6a045" headerColor="white">
                             <Steps
