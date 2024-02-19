@@ -59,3 +59,42 @@ export default function Buildings({buildings = {}, onUpdateBuildings}) {
         </Card>
     );
 }
+
+export function BuildingsPreview({buildings = {}, orderedSuit, birdBuild}) {
+    const {sawmill = [], workshop = [], recruiter = []} = buildings;
+
+    return (
+        <div style={{display: 'flex', flexDirection: 'column', gap: '0.25rem', margin: '1rem auto'}}>
+            {(orderedSuit === 'fox' || (orderedSuit === 'bird' && birdBuild === 'sawmill')) && (<div style={{display: "flex", gap: '0.25rem', flexWrap: "wrap", width: '100%'}}>
+                {sawmill.map(({id, isPlaced, points}) => (
+                    <div  key={id} style={{position: "relative", display: 'flex', flexGrow: '0', width: '2rem',}}>
+                        <img style={{opacity: isPlaced ? '50%' : '100%', borderRadius: '15%'}} src={Sawmill} width="100%" alt="sawmill" />
+                        <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
+                            fontSize: '1rem',
+                            fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? 'orange' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                    </div>
+                ))}
+                </div>)}
+                {(orderedSuit === 'rabbit' || (orderedSuit === 'bird' && birdBuild === 'workshop')) && (<div style={{display: "flex", gap: '0.25rem', flexWrap: "wrap", width: '100%'}}>
+            {workshop.map(({id, isPlaced, points}) => (
+                <div  key={id} style={{position: "relative", display: 'flex', flexGrow: '0', width: '2rem',}}>
+                    <img style={{opacity: isPlaced ? '50%' : '100%', borderRadius: '15%'}} src={Workshop} width="100%" alt="workshop" />
+                    <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
+                        fontSize: '1rem',
+                        fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? 'orange' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                </div>
+            ))}
+            </div>)}
+            {(orderedSuit === 'mouse' || (orderedSuit === 'bird' && birdBuild === 'recruiter')) && (<div style={{display: "flex", gap: '0.25rem', flexWrap: "wrap", width: '100%'}}>
+                {recruiter.map(({id, isPlaced, points}) => (
+                   <div  key={id} style={{position: "relative", display: 'flex', flexGrow: '0', width: '2rem',}}>
+                   <img style={{opacity: isPlaced ? '50%' : '100%', borderRadius: '15%'}} src={Recruiter} width="100%" alt="recruiter" />
+                   <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
+                       fontSize: '1rem',
+                       fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? 'orange' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                    </div>
+                ))}
+            </div>)}
+        </div>
+    );
+}
