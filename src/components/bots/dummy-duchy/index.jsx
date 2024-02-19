@@ -8,9 +8,9 @@ import Number from "../../number";
 import Level from '../../level';
 import Trait from '../../trait';
 import Ministers, {ministerNameActionMapping} from './ministers';
-import Buildings from './buildings';
+import Buildings, { BuildingsPreview } from './buildings';
 import OneVP from '../../one-vp';
-import Tunnels from "./tunnels";
+import Tunnels, { TunnelsPreview } from "./tunnels";
 import { CONSTANTS, getFactionColor } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
 import Mole from '../../../assets/mole.png';
@@ -180,13 +180,16 @@ export default function DummyDuchy({faction, state = {}, isRivetfolkPlaying, onD
                                         {numPlacedTunnels < 3 && (<> <Button onClick={placeTunnel} alt="tunnel token" img={Tunnel}>place a</Button></>)}
                                         {isOverwhelm ?  ' Repeat once.': ''}</>}
                                         substeps={
-                                            <Steps 
-                                                type="I"
-                                                steps={[
-                                                <Step title={<i>Clearing Tie:</i>} description={<i>{isInvaders ? <><b>(Invaders)</b> Target the clearing with the most enemy buildings, but least enemy warriors.</> : orderedSuit === 'bird' ? 'The clearing with the most enemy buildings and tokens.': 'The clearing with the most empty building slots, then the fewest enemy warriors.'}</i>}/>,
-                                                <Step title={<i>No tunnel:</i>} description={<i>Move the tunnel in the clearing with the least Duchy warriors to the target clearing.</i>}/>
-                                            ]}
-                                            />
+                                            <>
+                                                <Steps 
+                                                    type="I"
+                                                    steps={[
+                                                    <Step title={<i>Clearing Tie:</i>} description={<i>{isInvaders ? <><b>(Invaders)</b> Target the clearing with the most enemy buildings, but least enemy warriors.</> : orderedSuit === 'bird' ? 'The clearing with the most enemy buildings and tokens.': 'The clearing with the most empty building slots, then the fewest enemy warriors.'}</i>}/>,
+                                                    <Step title={<i>No tunnel:</i>} description={<i>Move the tunnel in the clearing with the least Duchy warriors to the target clearing.</i>}/>
+                                                ]}
+                                                />
+                                                <TunnelsPreview tunnels={tunnels} />
+                                            </>
                                         }
                                     />,
                                     <Step 
@@ -206,7 +209,9 @@ export default function DummyDuchy({faction, state = {}, isRivetfolkPlaying, onD
                                     {numPlacedMarkets + numPlacedCitadels === 6 ? '': <> Score <OneVP /> if you can't place a building.</>}
                                     {numPlacedCitadels < 3 && (<> <Button onClick={()=> placeBuilding('citadel')} img={Citadel} alt="citadel">place a</Button></>)}
                                     {numPlacedMarkets < 3 && (<> <Button onClick={()=> placeBuilding('market')} img={Market} alt="market">place a</Button></>)}
-                                    {canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}{isInvaders ? <div style={{paddingLeft: '26px'}}><b>(Invaders)</b> If you cannot build due to no free building slots, battle in all clearings.</div>: ''}</>} />,
+                                    {canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}{isInvaders ? <div style={{paddingLeft: '26px'}}><b>(Invaders)</b> If you cannot build due to no free building slots, battle in all clearings.</div>: ''}
+                                    <BuildingsPreview buildings={buildings} />
+                                    </>} />,
                                     <Step
                                         title="Ministers."
                                         description={<>Take the actions of all Swayed Ministers from top to bottom. <i>(Captain and Foremole are always active and have no action)</i></>}
