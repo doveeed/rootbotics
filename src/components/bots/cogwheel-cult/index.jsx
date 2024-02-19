@@ -8,7 +8,7 @@ import Number from "../../number";
 import Level from '../../level';
 import Trait from '../../trait';
 import Conspiracies from "./conspiracies";
-import Gardens from "./gardens";
+import Gardens, { GardensPreview } from "./gardens";
 import Suited from "../../../assets/suited.png";
 import Bird from "../../../assets/bird.png";
 import OneVP from "../../one-vp";
@@ -134,7 +134,7 @@ export default function CogwheelCult({faction, state = {}, isRivetfolkPlaying, o
                         <Card
                             title="Conspiracy Track"
                         >
-                            <Conspiracies canBuyServices={canBuyServices} isSpiteful={isSpiteful} isFanatics={isFanatics} index={conspiracyIndex} onUpdateConspiracyIndex={(newIndex) => updateState({...state, conspiracyIndex: newIndex})} orderedSuit={orderedSuit} suitToNumPlacedGardens={suitToNumPlacedGardens} onSanctify={placeGarden} />
+                            <Conspiracies canBuyServices={canBuyServices} isSpiteful={isSpiteful} isFanatics={isFanatics} index={conspiracyIndex} onUpdateConspiracyIndex={(newIndex) => updateState({...state, conspiracyIndex: newIndex})} orderedSuit={orderedSuit} gardens={gardens} suitToNumPlacedGardens={suitToNumPlacedGardens} onSanctify={placeGarden} />
                         </Card>
                         <Card title="Daylight" headerBackgroundColor="#6db6dc" headerColor="white">
                             <Steps 
@@ -151,9 +151,10 @@ export default function CogwheelCult({faction, state = {}, isRivetfolkPlaying, o
                                         {suitToNumPlacedGardens.rabbit < 5 && (<> <Button alt="rabbit garden" img={RabbitGarden} onClick={() => placeGarden('rabbit')}>place a</Button></>) }
                                         {suitToNumPlacedGardens.fox < 5 && (<> <Button alt="fox garden" img={FoxGarden} onClick={() => placeGarden('fox')}>place a</Button></>) }
                                         {canBuyServices ? CONSTANTS.riverfolkMercenariesBuildText: ''}</>}
-                                            substeps={<Steps type='I' steps={
+                                            substeps={<><Steps type='I' steps={
                                                 [<Step title={<i>Clearing Tie:</i>} description={<i>Place the warrior into the clearing with any free building slots, then the most enemy buildings.</i>} />]
-                                            }/>}
+                                            }/>  
+                                        <GardensPreview gardens={gardens} isShowAll /></>}
                                         />
                                     </div>
                                 </div>
