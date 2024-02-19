@@ -7,7 +7,7 @@ import Suit from "../../suit";
 import Number from "../../number";
 import Level from '../../level';
 import Trait from '../../trait';
-import TradePosts from './trade-posts';
+import TradePosts, { TradePostsPreview } from './trade-posts';
 import OneVP from "../../one-vp";
 import Shield from '../../../assets/shield.png';
 import Sword from '../../../assets/sword.png';
@@ -57,15 +57,18 @@ export default function RivetfolkCompany({faction, state = {}, onDelete = () => 
             title="Build"
             description={<>a trade post in a <Suit suit={orderedSuit} /> clearing without one. Place {levelToRecruit[level]} into the same clearing.
             {(orderedSuit === 'bird' || orderedSuit === 'fox') && suitToNumPlacedTradePosts['fox'] < 3 && (<> <Button img={FoxTradePost} alt={`fox trade post`} onClick={() => placeTradePost('fox')} >place a</Button></>)}
-            {(orderedSuit === 'bird' || orderedSuit === 'rabbit') && suitToNumPlacedTradePosts['rabbit'] < 3 && (<> <Button img={RabbitTradePost} alt={`rabbit trade post`} onClick={() => placeTradePost('fox')} >place a</Button></>)}
-            {(orderedSuit === 'bird' || orderedSuit === 'mouse') && suitToNumPlacedTradePosts['mouse'] < 3 && (<> <Button img={MouseTradePost} alt={`mouse trade post`} onClick={() => placeTradePost('fox')} >place a</Button></>)} Score the number of victory points revealed for the placed trade post.{orderedSuit !== 'bird' && (<> (<Number value={tradeposts[orderedSuit].findLast(({isPlaced}) => isPlaced)?.points || 0}/>)</>)}</>}
+            {(orderedSuit === 'bird' || orderedSuit === 'rabbit') && suitToNumPlacedTradePosts['rabbit'] < 3 && (<> <Button img={RabbitTradePost} alt={`rabbit trade post`} onClick={() => placeTradePost('rabbit')} >place a</Button></>)}
+            {(orderedSuit === 'bird' || orderedSuit === 'mouse') && suitToNumPlacedTradePosts['mouse'] < 3 && (<> <Button img={MouseTradePost} alt={`mouse trade post`} onClick={() => placeTradePost('mouse')} >place a</Button></>)} Score the number of victory points revealed for the placed trade post.{orderedSuit !== 'bird' && (<> (<Number value={tradeposts[orderedSuit].findLast(({isPlaced}) => isPlaced)?.points || 0}/>)</>)}</>}
             substeps={
+                <>
                 <Steps 
                     type="I"
                     steps={[
                         <Step title={<i>Clearing Tie:</i>} description={<i>Target the clearing with pieces of the player with the most warriors in the Payments box.</i>}/>,
                     ]}
                 />
+                <TradePostsPreview tradeposts={tradeposts} orderedSuit={orderedSuit} />
+                </>
             }
         />,
         <Step title="Recruit" description={<>1 warrior in each {orderedSuit === 'bird' ? 'River': <Suit suit={orderedSuit} />} clearing.</>}
