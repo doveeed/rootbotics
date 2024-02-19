@@ -8,8 +8,9 @@ import Button from "../../../button";
 import MouseGarden from '../../../../assets/mouse-garden.png';
 import RabbitGarden from '../../../../assets/rabbit-garden.png';
 import FoxGarden from '../../../../assets/fox-garden.png';
+import { GardensPreview } from "../gardens";
 
-export default function Conspiracies({canBuyServices, index, isSpiteful, isFanatics, onUpdateConspiracyIndex, orderedSuit, suitToNumPlacedGardens, onSanctify}) {
+export default function Conspiracies({canBuyServices, index, isSpiteful, isFanatics, onUpdateConspiracyIndex, orderedSuit, gardens, suitToNumPlacedGardens, onSanctify}) {
     const conspiracies = ['Convert', 'Crusade', 'Convert', 'Crusade', 'Sanctify'];
     const selectedConspiracy = conspiracies[index];
 
@@ -67,11 +68,16 @@ export default function Conspiracies({canBuyServices, index, isSpiteful, isFanat
                         title=""
                         description={
                         <>Remove an enemy building in a <Suit suit={orderedSuit} /> clearing and place a matching garden there.
-                        {suitToNumPlacedGardens.mouse < 5 && (<> <Button alt="mouse garden" img={MouseGarden} onClick={() => onSanctify('mouse')}>place a</Button></>) }
-                        {suitToNumPlacedGardens.rabbit < 5 && (<> <Button alt="rabbit garden" img={RabbitGarden} onClick={() => onSanctify('rabbit')}>place a</Button></>) }
-                        {suitToNumPlacedGardens.fox < 5 && (<> <Button alt="fox garden" img={FoxGarden} onClick={() => onSanctify('fox')}>place a</Button></>) }
+                        {suitToNumPlacedGardens.mouse < 5 && (orderedSuit === 'mouse' || orderedSuit === 'bird') && (<> <Button alt="mouse garden" img={MouseGarden} onClick={() => onSanctify('mouse')}>place a</Button></>) }
+                        {suitToNumPlacedGardens.rabbit < 5 && (orderedSuit === 'rabbit' || orderedSuit === 'bird') && (<> <Button alt="rabbit garden" img={RabbitGarden} onClick={() => onSanctify('rabbit')}>place a</Button></>) }
+                        {suitToNumPlacedGardens.fox < 5 && (orderedSuit === 'fox' || orderedSuit === 'bird') && (<> <Button alt="fox garden" img={FoxGarden} onClick={() => onSanctify('fox')}>place a</Button></>) }
                         </>}
-                        substeps={<Steps type="I" steps={[<Step title={<i>Player Tie:</i>} description={<i>Target the player with the most victory points.</i>} />, <Step title={<i>Clearing Tie:</i>} description={<i>Target the clearing with the least enemy warriors.</i>} />]}/>}
+                        substeps={
+                            <>
+                                <Steps type="I" steps={[<Step title={<i>Player Tie:</i>} description={<i>Target the player with the most victory points.</i>} />, <Step title={<i>Clearing Tie:</i>} description={<i>Target the clearing with the least enemy warriors.</i>} />]}/>
+                                <GardensPreview gardens={gardens} orderedSuit={orderedSuit} isShowAll={orderedSuit === 'bird'}/>
+                            </>
+                        }
                     />
                 )}
             </div>
