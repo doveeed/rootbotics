@@ -1,9 +1,11 @@
 import Bomb from '../../../assets/bomb.png';
 import BombCutout from '../../../assets/bomb-cutout.png';
 import Snare from '../../../assets/snare.png';
+import SnareCutout from '../../../assets/snare-cutout.png';
 import Extortion from '../../../assets/extortion.png';
 import ExtortionCutout from '../../../assets/extortion-cutout.png';
 import Raid from '../../../assets/raid.png';
+import RaidCutout from '../../../assets/raid-cutout.png';
 import Step from "../../step";
 import Header from "../../header";
 import Card from "../../card";
@@ -179,7 +181,7 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                 </div>
                                 <div style={{backgroundColor: 'black', width: '1px', flexDirection: 'column', display: 'flex'}}></div>
                                 <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
-                                <img style={{margin: '0 auto', minWidth: '1rem'}} src={ExtortionCutout} width="32%" alt="snare plots header" />
+                                <img style={{margin: '0 auto', minWidth: '1rem'}} src={SnareCutout} width="32%" alt="snare plots header" />
                                 {plots.filter((({type}) => type === 'snare')).map(({type, flipped, key}) => (
                                         <Plot key={key} type={type} flipped={flipped} 
                                             onFlip={() => {
@@ -217,7 +219,7 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                 </div>
                                 <div style={{backgroundColor: 'black', width: '1px', flexDirection: 'column', display: 'flex'}}></div>
                                 <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
-                                <img style={{margin: '0 auto', minWidth: '1rem'}} src={ExtortionCutout} width="32%" alt="raid plots header" />
+                                <img style={{margin: '0 auto', minWidth: '1rem'}} src={RaidCutout} width="32%" alt="raid plots header" />
                                 {plots.filter((({type}) => type === 'raid')).map(({type, flipped, key}) => (
                                         <Plot key={key} type={type} flipped={flipped} 
                                             onFlip={() => {
