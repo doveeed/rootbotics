@@ -9,7 +9,7 @@ import Level from '../../level';
 import Trait from '../../trait';
 import Buildings, { BuildingsPreview } from "./buildings";
 import OneVP from "../../one-vp";
-import { CONSTANTS, getFactionColor } from "../../../utils";
+import { CONSTANTS, getFactionColor, getFactionName } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
 import Button from "../../button";
 import Sawmill from "../../../assets/sawmill.png";
@@ -127,7 +127,7 @@ export default function DCMechanicalMarquise2point0({faction, state = {}, isRive
     return (
         <section>
             <Header
-                title="DC M. Marquise 2.0"
+                title={getFactionName(faction)}
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
