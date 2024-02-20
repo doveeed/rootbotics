@@ -11,7 +11,7 @@ import TradePosts, { TradePostsPreview } from './trade-posts';
 import OneVP from "../../one-vp";
 import Shield from '../../../assets/shield.png';
 import Sword from '../../../assets/sword.png';
-import { getFactionColor } from "../../../utils";
+import { getFactionColor, getFactionName } from "../../../utils";
 import Button from "../../button";
 import FoxTradePost from '../../../assets/fox-trade-post.png';
 import MouseTradePost from '../../../assets/mouse-trade-post.png';
@@ -120,7 +120,7 @@ export default function RivetfolkCompany({faction, state = {}, onDelete = () => 
     return (
         <section>
             <Header
-                title="Rivetfolk Company"
+                title={getFactionName(faction)}
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
@@ -176,7 +176,7 @@ export default function RivetfolkCompany({faction, state = {}, onDelete = () => 
                             <Steps
                                 type="1"
                                 steps={[
-                                    <Step title="Stock the Market" description="by adding cards from the deck until there are 5 cards in the Market."/>,
+                                    <Step title="Stock the Market" description="by adding cards from the deck to the right side of the Market, until it has 5 cards."/>,
                                     <Step title="Craft" description={<>the first card added that shows an available item for <OneVP /> and then discard it.</>} />,
                                     <Step 
                                         title="Order Card"
