@@ -5,7 +5,7 @@ import VP2 from '../../../../assets/vp2.png';
 export const ministerNameActionMapping = {
     'Banker': <>Repeat the <b>Build</b> action.</>,
     'Baron of Dirt': <>Score <OneVP /> per market on the map.</>,
-    'Brigadier': <>Repeat the <b>Dig</b> action if there are at least 3 warriors in the burrow, targeting the clearing with the most enemy buildings and tokens.</>,
+    'Brigadier': <>Repeat the <b>Dig</b> action if there are at least 3 warriors in the Burrow, targeting the clearing with the most enemy buildings and tokens.</>,
     'Captain': 'As attacker, deal an extra Hit in clearings with a tunnel.',
     'Duchess of Mud': <>Score <img src={VP2} alt="two victory points" width={24} style={{marginBottom: '-4px'}}/> if all tunnels are on the map.</>,
     'Earl of Stone': <>Score <OneVP /> per citadel on the map.</>,
