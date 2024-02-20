@@ -11,7 +11,7 @@ import Buildings, { BuildingsPreview } from "./buildings";
 import OneVP from "../../one-vp";
 import Sympathy, { SympathyPreview } from "./sympathy";
 import SympathyImg from "../../../assets/sympathy.png";
-import { getFactionColor } from "../../../utils";
+import { getFactionColor, getFactionName } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
 import Button from "../../button";
 import Number from "../../number";
@@ -98,7 +98,7 @@ export default function DCAutomatedAlliance({faction, state = {}, isRivetfolkPla
     return (
         <section>
             <Header
-                title="DC Automated Alliance"
+                title={getFactionName(faction)}
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
