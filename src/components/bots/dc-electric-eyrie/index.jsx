@@ -10,7 +10,7 @@ import Trait from '../../trait';
 import Buildings, { BuildingsPreview } from "./buildings";
 import Decree from "./decree";
 import OneVP from "../../one-vp";
-import { CONSTANTS, getFactionColor } from "../../../utils";
+import { CONSTANTS, getFactionColor, getFactionName } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
 import Button from "../../button";
 import Roost from "../../../assets/roost.png";
@@ -222,7 +222,7 @@ export default function DCElectricEyrie({faction, state = {}, isRivetfolkPlaying
     return (
         <section>
             <Header
-                title="DC Electric Eyrie"
+                title={getFactionName(faction)}
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
