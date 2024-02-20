@@ -1,6 +1,8 @@
 import Bomb from '../../../assets/bomb.png';
+import BombCutout from '../../../assets/bomb-cutout.png';
 import Snare from '../../../assets/snare.png';
 import Extortion from '../../../assets/extortion.png';
+import ExtortionCutout from '../../../assets/extortion-cutout.png';
 import Raid from '../../../assets/raid.png';
 import Step from "../../step";
 import Header from "../../header";
@@ -13,7 +15,7 @@ import Number from "../../number";
 import Level from '../../level';
 import Trait from '../../trait';
 import OneVP from '../../one-vp';
-import { CONSTANTS, getFactionColor } from '../../../utils';
+import { CONSTANTS, getFactionColor, getFactionName } from '../../../utils';
 import HumanRiverfolk from '../../human-riverfolk';
 import Button from '../../button';
 
@@ -122,7 +124,7 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
     return (
         <section>
             <Header
-                title="Contraption Conspiracy"
+                title={getFactionName(faction)}
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
@@ -158,7 +160,7 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                         <Card title="Plots">
                             <div style={{display: 'flex', gap: '1rem', maxWidth: '500px'}}>
                                 <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
-                                    <div style={{textAlign: 'center', wordBreak: 'break-all', maxHeight: '19px', overflow: 'hidden'}}>Bombs</div>
+                                    <img style={{margin: '0 auto', minWidth: '1rem'}} src={BombCutout} width="32%." alt="bomb plots header" />
                                     {plots.filter((({type}) => type === 'bomb')).map(({type, flipped, key}) => (
                                         <Plot key={key} type={type} flipped={flipped} 
                                             onFlip={() => {
@@ -177,7 +179,7 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                 </div>
                                 <div style={{backgroundColor: 'black', width: '1px', flexDirection: 'column', display: 'flex'}}></div>
                                 <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
-                                <div style={{textAlign: 'center', wordBreak: 'break-all', maxHeight: '19px', overflow: 'hidden'}}>Snares</div>
+                                <img style={{margin: '0 auto', minWidth: '1rem'}} src={ExtortionCutout} width="32%" alt="snare plots header" />
                                 {plots.filter((({type}) => type === 'snare')).map(({type, flipped, key}) => (
                                         <Plot key={key} type={type} flipped={flipped} 
                                             onFlip={() => {
@@ -196,7 +198,7 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                 </div>
                                 <div style={{backgroundColor: 'black', width: '1px', flexDirection: 'column', display: 'flex'}}></div>
                                 <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
-                                <div style={{textAlign: 'center', wordBreak: 'break-all', maxHeight: '19px', overflow: 'hidden'}}>Extortions</div>
+                                <img style={{margin: '0 auto', minWidth: '1rem'}} src={ExtortionCutout} width="32%" alt="extortion plots header" />
                                 {plots.filter((({type}) => type === 'extortion')).map(({type, flipped, key}) => (
                                         <Plot key={key} type={type} flipped={flipped} 
                                             onFlip={() => {
@@ -215,7 +217,7 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                 </div>
                                 <div style={{backgroundColor: 'black', width: '1px', flexDirection: 'column', display: 'flex'}}></div>
                                 <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
-                                <div style={{textAlign: 'center', wordBreak: 'break-all', maxHeight: '19px', overflow: 'hidden'}}>Raids</div>
+                                <img style={{margin: '0 auto', minWidth: '1rem'}} src={ExtortionCutout} width="32%" alt="raid plots header" />
                                 {plots.filter((({type}) => type === 'raid')).map(({type, flipped, key}) => (
                                         <Plot key={key} type={type} flipped={flipped} 
                                             onFlip={() => {
