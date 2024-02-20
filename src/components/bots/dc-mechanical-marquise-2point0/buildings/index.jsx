@@ -70,7 +70,7 @@ export function BuildingsPreview({buildings = {}, orderedSuit, birdBuild}) {
                     <div  key={id} style={{position: "relative", display: 'flex', flexGrow: '0', width: '2rem',}}>
                         <img style={{opacity: isPlaced ? '50%' : '100%', borderRadius: '15%'}} src={Sawmill} width="100%" alt="sawmill" />
                         <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
-                            fontSize: '1rem',
+                            fontSize: '1.5rem',
                             fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? 'orange' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                     </div>
                 ))}
@@ -80,7 +80,7 @@ export function BuildingsPreview({buildings = {}, orderedSuit, birdBuild}) {
                 <div  key={id} style={{position: "relative", display: 'flex', flexGrow: '0', width: '2rem',}}>
                     <img style={{opacity: isPlaced ? '50%' : '100%', borderRadius: '15%'}} src={Workshop} width="100%" alt="workshop" />
                     <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
-                        fontSize: '1rem',
+                        fontSize: '1.5rem',
                         fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? 'orange' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                 </div>
             ))}
@@ -90,7 +90,7 @@ export function BuildingsPreview({buildings = {}, orderedSuit, birdBuild}) {
                    <div  key={id} style={{position: "relative", display: 'flex', flexGrow: '0', width: '2rem',}}>
                    <img style={{opacity: isPlaced ? '50%' : '100%', borderRadius: '15%'}} src={Recruiter} width="100%" alt="recruiter" />
                    <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
-                       fontSize: '1rem',
+                       fontSize: '1.5rem',
                        fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? 'orange' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                     </div>
                 ))}
