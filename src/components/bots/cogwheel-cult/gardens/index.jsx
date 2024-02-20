@@ -61,7 +61,7 @@ export function GardensPreview({gardens, orderedSuit, isShowAll} ) {
                         <div  key={id} style={{position: "relative", display: 'flex', flexGrow: '0', width: '2rem'}} >
                             <img style={{opacity: isPlaced ? '50%' : '100%'}} src={MouseGarden} width="100%" alt="mouse garden" />
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
-                                fontSize: '1rem',
+                                fontSize: '1.5rem',
                                 fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? '#f4e274' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     );
@@ -71,7 +71,7 @@ export function GardensPreview({gardens, orderedSuit, isShowAll} ) {
                         <div  key={id} style={{position: "relative", display: 'flex', flexGrow: '0', width: '2rem'}} >
                             <img style={{opacity: isPlaced ? '50%' : '100%'}} src={RabbitGarden} width="100%" alt="rabbit garden" />
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
-                                fontSize: '1rem',
+                                fontSize: '1.5rem',
                                 fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? '#f4e274' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     );
@@ -81,7 +81,7 @@ export function GardensPreview({gardens, orderedSuit, isShowAll} ) {
                         <div  key={id} style={{position: "relative", display: 'flex', flexGrow: '0', width: '2rem'}} >
                             <img style={{opacity: isPlaced ? '50%' : '100%'}} src={FoxGarden} width="100%" alt="fox garden" />
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
-                                fontSize: '1rem',
+                                fontSize: '1.5rem',
                                 fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? '#f4e274' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     );
