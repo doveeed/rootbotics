@@ -11,7 +11,7 @@ import Ministers, {ministerNameActionMapping} from './ministers';
 import Buildings, { BuildingsPreview } from './buildings';
 import OneVP from '../../one-vp';
 import Tunnels, { TunnelsPreview } from "./tunnels";
-import { CONSTANTS, getFactionColor } from "../../../utils";
+import { CONSTANTS, getFactionColor, getFactionName } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
 import Mole from '../../../assets/mole.png';
 import Tunnel from '../../../assets/tunnel.png';
@@ -86,7 +86,7 @@ export default function DummyDuchy({faction, state = {}, isRivetfolkPlaying, onD
     const eveningSteps = [
         <Step 
             title="Rally."
-            description={<>In each <Suit suit={orderedSuit} /> clearing without a citadel or market and less than 3 Duchy warriors, move your warriors into an adjacent clearing with a citadel or a market. If there is no such clearing, instead place the warriors into the Burrow. Then in each clearing you rule with more than 4 Duchy warriors, place all but 4 of your Warriors from that clearing into the burrow.</>}
+            description={<>In each <Suit suit={orderedSuit} /> clearing without a citadel or market and less than 3 Duchy warriors, move your warriors into an adjacent clearing with a citadel or a market. If there is no such clearing, instead place the warriors into the Burrow. Then in each clearing you rule with more than 4 Duchy warriors, place all but 4 of your Warriors from that clearing into the Burrow.</>}
             substeps={<Steps type='I' steps={[<Step title={<i><b>Destination Tie:</b></i>} description={<><i>Target the clearing with the least of your warriors.</i></>}/>]}/>}    
         />,
         <Step title="Score" description={<><OneVP /> per market on the map. (<Number value={numPlacedMarkets} />)</>}/>,
@@ -114,7 +114,7 @@ export default function DummyDuchy({faction, state = {}, isRivetfolkPlaying, onD
     return (
         <section>
             <Header
-                title="Dummy Duchy"
+                title={getFactionName(faction)}
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
@@ -175,8 +175,8 @@ export default function DummyDuchy({faction, state = {}, isRivetfolkPlaying, onD
                                     <Step
                                         title={<>Dig.{isOverwhelm ? <> <b>(Overwhelm)</b></>: ''}</>}
                                         description={
-                                        <>If there are {isOverwhelm ? '3': '4'} or more warriors in the burrow:
-                                        <br/>Place a tunnel and move {isOverwhelm ? 3: 4} warriors from your burrow into the <Suit suit={orderedSuit} /> clearing with no tunnel and none of your buildings.
+                                        <>If there are {isOverwhelm ? '3': '4'} or more warriors in the Burrow:
+                                        <br/>Place a tunnel and move {isOverwhelm ? 3: 4} warriors from your Burrow into the <Suit suit={orderedSuit} /> clearing with no tunnel and none of your buildings.
                                         {numPlacedTunnels < 3 && (<> <Button onClick={placeTunnel} alt="tunnel token" img={Tunnel}>place a</Button></>)}
                                         {isOverwhelm ?  ' Repeat once.': ''}</>}
                                         substeps={
