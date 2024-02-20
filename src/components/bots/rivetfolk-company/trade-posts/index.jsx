@@ -62,7 +62,7 @@ export function TradePostsPreview({tradeposts = {}, orderedSuit}) {
                         <div  key={id} style={{position: "relative",  display: 'flex', flexGrow: '0', width: '2rem'}}>
                             <img src={FoxTradePost} style={{opacity: isPlaced ? '50%' : '100%'}} width="100%" alt="fox trade post"/>
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
-                                fontSize: '1rem',
+                                fontSize: '1.5rem',
                                 fontWeight: 'bold', borderRadius: '50%', border: `2px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     ))}
@@ -72,7 +72,7 @@ export function TradePostsPreview({tradeposts = {}, orderedSuit}) {
                         <div  key={id} style={{position: "relative", display: 'flex', flexGrow: '0', width: '2rem'}}>
                             <img src={RabbitTradePost} style={{opacity: isPlaced ? '50%' : '100%'}} width="100%" alt="rabbit trade post"/>
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
-                                fontSize: '1rem',
+                                fontSize: '1.5rem',
                                 fontWeight: 'bold', borderRadius: '50%', border: `2px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     ))}
@@ -82,7 +82,7 @@ export function TradePostsPreview({tradeposts = {}, orderedSuit}) {
                         <div  key={id} style={{position: "relative", display: 'flex', flexGrow: '0', width: '2rem'}}>
                             <img src={MouseTradePost} style={{opacity: isPlaced ? '50%' : '100%'}} width="100%" alt="mouse trade post"/>
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
-                                fontSize: '1rem',
+                                fontSize: '1.5rem',
                                 fontWeight: 'bold', borderRadius: '50%', border: `2px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     ))}
