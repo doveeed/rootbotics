@@ -12,7 +12,7 @@ import Gardens, { GardensPreview } from "./gardens";
 import Suited from "../../../assets/suited.png";
 import Bird from "../../../assets/bird.png";
 import OneVP from "../../one-vp";
-import { CONSTANTS, getFactionColor } from "../../../utils";
+import { CONSTANTS, getFactionColor, getFactionName } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
 import Button from "../../button";
 import MouseGarden from '../../../assets/mouse-garden.png';
@@ -87,7 +87,7 @@ export default function CogwheelCult({faction, state = {}, isRivetfolkPlaying, o
     return (
         <section>
             <Header
-                title="Cogwheel Cult"
+                title={getFactionName(faction)}
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
