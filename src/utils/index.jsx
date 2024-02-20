@@ -39,3 +39,24 @@ export function getFactionColor(faction) {
     }
     return color;
 }
+
+export function getFactionName(faction) {
+    switch (faction) {
+        case 'dc-mechanical-marquise-2point0':
+            return "DC M. Marquise 2.0";
+        case 'dc-electric-eyrie':
+            return "DC Electric Eyrie";
+        case 'dc-automated-alliance':
+            return "DC Automated Alliance";
+        case 'cogwheel-cult':
+            return "Cogwheel Cult";
+        case 'rivetfolk-company':
+            return "Rivetfolk Company";
+        case 'dummy-duchy':
+            return "Dummy Duchy";
+        case 'contraption-conspiracy':
+            return "Contraption Conspiracy";
+        default:
+            return '';
+    }
+}
