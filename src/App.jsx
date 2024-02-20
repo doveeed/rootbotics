@@ -9,6 +9,7 @@ import DCMechanicalMarquise2point0 from "./components/bots/dc-mechanical-marquis
 import DCElectricEyrie from "./components/bots/dc-electric-eyrie";
 import DCAutomatedAlliance from "./components/bots/dc-automated-alliance";
 import Map from "./components/map";
+import DeleteModal from "./components/delete-modal";
 
 
 class ErrorBoundary extends Component {
@@ -40,6 +41,7 @@ class ErrorBoundary extends Component {
 function App() {
 
   const [bots, updateBots] = useState([]);
+  const [deleteModalFaction, setDeleteModalFaction] = useState(null);
   const isRivetfolkPlaying = bots.some(({faction}) => faction === 'rivetfolk-company');
   const isNoBots = bots.length === 0;
   const maps = ['fall', 'winter', 'lake', 'mountain'];
@@ -107,9 +109,7 @@ function App() {
               state={state}
               isRivetfolkPlaying={isRivetfolkPlaying}
               onDelete={() => {
-                const before = bots.slice(0,index);
-                const after = bots.slice(index + 1);
-                handleUpdateBots([...before, ...after])
+                setDeleteModalFaction(faction)
               }}
               updateState={(newState) => {
                 const before = bots.slice(0,index);
@@ -124,6 +124,18 @@ function App() {
               {maps.map (map => <Map key={map} type={map} />)}
             </div>
           )}
+          {deleteModalFaction && (<DeleteModal faction={deleteModalFaction} onConfirm={() => {
+            const index = bots.findIndex(({faction}) => faction === deleteModalFaction);
+            if (index === -1) {
+              setDeleteModalFaction(null);
+              return;
+            }
+            
+            const before = bots.slice(0,index);
+            const after = bots.slice(index + 1);
+            handleUpdateBots([...before, ...after])
+            setDeleteModalFaction(null);
+          }} onCancel={() => setDeleteModalFaction(null)}/>)}
         </main>
       </ErrorBoundary>
         <footer>
