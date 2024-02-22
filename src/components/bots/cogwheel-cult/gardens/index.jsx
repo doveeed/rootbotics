@@ -2,8 +2,10 @@ import Card from "../../../card";
 import MouseGarden from '../../../../assets/mouse-garden.png';
 import RabbitGarden from '../../../../assets/rabbit-garden.png';
 import FoxGarden from '../../../../assets/fox-garden.png';
+import { useSettings } from "../../../../hooks/use-settings";
 
 export default function Gardens({gardens, onUpdateGardens} ) {
+    const {factionColor} = useSettings()
     const {mouse = [], rabbit = [], fox = []} = gardens;
     const handleClick = ({index, type}) => {
         const garden = gardens[type][index];
@@ -22,7 +24,7 @@ export default function Gardens({gardens, onUpdateGardens} ) {
                             <img style={{opacity: isPlaced ? '50%' : '100%'}} src={MouseGarden} width="100%" alt="mouse garden" />
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                                 fontSize: '2rem',
-                                fontWeight: 'bold', borderRadius: '15%', border: `4px solid ${isPlaced ? '#f4e274' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                                fontWeight: 'bold', borderRadius: '15%', border: `4px solid ${isPlaced ? factionColor : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     );
                 })}</div>
@@ -32,7 +34,7 @@ export default function Gardens({gardens, onUpdateGardens} ) {
                             <img style={{opacity: isPlaced ? '50%' : '100%'}} src={RabbitGarden} width="100%" alt="rabbit garden" />
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                                 fontSize: '2rem',
-                                fontWeight: 'bold', borderRadius: '15%', border: `4px solid ${isPlaced ? '#f4e274' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                                fontWeight: 'bold', borderRadius: '15%', border: `4px solid ${isPlaced ? factionColor : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     );
                 })}</div>
@@ -42,7 +44,7 @@ export default function Gardens({gardens, onUpdateGardens} ) {
                             <img style={{opacity: isPlaced ? '50%' : '100%'}} src={FoxGarden} width="100%" alt="fox garden" />
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                                 fontSize: '2rem',
-                                fontWeight: 'bold', borderRadius: '15%', border: `4px solid ${isPlaced ? '#f4e274' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                                fontWeight: 'bold', borderRadius: '15%', border: `4px solid ${isPlaced ? factionColor : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     );
                 })}</div>
@@ -52,6 +54,7 @@ export default function Gardens({gardens, onUpdateGardens} ) {
 }
 
 export function GardensPreview({gardens, orderedSuit, isShowAll} ) {
+    const {factionColor} = useSettings()
     const {mouse = [], rabbit = [], fox = []} = gardens;
 
     return (
@@ -62,7 +65,7 @@ export function GardensPreview({gardens, orderedSuit, isShowAll} ) {
                             <img style={{opacity: isPlaced ? '50%' : '100%'}} src={MouseGarden} width="100%" alt="mouse garden" />
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                                 fontSize: '1.5rem',
-                                fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? '#f4e274' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                                fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? factionColor : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     );
                 })}</div>)}
@@ -72,7 +75,7 @@ export function GardensPreview({gardens, orderedSuit, isShowAll} ) {
                             <img style={{opacity: isPlaced ? '50%' : '100%'}} src={RabbitGarden} width="100%" alt="rabbit garden" />
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                                 fontSize: '1.5rem',
-                                fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? '#f4e274' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                                fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? factionColor : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     );
                 })}</div>)}
@@ -82,7 +85,7 @@ export function GardensPreview({gardens, orderedSuit, isShowAll} ) {
                             <img style={{opacity: isPlaced ? '50%' : '100%'}} src={FoxGarden} width="100%" alt="fox garden" />
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                                 fontSize: '1.5rem',
-                                fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? '#f4e274' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                                fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? factionColor : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     );
                 })}</div>)}
