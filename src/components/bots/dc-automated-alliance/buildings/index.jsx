@@ -1,9 +1,11 @@
 
 import FoxBase from '../../../../assets/fox-base.png';
 import RabbitBase from '../../../../assets/rabbit-base.png';
-import MouseBase from '../../../../assets/mouse-base.png';
+import MouseBase from '../../../../assets/mouse-base.png'
+import { useSettings } from '../../../../hooks/use-settings';
 
 export default function Buildings({buildings, onUpdateBuildings}) {
+    const {factionColor } = useSettings();
     const {fox, rabbit, mouse} = buildings
 
     const handleClick = (type) => {
@@ -20,7 +22,7 @@ export default function Buildings({buildings, onUpdateBuildings}) {
                         <div style={{
                             width: '100%',
                             height: '100%',
-                            border: `4px solid ${fox.isPlaced ? '#6db456': 'transparent'}`,
+                            border: `4px solid ${fox.isPlaced ? factionColor: 'transparent'}`,
                             borderRadius: '15%',
                             position: 'absolute',
                             boxSizing: 'border-box',
@@ -32,7 +34,7 @@ export default function Buildings({buildings, onUpdateBuildings}) {
                         <div style={{
                             width: '100%',
                             height: '100%',
-                            border: `4px solid ${rabbit.isPlaced ? '#6db456': 'transparent'}`,
+                            border: `4px solid ${rabbit.isPlaced ? factionColor: 'transparent'}`,
                             borderRadius: '15%',
                             position: 'absolute',
                             boxSizing: 'border-box',
@@ -44,7 +46,7 @@ export default function Buildings({buildings, onUpdateBuildings}) {
                         <div style={{
                             width: '100%',
                             height: '100%',
-                            border: `4px solid ${mouse.isPlaced ? '#6db456': 'transparent'}`,
+                            border: `4px solid ${mouse.isPlaced ? factionColor: 'transparent'}`,
                             borderRadius: '15%',
                             position: 'absolute',
                             boxSizing: 'border-box',
@@ -58,6 +60,7 @@ export default function Buildings({buildings, onUpdateBuildings}) {
 }
 
 export function BuildingsPreview({buildings}) {
+    const {factionColor } = useSettings();
     const {fox, rabbit, mouse} = buildings
     
     return (
@@ -69,7 +72,7 @@ export function BuildingsPreview({buildings}) {
                         <div style={{
                             width: '100%',
                             height: '100%',
-                            border: `4px solid ${fox.isPlaced ? '#6db456': 'transparent'}`,
+                            border: `4px solid ${fox.isPlaced ? factionColor: 'transparent'}`,
                             borderRadius: '15%',
                             position: 'absolute',
                             boxSizing: 'border-box',
@@ -81,7 +84,7 @@ export function BuildingsPreview({buildings}) {
                         <div style={{
                             width: '100%',
                             height: '100%',
-                            border: `4px solid ${rabbit.isPlaced ? '#6db456': 'transparent'}`,
+                            border: `4px solid ${rabbit.isPlaced ? factionColor: 'transparent'}`,
                             borderRadius: '15%',
                             position: 'absolute',
                             boxSizing: 'border-box',
@@ -93,7 +96,7 @@ export function BuildingsPreview({buildings}) {
                         <div style={{
                             width: '100%',
                             height: '100%',
-                            border: `4px solid ${mouse.isPlaced ? '#6db456': 'transparent'}`,
+                            border: `4px solid ${mouse.isPlaced ? factionColor: 'transparent'}`,
                             borderRadius: '15%',
                             position: 'absolute',
                             boxSizing: 'border-box',
