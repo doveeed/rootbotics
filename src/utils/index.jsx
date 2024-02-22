@@ -60,3 +60,21 @@ export function getFactionName(faction) {
             return '';
     }
 }
+
+export function getFactionFontColor(faction) {
+    switch (faction) {
+        case 'dc-mechanical-marquise-2point0':
+            return 'black';
+        case 'dc-electric-eyrie':
+        case 'dc-automated-alliance':
+            return 'white';
+        case 'cogwheel-cult':
+        case 'rivetfolk-company':
+        case 'dummy-duchy':
+            return 'black';
+        case 'contraption-conspiracy':
+            return 'white'
+        default:
+            return 'black';
+    }
+}
