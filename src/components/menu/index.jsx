@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { getFactionImageSrc } from "../../utils";
 
 export default function Menu ({bots, onAddBot = () => {}}) {
     const botFactions = bots.map(bot => bot.faction);
@@ -622,10 +623,13 @@ export default function Menu ({bots, onAddBot = () => {}}) {
             {isOpen && (
                 <div style={{ position: "absolute", right: '0', top: '54px', width: '300px', backgroundColor: 'white', cursor: "pointer"}}>
                     {filteredOptions.map(({faction, name}, index) => (
-                        <div key={`${faction}-${index}`} style={{padding: '0.5rem'}} onClick={() => {
+                        <div key={`${faction}-${index}`} style={{padding: '1rem 0.5rem', display: 'flex', gap: '0.5rem', alignItems: 'center', borderBottom: index < filteredOptions.length - 1 ? '1px solid black': 'none'}} onClick={() => {
                             setIsOpen(false)
                             addBot(faction)}
-                        }>{name}</div>
+                        } >
+                            <img src={getFactionImageSrc(faction)} alt={faction} width={16} height={16}/>
+                            <div>{name}</div>
+                        </div>
                     ))}
                 </div>
             )}
