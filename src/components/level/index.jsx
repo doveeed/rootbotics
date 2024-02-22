@@ -1,11 +1,12 @@
-import { getFactionColor } from '../../utils';
+import { useSettings } from '../../hooks/use-settings';
 import Card from '../card';
 import OneVP from '../one-vp';
 
-export default function Level({faction,level, labels,onChangeLevel}) {
+export default function Level({level, labels,onChangeLevel}) {
+    const {faction, factionColor} = useSettings();
 
     const onChange = (event) => onChangeLevel(event.target.value);
-    const accentColor = getFactionColor(faction);
+    const accentColor = factionColor;
     
     return (
         <Card title="Difficulty Level">
