@@ -10,6 +10,8 @@ import DCElectricEyrie from "./components/bots/dc-electric-eyrie";
 import DCAutomatedAlliance from "./components/bots/dc-automated-alliance";
 import Map from "./components/map";
 import DeleteModal from "./components/delete-modal";
+import { SettingsContextProvider } from "./hooks/use-settings";
+import { getFactionColor, getFactionFontColor, getFactionName } from "./utils";
 
 
 class ErrorBoundary extends Component {
@@ -103,20 +105,26 @@ function App() {
               return null;
           }
           return (
-            <Faction
+            <SettingsContextProvider 
               key={key}
               faction={faction}
-              state={state}
-              isRivetfolkPlaying={isRivetfolkPlaying}
-              onDelete={() => {
-                setDeleteModalFaction(faction)
-              }}
-              updateState={(newState) => {
-                const before = bots.slice(0,index);
-                const after = bots.slice(index + 1);
-                handleUpdateBots([...before,{...bot, state: {...newState}}, ...after])
-              }}
-            />
+              name={getFactionName(faction)}
+              factionColor={getFactionColor(faction)}
+              fontColor={getFactionFontColor(faction)}
+            >
+              <Faction
+                state={state}
+                isRivetfolkPlaying={isRivetfolkPlaying}
+                onDelete={() => {
+                  setDeleteModalFaction(faction)
+                }}
+                updateState={(newState) => {
+                  const before = bots.slice(0,index);
+                  const after = bots.slice(index + 1);
+                  handleUpdateBots([...before,{...bot, state: {...newState}}, ...after])
+                }}
+              />
+            </SettingsContextProvider>
           );
         })}
           {isNoBots && (
