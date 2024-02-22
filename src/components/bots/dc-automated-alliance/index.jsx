@@ -11,7 +11,6 @@ import Buildings, { BuildingsPreview } from "./buildings";
 import OneVP from "../../one-vp";
 import Sympathy, { SympathyPreview } from "./sympathy";
 import SympathyImg from "../../../assets/sympathy.png";
-import { getFactionColor, getFactionName } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
 import Button from "../../button";
 import Number from "../../number";
@@ -19,7 +18,7 @@ import FoxBase from '../../../assets/fox-base.png';
 import MouseBase from '../../../assets/mouse-base.png';
 import RabbitBase from '../../../assets/rabbit-base.png';
 
-export default function DCAutomatedAlliance({faction, state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
+export default function DCAutomatedAlliance({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', buildings = {}, sympathy = [], isHumanRiverfolk = false} = state;
     const {fox, rabbit, mouse} = buildings;
     const isBossMode = level === 'boss';
@@ -98,12 +97,10 @@ export default function DCAutomatedAlliance({faction, state = {}, isRivetfolkPla
     return (
         <section>
             <Header
-                title={getFactionName(faction)}
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor={getFactionColor(faction)}
-                color="white"
+                
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
@@ -117,12 +114,12 @@ export default function DCAutomatedAlliance({faction, state = {}, isRivetfolkPla
                                 }
                             />
                         </Card >
-                        <Level faction={faction} level={level} labels={{'beginner': <>You <b>Organize</b> in each clearing with a base and <b>4 or more</b> Alliance warriors.</>, 'expert': <>You <b>Organize</b> in each clearing with a base and <b>3 or more</b> Alliance warriors.</>, 'master': <>You <b>Organize</b> in each clearing with a base and <b>2 or more</b> Alliance warriors.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
-                        {!isRivetfolkPlaying && (<HumanRiverfolk faction={faction} onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
+                        <Level level={level} labels={{'beginner': <>You <b>Organize</b> in each clearing with a base and <b>4 or more</b> Alliance warriors.</>, 'expert': <>You <b>Organize</b> in each clearing with a base and <b>3 or more</b> Alliance warriors.</>, 'master': <>You <b>Organize</b> in each clearing with a base and <b>2 or more</b> Alliance warriors.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        {!isRivetfolkPlaying && (<HumanRiverfolk onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
                     </>
                 )}
                 <Card title='Traits'>
-                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={faction} isSetup={isSetup} onUpdate={(isEnabled) => {
+                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait}  isSetup={isSetup} onUpdate={(isEnabled) => {
                         const before = traits.slice(0,index);
                         const after = traits.slice(index + 1);
                         updateState({...state, traits: [...before, {...trait, isEnabled}, ...after]})
@@ -131,8 +128,8 @@ export default function DCAutomatedAlliance({faction, state = {}, isRivetfolkPla
                 {isSetup && (
                     <>
                         <Card title="Sympathy Track and Bases">
-                            <Sympathy sympathy={sympathy} onUpdateSympathy={(newSympathy) => updateState({...state, sympathy: newSympathy})}/>
-                            <Buildings buildings={buildings} onUpdateBuildings={(newBuildings) => {updateState({...state, buildings: newBuildings})}}/>
+                            <Sympathy sympathy={sympathy} onUpdateSympathy={(newSympathy) => updateState({...state, sympathy: newSympathy})}  />
+                            <Buildings buildings={buildings} onUpdateBuildings={(newBuildings) => {updateState({...state, buildings: newBuildings})}} />
                         </Card>
                         <Card title="Ordered suit">
                             <Order order={orderedSuit} onChangeOrder={(newOrder) => updateState({...state, orderedSuit:newOrder})}/>
