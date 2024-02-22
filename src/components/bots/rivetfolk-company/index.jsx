@@ -11,14 +11,13 @@ import TradePosts, { TradePostsPreview } from './trade-posts';
 import OneVP from "../../one-vp";
 import Shield from '../../../assets/shield.png';
 import Sword from '../../../assets/sword.png';
-import { getFactionColor, getFactionName } from "../../../utils";
 import Button from "../../button";
 import FoxTradePost from '../../../assets/fox-trade-post.png';
 import MouseTradePost from '../../../assets/mouse-trade-post.png';
 import RabbitTradePost from '../../../assets/rabbit-trade-post.png';
 
 
-export default function RivetfolkCompany({faction, state = {}, onDelete = () => {}, updateState = () => {}}) {
+export default function RivetfolkCompany({ state = {}, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', tradeposts = {}, protectionism = 'none'} = state;
     const isBossMode = level === 'boss';
     const isFerocious = traits.some(({id, isEnabled}) => id === 'ferocious' && isEnabled);
@@ -120,11 +119,9 @@ export default function RivetfolkCompany({faction, state = {}, onDelete = () => 
     return (
         <section>
             <Header
-                title={getFactionName(faction)}
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor={getFactionColor(faction)}
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
@@ -141,11 +138,11 @@ export default function RivetfolkCompany({faction, state = {}, onDelete = () => 
                                 }
                             />
                         </Card >
-                        <Level faction={faction} level={level} labels={{beginner: <>Whenever you <b>Build</b>, place <b>0 warriors</b> in the clearing. Score <b>0 VP</b> when you have Shield Protectionism in effect.</>, expert: <>Whenever you <b>Build</b>, place <b>1 warrior</b> in the clearing. Score <b>1 VP</b> when you have Shield Protectionism in effect.</>, master: <>Whenever you <b>Build</b>, place <b>2 warriors</b> in the clearing. Score <b>2 VP</b> when you have Shield Protectionism in effect.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        <Level  level={level} labels={{beginner: <>Whenever you <b>Build</b>, place <b>0 warriors</b> in the clearing. Score <b>0 VP</b> when you have Shield Protectionism in effect.</>, expert: <>Whenever you <b>Build</b>, place <b>1 warrior</b> in the clearing. Score <b>1 VP</b> when you have Shield Protectionism in effect.</>, master: <>Whenever you <b>Build</b>, place <b>2 warriors</b> in the clearing. Score <b>2 VP</b> when you have Shield Protectionism in effect.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
                     </>
                 )}
                 <Card title='Traits'>
-                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={faction} isSetup={isSetup} onUpdate={(isEnabled) => {
+                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait}  isSetup={isSetup} onUpdate={(isEnabled) => {
                         const before = traits.slice(0,index);
                         const after = traits.slice(index + 1);
                         updateState({...state, traits: [...before, {...trait, isEnabled}, ...after]})
