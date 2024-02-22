@@ -11,7 +11,7 @@ import Ministers, {ministerNameActionMapping} from './ministers';
 import Buildings, { BuildingsPreview } from './buildings';
 import OneVP from '../../one-vp';
 import Tunnels, { TunnelsPreview } from "./tunnels";
-import { CONSTANTS, getFactionColor, getFactionName } from "../../../utils";
+import { CONSTANTS } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
 import Mole from '../../../assets/mole.png';
 import Tunnel from '../../../assets/tunnel.png';
@@ -20,7 +20,7 @@ import Market from '../../../assets/market-building.png';
 import Button from "../../button";
 
 
-export default function DummyDuchy({faction, state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
+export default function DummyDuchy({ state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], ministers, buildings = [], tunnels = [], level = 'expert', isHumanRiverfolk = false} = state;
     const isBossMode = level === 'boss';
     const isOverwhelm = traits.find(({id}) => id === 'overwhelm').isEnabled;
@@ -114,11 +114,9 @@ export default function DummyDuchy({faction, state = {}, isRivetfolkPlaying, onD
     return (
         <section>
             <Header
-                title={getFactionName(faction)}
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor={getFactionColor(faction)}
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
@@ -138,12 +136,12 @@ export default function DummyDuchy({faction, state = {}, isRivetfolkPlaying, onD
                         <Card title="Minister Track">
                             <Ministers ministers={ministers} onUpdateMinisters={(newMinisters) => updateState({...state, ministers: newMinisters})} />
                         </Card>
-                        <Level faction={faction} level={level} labels={{beginner: <>Whenever you <b>Recruit</b>, place <b>1 warrior</b> in the Burrow.</>, expert: <>Whenever you <b>Recruit</b>, place <b>2 warriors</b> in the Burrow.</>, master: <>Whenever you <b>Recruit</b>, place <b>3 warriors</b> in the Burrow.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
-                        {!isRivetfolkPlaying && (<HumanRiverfolk faction={faction} onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
+                        <Level  level={level} labels={{beginner: <>Whenever you <b>Recruit</b>, place <b>1 warrior</b> in the Burrow.</>, expert: <>Whenever you <b>Recruit</b>, place <b>2 warriors</b> in the Burrow.</>, master: <>Whenever you <b>Recruit</b>, place <b>3 warriors</b> in the Burrow.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        {!isRivetfolkPlaying && (<HumanRiverfolk  onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
                     </>
                 )}
                 <Card title='Traits'>
-                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={faction} isSetup={isSetup} onUpdate={(isEnabled) => {
+                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait}  isSetup={isSetup} onUpdate={(isEnabled) => {
                         const before = traits.slice(0,index);
                         const after = traits.slice(index + 1);
                         updateState({...state, traits: [...before, {...trait, isEnabled}, ...after]})
