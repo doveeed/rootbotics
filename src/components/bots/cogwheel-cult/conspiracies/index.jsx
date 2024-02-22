@@ -10,7 +10,7 @@ import RabbitGarden from '../../../../assets/rabbit-garden.png';
 import FoxGarden from '../../../../assets/fox-garden.png';
 import { GardensPreview } from "../gardens";
 
-export default function Conspiracies({canBuyServices, index, isSpiteful, isFanatics, onUpdateConspiracyIndex, orderedSuit, gardens, suitToNumPlacedGardens, onSanctify}) {
+export default function Conspiracies({canBuyServices, index, isSpiteful, isFanatics, onUpdateConspiracyIndex, orderedSuit, gardens, suitToNumPlacedGardens, onSanctify, faction}) {
     const conspiracies = ['Convert', 'Crusade', 'Convert', 'Crusade', 'Sanctify'];
     const selectedConspiracy = conspiracies[index];
 
@@ -75,7 +75,7 @@ export default function Conspiracies({canBuyServices, index, isSpiteful, isFanat
                         substeps={
                             <>
                                 <Steps type="I" steps={[<Step title={<i>Player Tie:</i>} description={<i>Target the player with the most victory points.</i>} />, <Step title={<i>Clearing Tie:</i>} description={<i>Target the clearing with the least enemy warriors.</i>} />]}/>
-                                <GardensPreview gardens={gardens} orderedSuit={orderedSuit} isShowAll={orderedSuit === 'bird'}/>
+                                <GardensPreview gardens={gardens} orderedSuit={orderedSuit} isShowAll={orderedSuit === 'bird'} />
                             </>
                         }
                     />
