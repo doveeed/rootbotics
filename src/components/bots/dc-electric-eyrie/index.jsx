@@ -10,12 +10,12 @@ import Trait from '../../trait';
 import Buildings, { BuildingsPreview } from "./buildings";
 import Decree from "./decree";
 import OneVP from "../../one-vp";
-import { CONSTANTS, getFactionColor, getFactionName } from "../../../utils";
+import { CONSTANTS } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
 import Button from "../../button";
 import Roost from "../../../assets/roost.png";
 
-export default function DCElectricEyrie({faction, state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
+export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, traits = [], level = 'expert', buildings = [], isHumanRiverfolk = false, decree = {}} = state;
     const {fox, mouse, rabbit, bird} = decree;
     const isBossMode = level === 'boss';
@@ -222,12 +222,10 @@ export default function DCElectricEyrie({faction, state = {}, isRivetfolkPlaying
     return (
         <section>
             <Header
-                title={getFactionName(faction)}
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor={getFactionColor(faction)}
-                color="white"
+                
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
@@ -246,12 +244,12 @@ export default function DCElectricEyrie({faction, state = {}, isRivetfolkPlaying
                         <Card title="Decree">
                             <Decree decree={decree} onUpdateDecree={(newDecree) => updateState({...state, decree: newDecree})}/>
                         </Card>
-                        <Level faction={faction} level={level} labels={{'beginner': <>Whenever you <b>Recruit</b> for <Suit suit="bird" />, place <b>one fewer</b> warrior than the card count.</>, 'expert': <>Whenever you <b>Recruit</b> for <Suit suit="bird" />, place <b>the same</b> number of warriors as the card count.</>, 'master': <>Whenever you <b>Recruit</b> for <Suit suit="bird" />, place <b>one more</b> warrior than the card count.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
-                        {!isRivetfolkPlaying && (<HumanRiverfolk faction={faction} onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
+                        <Level  level={level} labels={{'beginner': <>Whenever you <b>Recruit</b> for <Suit suit="bird" />, place <b>one fewer</b> warrior than the card count.</>, 'expert': <>Whenever you <b>Recruit</b> for <Suit suit="bird" />, place <b>the same</b> number of warriors as the card count.</>, 'master': <>Whenever you <b>Recruit</b> for <Suit suit="bird" />, place <b>one more</b> warrior than the card count.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        {!isRivetfolkPlaying && (<HumanRiverfolk  onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
                     </>
                 )}
                 <Card title='Traits'>
-                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={faction} isSetup={isSetup} onUpdate={(isEnabled) => {
+                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait}  isSetup={isSetup} onUpdate={(isEnabled) => {
                         const before = traits.slice(0,index);
                         const after = traits.slice(index + 1);
                         updateState({...state, traits: [...before, {...trait, isEnabled}, ...after]})
