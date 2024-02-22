@@ -17,13 +17,12 @@ import Number from "../../number";
 import Level from '../../level';
 import Trait from '../../trait';
 import OneVP from '../../one-vp';
-import { CONSTANTS, getFactionColor, getFactionName } from '../../../utils';
+import { CONSTANTS } from '../../../utils';
 import HumanRiverfolk from '../../human-riverfolk';
 import Button from '../../button';
 
 
-export default function ContraptionConspiracy({faction, state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
-
+export default function ContraptionConspiracy({ state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
 
     const {isSetup = false, orderedSuit = 'bird', plots = [], traits = [], level = 'expert', isHumanRiverfolk = false} = state;
     const isBossMode = level === 'boss';
@@ -87,19 +86,19 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                 <div style={{backgroundColor: 'black', width: '1px', flexDirection: 'column', display: 'flex'}}></div>
                                 <div style={{display: 'flex', flexDirection: 'column', gap: '0.25rem'}}>
                                     {plots.filter((({type}) => type === 'snare')).map(({type, flipped, key}) => (
-                                        <PlotPreview key={key} type={type} flipped={flipped} />
+                                        <PlotPreview key={key} type={type} flipped={flipped}  />
                                     ))}
                                 </div>
                                 <div style={{backgroundColor: 'black', width: '1px', flexDirection: 'column', display: 'flex'}}></div>
                                 <div style={{display: 'flex', flexDirection: 'column', gap: '0.25rem'}}>
                                     {plots.filter((({type}) => type === 'extortion')).map(({type, flipped, key}) => (
-                                        <PlotPreview key={key} type={type} flipped={flipped} />
+                                        <PlotPreview key={key} type={type} flipped={flipped}  />
                                     ))}
                                 </div>
                                 <div style={{backgroundColor: 'black', width: '1px', flexDirection: 'column', display: 'flex'}}></div>
                                 <div style={{display: 'flex', flexDirection: 'column', gap: '0.25rem'}}>
                                     {plots.filter((({type}) => type === 'raid')).map(({type, flipped, key}) => (
-                                        <PlotPreview key={key} type={type} flipped={flipped} />
+                                        <PlotPreview key={key} type={type} flipped={flipped}  />
                                     ))}
                                 </div>
 
@@ -126,12 +125,10 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
     return (
         <section>
             <Header
-                title={getFactionName(faction)}
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor={getFactionColor(faction)}
-                color="white"
+                
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
@@ -146,12 +143,12 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                 }
                             />
                         </Card >
-                        <Level faction={faction} level={level} labels={{beginner: <>Whenever you <b>Recruit</b>, place <b>1 warrior</b> in each clearing.</>, expert: <>Whenever you <b>Recruit</b>, place <b>2 warriors</b> in each clearing.</>, master: <>Whenever you <b>Recruit</b>, place <b>3 warriors</b> in each clearing.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
-                        {!isRivetfolkPlaying && (<HumanRiverfolk faction={faction} onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
+                        <Level  level={level} labels={{beginner: <>Whenever you <b>Recruit</b>, place <b>1 warrior</b> in each clearing.</>, expert: <>Whenever you <b>Recruit</b>, place <b>2 warriors</b> in each clearing.</>, master: <>Whenever you <b>Recruit</b>, place <b>3 warriors</b> in each clearing.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        {!isRivetfolkPlaying && (<HumanRiverfolk  onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
                     </>
                 )}
                 <Card title='Traits'>
-                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={faction} isSetup={isSetup} onUpdate={(isEnabled) => {
+                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait}  isSetup={isSetup} onUpdate={(isEnabled) => {
                         const before = traits.slice(0,index);
                         const after = traits.slice(index + 1);
                         updateState({...state, traits: [...before, {...trait, isEnabled}, ...after]})
@@ -164,7 +161,7 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                 <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
                                     <img style={{margin: '0 auto', minWidth: '1rem'}} src={BombCutout} width="32%." alt="bomb plots header" />
                                     {plots.filter((({type}) => type === 'bomb')).map(({type, flipped, key}) => (
-                                        <Plot key={key} type={type} flipped={flipped} 
+                                        <Plot key={key} type={type} flipped={flipped}  
                                             onFlip={() => {
                                                 const index = plots.findIndex((plot) => plot.key === key);
                                                 const before = plots.slice(0,index);
@@ -183,7 +180,7 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                 <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
                                 <img style={{margin: '0 auto', minWidth: '1rem'}} src={SnareCutout} width="32%" alt="snare plots header" />
                                 {plots.filter((({type}) => type === 'snare')).map(({type, flipped, key}) => (
-                                        <Plot key={key} type={type} flipped={flipped} 
+                                        <Plot key={key} type={type} flipped={flipped}  
                                             onFlip={() => {
                                                 const index = plots.findIndex((plot) => plot.key === key);
                                                 const before = plots.slice(0,index);
@@ -202,7 +199,7 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                 <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
                                 <img style={{margin: '0 auto', minWidth: '1rem'}} src={ExtortionCutout} width="32%" alt="extortion plots header" />
                                 {plots.filter((({type}) => type === 'extortion')).map(({type, flipped, key}) => (
-                                        <Plot key={key} type={type} flipped={flipped} 
+                                        <Plot key={key} type={type} flipped={flipped}  
                                             onFlip={() => {
                                                 const index = plots.findIndex((plot) => plot.key === key);
                                                 const before = plots.slice(0,index);
@@ -221,7 +218,7 @@ export default function ContraptionConspiracy({faction, state = {}, isRivetfolkP
                                 <div style={{display: 'flex', flex: '1', flexDirection: 'column', gap: '1rem'}}>
                                 <img style={{margin: '0 auto', minWidth: '1rem'}} src={RaidCutout} width="32%" alt="raid plots header" />
                                 {plots.filter((({type}) => type === 'raid')).map(({type, flipped, key}) => (
-                                        <Plot key={key} type={type} flipped={flipped} 
+                                        <Plot key={key} type={type} flipped={flipped}  
                                             onFlip={() => {
                                                 const index = plots.findIndex((plot) => plot.key === key);
                                                 const before = plots.slice(0,index);
