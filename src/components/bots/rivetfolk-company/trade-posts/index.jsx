@@ -2,8 +2,10 @@ import Card from "../../../card";
 import MouseTradePost from '../../../../assets/mouse-trade-post.png';
 import RabbitTradePost from '../../../../assets/rabbit-trade-post.png';
 import FoxTradePost from '../../../../assets/fox-trade-post.png';
+import { useSettings } from "../../../../hooks/use-settings";
 
 export default function TradePosts({tradeposts = {}, onUpdateTradePosts}) {
+    const {factionColor } = useSettings();
     const {mouse = [], rabbit, fox} = tradeposts;
 
     const handleClick = ({index, type}) => {
@@ -23,7 +25,7 @@ export default function TradePosts({tradeposts = {}, onUpdateTradePosts}) {
                             <img src={FoxTradePost} style={{opacity: isPlaced ? '50%' : '100%'}} width="100%" alt="fox trade post"/>
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                                 fontSize: '2rem',
-                                fontWeight: 'bold', borderRadius: '50%', border: `4px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                                fontWeight: 'bold', borderRadius: '50%', border: `4px solid ${isPlaced ? factionColor : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     ))}
                 </div>
@@ -33,7 +35,7 @@ export default function TradePosts({tradeposts = {}, onUpdateTradePosts}) {
                             <img src={RabbitTradePost} style={{opacity: isPlaced ? '50%' : '100%'}} width="100%" alt="rabbit trade post"/>
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                                 fontSize: '2rem',
-                                fontWeight: 'bold', borderRadius: '50%', border: `4px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                                fontWeight: 'bold', borderRadius: '50%', border: `4px solid ${isPlaced ? factionColor : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     ))}
                 </div>
@@ -43,7 +45,7 @@ export default function TradePosts({tradeposts = {}, onUpdateTradePosts}) {
                             <img src={MouseTradePost} style={{opacity: isPlaced ? '50%' : '100%'}} width="100%" alt="mouse trade post"/>
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                                 fontSize: '2rem',
-                                fontWeight: 'bold', borderRadius: '50%', border: `4px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                                fontWeight: 'bold', borderRadius: '50%', border: `4px solid ${isPlaced ? factionColor : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     ))}
                 </div>
@@ -53,6 +55,7 @@ export default function TradePosts({tradeposts = {}, onUpdateTradePosts}) {
 }
 
 export function TradePostsPreview({tradeposts = {}, orderedSuit}) {
+    const {factionColor } = useSettings();
     const {mouse = [], rabbit, fox} = tradeposts;
     
     return (
@@ -63,7 +66,7 @@ export function TradePostsPreview({tradeposts = {}, orderedSuit}) {
                             <img src={FoxTradePost} style={{opacity: isPlaced ? '50%' : '100%'}} width="100%" alt="fox trade post"/>
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                                 fontSize: '1.5rem',
-                                fontWeight: 'bold', borderRadius: '50%', border: `2px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                                fontWeight: 'bold', borderRadius: '50%', border: `2px solid ${isPlaced ? factionColor : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     ))}
                 </div>)}
@@ -73,7 +76,7 @@ export function TradePostsPreview({tradeposts = {}, orderedSuit}) {
                             <img src={RabbitTradePost} style={{opacity: isPlaced ? '50%' : '100%'}} width="100%" alt="rabbit trade post"/>
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                                 fontSize: '1.5rem',
-                                fontWeight: 'bold', borderRadius: '50%', border: `2px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                                fontWeight: 'bold', borderRadius: '50%', border: `2px solid ${isPlaced ? factionColor : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     ))}
                 </div>)}
@@ -83,7 +86,7 @@ export function TradePostsPreview({tradeposts = {}, orderedSuit}) {
                             <img src={MouseTradePost} style={{opacity: isPlaced ? '50%' : '100%'}} width="100%" alt="mouse trade post"/>
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                                 fontSize: '1.5rem',
-                                fontWeight: 'bold', borderRadius: '50%', border: `2px solid ${isPlaced ? '#56c3bc' : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
+                                fontWeight: 'bold', borderRadius: '50%', border: `2px solid ${isPlaced ? factionColor : 'transparent'}`,position: "absolute", top: 0}}>{isPlaced && (<>+{points}</>)}</div>
                         </div>
                     ))}
                 </div>)}
