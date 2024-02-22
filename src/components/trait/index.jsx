@@ -1,4 +1,4 @@
-import { getFactionColor } from "../../utils";
+import { useSettings } from "../../hooks/use-settings";
 import OneVP from "../one-vp";
 import Suit from "../suit";
 
@@ -44,16 +44,15 @@ const traitIdDescriptionMap = {
     'wildfire': <>A the end of Evening, <b>Spread Sympathy</b>. Do not score victory points for placing this sympathy token.</>
 }
 
-export default  function Trait({id, faction, name, isDefault, isEnabled, isSetup, onUpdate }) {
+export default  function Trait({id,  name, isDefault, isEnabled, isSetup, onUpdate }) {
+    const {faction, factionColor} = useSettings()
     if (isSetup && !isEnabled) {
         return null;
     }
 
-    const accentColor = getFactionColor(faction); 
-
     return (
         <label htmlFor={`${faction}-${id}`} style={{display: 'flex', alignItems: 'center', marginBottom: '0.5rem', gap: '1rem', cursor: 'pointer'}} >
-            {!isSetup && (<input id={`${faction}-${id}`} type="checkbox" style={{accentColor}} checked={isEnabled} disabled={isDefault}  onChange={() => onUpdate(!isEnabled)}/>)}
+            {!isSetup && (<input id={`${faction}-${id}`} type="checkbox" style={{accentColor: factionColor}} checked={isEnabled} disabled={isDefault}  onChange={() => onUpdate(!isEnabled)}/>)}
             <div>
                 <div><b>{name}</b></div>
                 <div>{traitIdDescriptionMap[id]}</div>
