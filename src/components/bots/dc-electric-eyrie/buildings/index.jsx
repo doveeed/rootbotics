@@ -1,7 +1,9 @@
 
 import Roost from '../../../../assets/roost.png';
+import { useSettings } from '../../../../hooks/use-settings';
 
 export default function Buildings({buildings = [], onUpdateBuildings}) {
+    const {factionColor } = useSettings();
 
     const handleClick = ({index}) => {
         const before = buildings.slice(0,index);
@@ -17,7 +19,7 @@ export default function Buildings({buildings = [], onUpdateBuildings}) {
                         <img style={{opacity: isPlaced ? '50%' : '100%', borderRadius: '15%'}} src={Roost} width="100%" alt="sawmill" />
                         <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                             fontSize: '1.5rem',
-                            fontWeight: 'bold', borderRadius: '15%', border: `4px solid ${isPlaced ? 'blue' : 'transparent'}`,position: "absolute", top: 0,}}>{isPlaced && (<>+{points}</>)}</div>
+                            fontWeight: 'bold', borderRadius: '15%', border: `4px solid ${isPlaced ? factionColor : 'transparent'}`,position: "absolute", top: 0,}}>{isPlaced && (<>+{points}</>)}</div>
                     </div>
                 ))}
             </div>
@@ -26,6 +28,7 @@ export default function Buildings({buildings = [], onUpdateBuildings}) {
 }
 
 export function BuildingsPreview({buildings = []}) {
+    const {factionColor } = useSettings();
     return (
         <div style={{display: 'flex', flexDirection: 'column', margin: '1rem auto'}}>
             <div style={{display: "flex", gap: '0.25rem', flexWrap: "wrap", width: '100%'}}>
@@ -34,7 +37,7 @@ export function BuildingsPreview({buildings = []}) {
                         <img style={{opacity: isPlaced ? '50%' : '100%', borderRadius: '15%'}} src={Roost} width="100%" alt="sawmill" />
                         <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
                             fontSize: '1.5rem',
-                            fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? 'blue' : 'transparent'}`,position: "absolute", top: 0,}}>{isPlaced && (<>+{points}</>)}</div>
+                            fontWeight: 'bold', borderRadius: '15%', border: `2px solid ${isPlaced ? factionColor : 'transparent'}`,position: "absolute", top: 0,}}>{isPlaced && (<>+{points}</>)}</div>
                     </div>
                 ))}
             </div>
