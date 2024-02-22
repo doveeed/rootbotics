@@ -1,3 +1,10 @@
+import Marquise from '../assets/marquise.png';
+import Eyrie from '../assets/eyrie.png';
+import Alliance from '../assets/alliance.png';
+import Cult from '../assets/cult.png';
+import Rivetfolk from '../assets/rivetfolk.png';
+import Duchy from '../assets/duchy.png';
+import Conspiracy from '../assets/conspiracy.png';
 
 export const CONSTANTS = {
     eyrieNobilityText: <div style={{paddingLeft: '26px'}}><b>(Nobility)</b> If you cannot place a warrior, you fall into Turmoil.</div>,
@@ -76,5 +83,26 @@ export function getFactionFontColor(faction) {
             return 'white'
         default:
             return 'black';
+    }
+}
+
+export function getFactionImageSrc(faction) {
+    switch (faction) {
+        case 'dc-mechanical-marquise-2point0':
+            return Marquise;
+        case 'dc-electric-eyrie':
+            return Eyrie;
+        case 'dc-automated-alliance':
+            return Alliance;
+        case 'cogwheel-cult':
+            return Cult;
+        case 'rivetfolk-company':
+            return Rivetfolk;
+        case 'dummy-duchy':
+            return Duchy;
+        case 'contraption-conspiracy':
+            return Conspiracy;
+        default:
+            return undefined;
     }
 }
