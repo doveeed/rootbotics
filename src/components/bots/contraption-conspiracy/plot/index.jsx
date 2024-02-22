@@ -3,9 +3,11 @@ import Extortion from '../../../../assets/extortion.png';
 import Raid from '../../../../assets/raid.png';
 import Snare from '../../../../assets/snare.png';
 import UnflippedPlot from '../../../../assets/plot.png';
+import { useSettings } from '../../../../hooks/use-settings';
 
 
 export default function Plot ({type, flipped, onFlip}) {
+    const {factionColor} = useSettings()
     let bgImg = 'none';
 
     switch(type) {
@@ -37,7 +39,7 @@ export default function Plot ({type, flipped, onFlip}) {
             height: '100%',
             position: 'absolute',
             top: 0,
-            border: `4px solid ${flipped ? '#3c2d90': 'transparent'}`,
+            border: `4px solid ${flipped ? factionColor: 'transparent'}`,
             borderRadius: '50%', 
             boxSizing: 'border-box',
             display: 'flex',
@@ -48,6 +50,7 @@ export default function Plot ({type, flipped, onFlip}) {
 }
 
 export function PlotPreview ({type, flipped}) {
+    const {factionColor} = useSettings()
     let bgImg = 'none';
 
     switch(type) {
@@ -78,7 +81,7 @@ export function PlotPreview ({type, flipped}) {
             height: '100%',
             position: 'absolute',
             top: 0,
-            border: `2px solid ${flipped ? '#3c2d90': 'transparent'}`,
+            border: `2px solid ${flipped ? factionColor: 'transparent'}`,
             borderRadius: '50%', 
             boxSizing: 'border-box',
             display: 'flex',
