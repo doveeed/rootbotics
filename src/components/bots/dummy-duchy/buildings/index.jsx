@@ -3,8 +3,10 @@ import Citadel2 from '../../../../assets/citadel2.png';
 import CitadelBuilding from '../../../../assets/citadel-building.png';
 import Market from '../../../../assets/market.png'
 import MarketBuilding from '../../../../assets/market-building.png';
+import { useSettings } from '../../../../hooks/use-settings';
 
 export default function Buildings({buildings, onUpdateBuildings}) {
+    const {factionColor } = useSettings();
 
     const handleClick = (id) => {
         const index = buildings.findIndex(({id: buildingId}) => buildingId === id);
@@ -26,7 +28,7 @@ export default function Buildings({buildings, onUpdateBuildings}) {
                         <div style={{
                                 width: '100%',
                                 height: '100%',
-                                border: `4px solid ${isPlaced ? '#d2a88d': 'transparent'}`,
+                                border: `4px solid ${isPlaced ? factionColor: 'transparent'}`,
                                 borderRadius: '15%',
                                 position: 'absolute',
                                 boxSizing: 'border-box',
@@ -46,7 +48,7 @@ export default function Buildings({buildings, onUpdateBuildings}) {
                                 width: '100%',
                                 height: '100%',
                                 position: 'absolute',
-                                border: `4px solid ${isPlaced ? '#d2a88d': 'transparent'}`,
+                                border: `4px solid ${isPlaced ? factionColor: 'transparent'}`,
                                 borderRadius: '15%',
                                 top: 0,
                                 boxSizing: 'border-box',
@@ -60,6 +62,7 @@ export default function Buildings({buildings, onUpdateBuildings}) {
 }
 
 export function BuildingsPreview({buildings}) {
+    const {factionColor } = useSettings();
     return (
         <div style={{display: 'flex', flexDirection: 'column', gap: '0.25rem', margin: '1rem auto'}}>
             <div style={{display: 'flex', gap: '0.25rem',}}>
@@ -69,7 +72,7 @@ export function BuildingsPreview({buildings}) {
                         <div style={{
                                 width: '100%',
                                 height: '100%',
-                                border: `2px solid ${isPlaced ? '#d2a88d': 'transparent'}`,
+                                border: `2px solid ${isPlaced ? factionColor: 'transparent'}`,
                                 borderRadius: '15%',
                                 position: 'absolute',
                                 boxSizing: 'border-box',
@@ -86,7 +89,7 @@ export function BuildingsPreview({buildings}) {
                             width: '100%',
                             height: '100%',
                             position: 'absolute',
-                            border: `2px solid ${isPlaced ? '#d2a88d': 'transparent'}`,
+                            border: `2px solid ${isPlaced ? factionColor: 'transparent'}`,
                             borderRadius: '15%',
                             top: 0,
                             boxSizing: 'border-box',
