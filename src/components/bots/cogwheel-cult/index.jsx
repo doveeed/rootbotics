@@ -12,7 +12,7 @@ import Gardens, { GardensPreview } from "./gardens";
 import Suited from "../../../assets/suited.png";
 import Bird from "../../../assets/bird.png";
 import OneVP from "../../one-vp";
-import { CONSTANTS, getFactionColor, getFactionName } from "../../../utils";
+import { CONSTANTS } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
 import Button from "../../button";
 import MouseGarden from '../../../assets/mouse-garden.png';
@@ -20,7 +20,7 @@ import RabbitGarden from '../../../assets/rabbit-garden.png';
 import FoxGarden from '../../../assets/fox-garden.png';
 
 
-export default function CogwheelCult({faction, state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
+export default function CogwheelCult({ state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', conspiracyIndex = 4, gardens = {}, isHumanRiverfolk = false} = state;
     const {mouse = [], rabbit = [], fox = []} = gardens;
     const isBossMode = level === 'boss';
@@ -87,11 +87,9 @@ export default function CogwheelCult({faction, state = {}, isRivetfolkPlaying, o
     return (
         <section>
             <Header
-                title={getFactionName(faction)}
                 isSetup={isSetup}
                 onChangeSetup={() => updateState({...state, isSetup: !isSetup})}
                 onDelete={onDelete}
-                backgroundColor={getFactionColor(faction)}
             />
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
@@ -107,12 +105,12 @@ export default function CogwheelCult({faction, state = {}, isRivetfolkPlaying, o
                                 }
                             />
                         </Card >
-                        <Level faction={faction} level={level} labels={{'beginner': <>At the start of Daylight, Reveal the top <b>3 cards</b> from the lost Souls pile.</>, 'expert': <>At the start of Daylight, Reveal the top <b>4 cards</b> from the lost Souls pile.</>, 'master': <>At the start of Daylight, Reveal the top <b>5 cards</b> from the lost Souls pile.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
-                        {!isRivetfolkPlaying && (<HumanRiverfolk faction={faction} onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
+                        <Level level={level} labels={{'beginner': <>At the start of Daylight, Reveal the top <b>3 cards</b> from the lost Souls pile.</>, 'expert': <>At the start of Daylight, Reveal the top <b>4 cards</b> from the lost Souls pile.</>, 'master': <>At the start of Daylight, Reveal the top <b>5 cards</b> from the lost Souls pile.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
+                        {!isRivetfolkPlaying && (<HumanRiverfolk onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
                     </>
                 )}
                 <Card title='Traits'>
-                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} faction={faction} isSetup={isSetup} onUpdate={(isEnabled) => {
+                    {traits.map((trait, index) => (<Trait key={trait.id} {...trait} isSetup={isSetup} onUpdate={(isEnabled) => {
                         const before = traits.slice(0,index);
                         const after = traits.slice(index + 1);
                         updateState({...state, traits: [...before, {...trait, isEnabled}, ...after]})
@@ -154,7 +152,7 @@ export default function CogwheelCult({faction, state = {}, isRivetfolkPlaying, o
                                             substeps={<><Steps type='I' steps={
                                                 [<Step title={<i>Clearing Tie:</i>} description={<i>Place the warrior into the clearing with any free building slots, then the most enemy buildings.</i>} />]
                                             }/>  
-                                        <GardensPreview gardens={gardens} isShowAll /></>}
+                                        <GardensPreview gardens={gardens} isShowAll/></>}
                                         />
                                     </div>
                                 </div>
