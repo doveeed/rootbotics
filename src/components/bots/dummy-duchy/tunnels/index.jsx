@@ -1,6 +1,8 @@
 import Tunnel from '../../../../assets/tunnel.png';
+import { useSettings } from '../../../../hooks/use-settings';
 
 export default function Tunnels({tunnels, onUpdateTunnels}) {
+    const {factionColor } = useSettings();
     return (
         <div style={{display: 'flex', alignItems: 'center', marginTop: '1rem'}}>
                 <div style={{minWidth: '80px'}}>Tunnels</div>
@@ -15,7 +17,7 @@ export default function Tunnels({tunnels, onUpdateTunnels}) {
                         <div style={{
                                 width: '100%',
                                 height: '100%',
-                                border: `4px solid ${isPlaced ? '#d2a88d': 'transparent'}`,
+                                border: `4px solid ${isPlaced ? factionColor: 'transparent'}`,
                                 borderRadius: '100%',
                                 position: 'absolute',
                                 boxSizing: 'border-box',
@@ -29,6 +31,7 @@ export default function Tunnels({tunnels, onUpdateTunnels}) {
 }
 
 export function TunnelsPreview({tunnels}) {
+    const {factionColor } = useSettings();
     return (
         <div style={{display: 'flex', margin: '1rem auto'}}>
                 <div style={{display: 'flex', gap: '0.25rem'}}>
@@ -38,7 +41,7 @@ export function TunnelsPreview({tunnels}) {
                         <div style={{
                                 width: '100%',
                                 height: '100%',
-                                border: `2px solid ${isPlaced ? '#d2a88d': 'transparent'}`,
+                                border: `2px solid ${isPlaced ? factionColor: 'transparent'}`,
                                 borderRadius: '100%',
                                 position: 'absolute',
                                 boxSizing: 'border-box',
