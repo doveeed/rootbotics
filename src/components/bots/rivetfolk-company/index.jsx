@@ -18,7 +18,7 @@ import RabbitTradePost from '../../../assets/rabbit-trade-post.png';
 
 
 export default function RivetfolkCompany({ state = {}, onDelete = () => {}, updateState = () => {}}) {
-    const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', tradeposts = {}, protectionism = 'none'} = state;
+    const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', tradeposts = {}, isSwordProtectionism = false, isShieldProtectionism = false} = state;
     const isBossMode = level === 'boss';
     const isFerocious = traits.some(({id, isEnabled}) => id === 'ferocious' && isEnabled);
     const levelToRecruit = {
@@ -85,12 +85,12 @@ export default function RivetfolkCompany({ state = {}, onDelete = () => {}, upda
             description={
             <>Check the Protectionism conditions now:
             <br/>If the Payments box is empty, activate <img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} /> Protectionism.
-            <br/>If there are no warriors in your supply, activate <img src={Sword} alt="Sword Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} /> Protectionism. <Button onClick={() => updateState({...state, protectionism: 'shield'})} img={Shield} alt="shield protectionism" >Activate</Button> <Button onClick={() => updateState({...state, protectionism: 'sword'})} img={Sword} alt="sword protectionism" >Activate</Button> <Button onClick={() => updateState({...state, protectionism: 'none'})} >None</Button>{protectionism === 'shield' && (<div style={{paddingLeft: '26px'}}><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: Score <Number value={levelToPoints[level]} /> and place 2 warriors into the clearing with your presence and the most enemy pieces.</div>)}</>}
+            <br/>If there are no warriors in your supply, activate <img src={Sword} alt="Sword Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} /> Protectionism. <Button onClick={() => updateState({...state, isShieldProtectionism: !isShieldProtectionism})} img={Shield} alt="Shield Protectionism" >{isShieldProtectionism ? 'Deactivate' : 'Activate'}</Button> <Button onClick={() => updateState({...state, isSwordProtectionism: !isSwordProtectionism})} img={Sword} alt="Sword Protectionism" >{isSwordProtectionism ? 'Deactivate': 'Activate'}</Button>{(isShieldProtectionism || isSwordProtectionism) && (<> <Button onClick={() => updateState({...state, isShieldProtectionism: false, isSwordProtectionism: false})} >Deactivate all</Button></>)} {isShieldProtectionism && (<div style={{paddingLeft: '26px'}}><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: Score <Number value={levelToPoints[level]} /> and place 2 warriors into the clearing with your presence and the most enemy pieces.</div>)}</>}
         />,
     ];
 
-    if (protectionism !== 'none') {
-        daylightSteps.push(<Step title="Battle" description={<>{protectionism === 'shield' && (<div style={{paddingLeft: '26px'}}><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: in all clearings.</div>)}{protectionism === 'sword' && (<div style={{paddingLeft: '26px'}}><img src={Sword} alt="Sword Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: in all <Suit suit={orderedSuit} /> clearings.</div>)}{isFerocious ? <div style={{paddingLeft: '26px'}}><b>(Ferocious)</b> You can deal a maximum of 3 Rolled Hits</div>: ''}</>}
+    if (isShieldProtectionism || isSwordProtectionism) {
+        daylightSteps.push(<Step title="Battle" description={<>{isShieldProtectionism && (<div style={{paddingLeft: '26px'}}><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: in all clearings.</div>)}{isSwordProtectionism && (<div style={{paddingLeft: '26px'}}><img src={Sword} alt="Sword Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: in all <Suit suit={orderedSuit} /> clearings.</div>)}{isFerocious ? <div style={{paddingLeft: '26px'}}><b>(Ferocious)</b> You can deal a maximum of 3 Rolled Hits</div>: ''}</>}
         substeps={
             <Steps 
                 type="I"
@@ -106,11 +106,11 @@ export default function RivetfolkCompany({ state = {}, onDelete = () => {}, upda
         <Step title="Score" description={<><OneVP /> per warrior of the player with the most warriors in your Payments box, and return them. Keep any other warriors.</>}/>,
     ];
 
-    if (protectionism !== 'none') {
-        eveningSteps.push(<Step title="Racketeering" description={<div style={{paddingLeft: '26px'}}><img src={protectionism === 'shield' ? Shield : Sword} alt="Shield or Sword Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: From each clearing move all but 2 Riverfolk warriors to the Payments box.</div>}/>);
+    if (isShieldProtectionism || isSwordProtectionism) {
+        eveningSteps.push(<Step title="Racketeering" description={<div style={{paddingLeft: '26px'}}>{isShieldProtectionism && (<img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />)}{isShieldProtectionism && isSwordProtectionism &&(<> or </>)}{isSwordProtectionism && (<img src={Sword} alt="Sword Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />)}: From each clearing move all but 2 Riverfolk warriors to the Payments box.</div>}/>);
     }
 
-    eveningSteps.push(<Step title="Discard" description={<>the left-most card in the Market.{protectionism === 'shield' && (<div style={{paddingLeft: '26px'}}><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: Discard the left-most card again.</div>)}</>} />)
+    eveningSteps.push(<Step title="Discard" description={<>the left-most card in the Market.{isShieldProtectionism && (<div style={{paddingLeft: '26px'}}><img src={Shield} alt="Shield Protectionism" height={24} width={24} style={{marginBottom: '-0.5rem'}} />: Discard the left-most card again.</div>)}</>} />)
 
     if (isBossMode) {
         eveningSteps.push(<Step title="Boss Mode." description={<>Score <OneVP /> for every two human players (rounded up).</>} />)
