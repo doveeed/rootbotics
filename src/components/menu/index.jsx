@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getFactionImageSrc } from "../../utils";
+import { getFactionImageSrc, getRandomKey } from "../../utils";
 
 export default function Menu ({bots, onAddBot = () => {}}) {
     const botFactions = bots.map(bot => bot.faction);
@@ -7,6 +7,7 @@ export default function Menu ({bots, onAddBot = () => {}}) {
         {faction: 'dc-mechanical-marquise-2point0', name: 'DC Mechanical Marquise 2.0'},
         {faction: 'dc-electric-eyrie', name: 'DC Electric Eyrie'},
         {faction: 'dc-automated-alliance', name: 'DC Automated Alliance'},
+        {faction: 'dc-vagabot', name: 'DC Vagabot'},
         {faction: 'cogwheel-cult', name: 'Cogwheel Cult'},
         {faction: 'rivetfolk-company', name: 'Rivetfolk Company'},
         {faction: 'dummy-duchy', name: 'Dummy Duchy'},
@@ -15,7 +16,7 @@ export default function Menu ({bots, onAddBot = () => {}}) {
     const [isOpen, setIsOpen] = useState(false);
 
     const addBot = (faction) => {
-        const key = `${Math.random(10)}${Math.random(10)}${Math.random(10)}`;
+        const key = getRandomKey();
         let bot = {
             key,
             faction,
@@ -387,6 +388,22 @@ export default function Menu ({bots, onAddBot = () => {}}) {
 
                 }
                 break;
+            case 'dc-vagabot':
+                bot = {
+                    ...bot,
+                    state: {
+                        ...bot.state,
+                        traits: [],
+                        items: [
+                            {key: getRandomKey(), isExausted: false, isDamaged: false},
+                            {key: getRandomKey(), isExausted: false, isDamaged: false},
+                            {key: getRandomKey(), isExausted: false, isDamaged: false},
+                            {key: getRandomKey(), isExausted: false, isDamaged: false}
+                        ],
+                        character: 'thief'
+                    }
+                }
+                break;
             case 'dummy-duchy':
                 bot = {
                     ...bot,
@@ -614,14 +631,14 @@ export default function Menu ({bots, onAddBot = () => {}}) {
     const isHidden = filteredOptions.length === 0;
 
     return (
-        <div style={{position: "relative"}}>
+        <div >
             {!isHidden && (<button 
             style={{background: 'none', border: 'none', cursor: "pointer"}}
             onClick={()=> setIsOpen(!isOpen)}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={24} height={24} fill="black"><path d="M416 277.333H277.333V416h-42.666V277.333H96v-42.666h138.667V96h42.666v138.667H416v42.666z"></path></svg>
             </button>)}
             {isOpen && (
-                <div style={{ position: "absolute", right: '0', top: '54px', width: '300px', backgroundColor: 'white', cursor: "pointer"}}>
+                <div style={{ position: "absolute", right: '0', top: '80px', width: '300px', backgroundColor: '#fcf8e8', border: '2px solid black', cursor: "pointer"}}>
                     {filteredOptions.map(({faction, name}, index) => (
                         <div key={`${faction}-${index}`} style={{padding: '1rem 0.5rem', display: 'flex', gap: '0.5rem', alignItems: 'center', borderBottom: index < filteredOptions.length - 1 ? '1px solid black': 'none'}} onClick={() => {
                             setIsOpen(false)
