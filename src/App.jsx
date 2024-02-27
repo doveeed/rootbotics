@@ -1,6 +1,7 @@
 import { useEffect, useState, Component } from "react";
 import ContraptionConspiracy from "./components/bots/contraption-conspiracy";
 import Menu from "./components/menu";
+import Maps from "./components/maps";
 import DummyDuchy from "./components/bots/dummy-duchy";
 import CogwheelCult from "./components/bots/cogwheel-cult";
 import RivetfolkCompany from "./components/bots/rivetfolk-company";
@@ -8,7 +9,7 @@ import Rootbotics from './assets/rootbotics.png';
 import DCMechanicalMarquise2point0 from "./components/bots/dc-mechanical-marquise-2point0";
 import DCElectricEyrie from "./components/bots/dc-electric-eyrie";
 import DCAutomatedAlliance from "./components/bots/dc-automated-alliance";
-import Map from "./components/map";
+import DCVagabot from "./components/bots/dc-vagabot";
 import DeleteModal from "./components/delete-modal";
 import { SettingsContextProvider } from "./hooks/use-settings";
 import { getFactionColor, getFactionFontColor, getFactionName } from "./utils";
@@ -46,7 +47,6 @@ function App() {
   const [deleteModalFaction, setDeleteModalFaction] = useState(null);
   const isRivetfolkPlaying = bots.some(({faction}) => faction === 'rivetfolk-company');
   const isNoBots = bots.length === 0;
-  const maps = ['fall', 'winter', 'lake', 'mountain'];
 
   useEffect(() => {
     try {
@@ -70,7 +70,7 @@ function App() {
       <header style={{display: "flex", flexShrink: 0,alignItems: "center", padding: '0 8px', position: 'sticky', top: 0, backgroundColor: '#fcf8e8', zIndex: 2, height: '80px'}}>
         <h1 style={{flex: '1'}}>
           <div style={{maxWidth: '300px', alignItems: 'center', display: 'flex'}}><img src={Rootbotics} alt="rootbotics logo" width="100%" /></div></h1>
-        
+        <Maps />
         <Menu bots={bots} onAddBot={(newBot) => {handleUpdateBots([...bots, {...newBot}])}} />
       </header>
       <ErrorBoundary>
@@ -94,6 +94,9 @@ function App() {
               break;
             case 'dc-mechanical-marquise-2point0':
               Faction = DCMechanicalMarquise2point0;
+              break;
+            case 'dc-vagabot':
+              Faction = DCVagabot;
               break;
             case 'dummy-duchy':
               Faction = DummyDuchy;
@@ -127,11 +130,11 @@ function App() {
             </SettingsContextProvider>
           );
         })}
-          {isNoBots && (
+          {/* {isNoBots && (
             <div style={{padding: '0.5rem 1rem', display: 'flex',flexDirection: 'column', gap: '2rem', maxWidth: '740px', margin: '0 auto'}}>
               {maps.map (map => <Map key={map} type={map} />)}
             </div>
-          )}
+          )} */}
           {deleteModalFaction && (<DeleteModal faction={deleteModalFaction} onConfirm={() => {
             const index = bots.findIndex(({faction}) => faction === deleteModalFaction);
             if (index === -1) {
@@ -146,9 +149,9 @@ function App() {
           }} onCancel={() => setDeleteModalFaction(null)}/>)}
         </main>
       </ErrorBoundary>
-        <footer>
+        {!isNoBots && (<footer>
         <button style={{width: '100%', backgroundColor: '#fcf8e8', border: 'none', cursor: 'pointer', padding: '24px 16px'}} onClick={() => {window.scrollTo(0,0)}}>Back to top</button>
-      </footer>
+      </footer>)}
     </div>
     
   );
