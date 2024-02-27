@@ -5,34 +5,11 @@ import Mountain from '../../assets/mountain.png';
 import RabbitSuitColored from '../../assets/rabbit-suit-colored.png';
 import FoxSuitColored from '../../assets/fox-suit-colored.png';
 import MouseSuitColored from '../../assets/mouse-suit-colored.png';
-import { useState } from 'react';
-import Button from '../button';
 
-const shuffle =(suits) => {
-    const array = [...suits]
-    let currentIndex = array.length,  randomIndex;
-  
-    // While there remain elements to shuffle.
-    while (currentIndex > 0) {
-  
-      // Pick a remaining element.
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-  
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex], array[currentIndex]];
-    }
-  
-    return array;
-  }
-export default function Map({type}) {
+export default function Map({type, suits}) {
     let src;
     let coordinates = [];
-    const [suits, updateSuits] = useState(shuffle(['fox', 'rabbit', 'mouse','fox', 'rabbit', 'mouse','fox', 'rabbit', 'mouse','fox', 'rabbit', 'mouse']));
-
-   
-      
+    
     switch (type) {
         case 'fall':
             src = Fall;
@@ -257,6 +234,5 @@ export default function Map({type}) {
                     </div>
                 ))}
             </div>
-            {type !== 'fall' && <Button style={{width: 'fit-content'}} onClick={() => updateSuits(shuffle(suits))}>Shuffle</Button>}
        </div>)
 }
