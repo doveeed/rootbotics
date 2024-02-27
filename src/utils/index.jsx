@@ -1,6 +1,7 @@
 import Marquise from '../assets/marquise.png';
 import Eyrie from '../assets/eyrie.png';
 import Alliance from '../assets/alliance.png';
+import Vagabot from '../assets/vagabot.png';
 import Cult from '../assets/cult.png';
 import Rivetfolk from '../assets/rivetfolk.png';
 import Duchy from '../assets/duchy.png';
@@ -29,6 +30,9 @@ export function getFactionColor(faction) {
         case 'dc-automated-alliance':
             color = '#5da84c';
             break;
+        case 'dc-vagabot':
+            color = 'black';    
+            break;
         case 'cogwheel-cult':
             color = '#e0d92a';
             break;
@@ -55,6 +59,8 @@ export function getFactionName(faction) {
             return "DC Electric Eyrie";
         case 'dc-automated-alliance':
             return "DC Automated Alliance";
+        case 'dc-vagabot':
+            return 'DC Vagabot';
         case 'cogwheel-cult':
             return "Cogwheel Cult";
         case 'rivetfolk-company':
@@ -74,6 +80,7 @@ export function getFactionFontColor(faction) {
             return 'black';
         case 'dc-electric-eyrie':
         case 'dc-automated-alliance':
+        case 'dc-vagabot':
             return 'white';
         case 'cogwheel-cult':
         case 'rivetfolk-company':
@@ -94,6 +101,8 @@ export function getFactionImageSrc(faction) {
             return Eyrie;
         case 'dc-automated-alliance':
             return Alliance;
+        case 'dc-vagabot':
+            return Vagabot;
         case 'cogwheel-cult':
             return Cult;
         case 'rivetfolk-company':
@@ -105,4 +114,8 @@ export function getFactionImageSrc(faction) {
         default:
             return undefined;
     }
+}
+
+export function getRandomKey() {
+    return `${Math.random(10)}${Math.random(10)}${Math.random(10)}`;
 }
