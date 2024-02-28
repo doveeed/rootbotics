@@ -393,7 +393,56 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                     ...bot,
                     state: {
                         ...bot.state,
-                        traits: [],
+                        traits: [
+                            {
+                                id: 'nimble',
+                                isDefault: true,
+                                isEnabled: true,
+                                name: 'Nimble',
+                            },
+                            {
+                                id: 'lone-wanderer',
+                                isDefault: true,
+                                isEnabled: true,
+                                name: 'Lone Wanderer',
+                            },
+                            {
+                                id: 'poor-manual-dexterity',
+                                isDefault: true,
+                                isEnabled: true,
+                                name: 'Poor Manual Dexterity',
+                            },
+                            {
+                                id: 'hates-surprises',
+                                isDefault: true,
+                                isEnabled: true,
+                                name: 'Hates Surprises',
+                            },
+                            {
+                                id: 'adventurer',
+                                isDefault: false,
+                                isEnabled: false,
+                                name: 'Adventurer',
+                            },
+                            {
+                                id: 'berserker',
+                                isDefault: false,
+                                isEnabled: false,
+                                name: 'Berserker',
+                            },
+                            {
+                                id: 'helper',
+                                isDefault: false,
+                                isEnabled: false,
+                                name: 'Helper',
+                            },
+                            {
+                                id: 'marksman',
+                                isDefault: false,
+                                isEnabled: false,
+                                name: 'Marksman',
+                            },
+                        ],
                         items: [
                             {key: getRandomKey(), isExausted: false, isDamaged: false},
                             {key: getRandomKey(), isExausted: false, isDamaged: false},
