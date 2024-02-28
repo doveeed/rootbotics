@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import Item from '../../../../assets/item.png';
 import { useSettings } from '../../../../hooks/use-settings';
 import { getRandomKey } from '../../../../utils';
