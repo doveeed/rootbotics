@@ -11,6 +11,7 @@ import { CONSTANTS } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
 import Items from "./items";
 import VP2 from '../../../assets/vp2.png';
+import Characters from "./characters";
 
 const characters = {
     thief: {id: 'thief', name: 'Thief', special:  <>Take a random card from the enemy in your clearing with the most victory points. On a tie, take it from such an enemy with the most pieces there.</>},
@@ -18,11 +19,10 @@ const characters = {
     ranger: {id: 'ranger', name: 'Ranger', special:  <>If you have three or more damaged items, slip into a random adjacent forest.</>},
     vagrant: {id: 'vagrant', name: 'Vagrant', special:  <>Initiate a battle in your clearing. You choose the attacker and then the defender <i>(using setup priority)</i>, and you remove pieces for each.</>},
     scoundrel: {id: 'scoundrel', name: 'Scoundrel', special:  <>If your clearing has 3 or more enemy pieces, including 1 building or token, remove all enemy pieces there. Place any one of your items in your clearing, covering a building slot. Buildings cannot be placed in this slot. Score <OneVP />.</>},
-    arbiter: {id: 'Arbiter', name: 'Arbiter', special:  <>Before rolling in battle, the defender may enlist the Arbiter if he is in the battle clearing. (If other bots are in play, they will interact with the Arbiter, whether played by a human or bot, in the same way.)
-    The Arbiter scores one victory point and adds the number of items on his Battle Track to the defender's maximum rolled hits. Defending bots will enlist the Arbiter if they meet all three of the following conditions:
-    I One. Their maximum rolled hits is lessthan three.
-    II Two. Their maximum rolled hits is less than the number of enemy pieces in the battle.
-    III Three. They have more victory points than the Arbiter.</>}
+    arbiter: {id: 'arbiter', name: 'Arbiter', special:  <>Before rolling in battle, the defender may enlist the Arbiter if the pawn is in the battle clearing. <i>(If other bots are in play, they will interact with the Arbiter, whether played by a human or bot, in the same way.)</i> The Arbiter scores one victory point and adds the number of items on his Battle Track to the defender's maximum rolled hits. Defending bots will enlist the Arbiter if they meet all three of the following conditions:
+    <br/><br/>I One. Their maximum rolled hits is lessthan three.
+    <br/>II Two. Their maximum rolled hits is less than the number of enemy pieces in the battle.
+    <br/>III Three. They have more victory points than the Arbiter.</>}
 }
 export default function DCVagabot({ state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', items = [], character = 'thief', isHumanRiverfolk = false} = state;
@@ -33,9 +33,11 @@ export default function DCVagabot({ state = {}, isRivetfolkPlaying, onDelete = (
         bird: ['explore', 'quest', 'battle']
     }
 
+    const maxHits = items.length >= 12 ? <>3, <b>deal an extra hit</b></> : items.length >= 9 ? 3 : items.length >= 6 ? 2 : 1;
+
     const steps = {
         aid: <Step title="Aid." description={<>Move to the nearest clearing containing pieces of a player with any items if possible. Then exhaust one item to take one of their items and place it in your satchel. Score <OneVP/> and then they draw one card.</>} substeps={<Steps type="I" steps={[<Step title={<i>Player tie:</i>} description={<i>If multiple players with items have pieces in equal distance, select the player with the lower score.</i>}/>]}/>}/>,
-        battle: <Step title="Battle." description={<>Move to the nearest clearing with any peices of the enemy with the most points, then exhaust one item to battle that player. Score <OneVP/> per enemy warrior removed. Repeat this action, exhausting two items per extra battle, as many times as possible.</>} substeps={<Steps type="I" steps={[<Step title={<i>Clearing Tie:</i>} description={<i>Move to the clearing where the target player has the most tokens and buildings, then fewest warriors.</i>} />]} />}/>,
+        battle: <Step title="Battle." description={<>Move to the nearest clearing with any peices of the enemy with the most points, then exhaust one item to battle that player. Your maximum Rolled Hits is {maxHits}. Score <OneVP/> per enemy warrior removed. Repeat this action, exhausting two items per extra battle, as many times as possible.</>} substeps={<Steps type="I" steps={[<Step title={<i>Clearing Tie:</i>} description={<i>Move to the clearing where the target player has the most tokens and buildings, then fewest warriors.</i>} />]} />}/>,
         explore: <Step title="Explore." description="Move to the nearest ruin, then exhoust one item to take an item from it."/>,
         quest: <Step title="Quest." description={<>Move to the nearest clearing matching your quest. Then exhaust any two items to discard your quest and score  <img src={VP2} alt="two victory points" width={24} style={{marginBottom: '-4px'}}/>. Then, replace the quest.</>} />,
         special: <Step title="Special." description={<>Exhaust one item to take the following action: {characters[character].special} Skip this action if it would have no effect.</>} />,
@@ -59,7 +61,7 @@ export default function DCVagabot({ state = {}, isRivetfolkPlaying, onDelete = (
     ]
 
     
-    const daylightSteps = suitToSteps[orderedSuit].map(step => steps[step]);
+    const daylightSteps = suitToSteps[orderedSuit].filter((step) => !(character === 'arbiter' && step === 'special')).map(step => steps[step]);
     
 
     const eveningSteps = [
@@ -92,6 +94,7 @@ export default function DCVagabot({ state = {}, isRivetfolkPlaying, onDelete = (
                                 }
                             />
                         </Card >
+                        <Characters characters={characters} selectedCharacter={character} onChangeCharacter={(id) => updateState({...state, character: id})}/>
                         <Level  level={level} labels={{'beginner': <>Whenever you <b>Recruit</b>, place <b>3 warriors</b>.</>, 'expert': <>Whenever you <b>Recruit</b>, place <b>4 warriors</b>.</>, 'master': <>Whenever you <b>Recruit</b>, place <b>5 warriors</b>.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
                         {!isRivetfolkPlaying && (<HumanRiverfolk  onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
                     </>
@@ -105,6 +108,12 @@ export default function DCVagabot({ state = {}, isRivetfolkPlaying, onDelete = (
                 </Card>
                 {isSetup && (
                     <>
+                        <Card title={characters[character].name} >
+                            <Step title="Special:" description={characters[character].special} />
+                        </Card>
+                        <Card title="Battle Track">
+                            <Step title={`Maximum Rolled Hits: ${items.length >= 12 ? `3, deal an extra hit` : items.length >= 9 ? 3 : items.length >= 6 ? 2 : 1}`}/>
+                        </Card>
                         <Items items={items} onUpdateItems={(newItems) => updateState({...state, items: newItems})} />
                         <Card title="Ordered suit">
                             <Order order={orderedSuit} onChangeOrder={(newOrder) => updateState({...state, orderedSuit:newOrder})}/>
