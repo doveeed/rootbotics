@@ -44,7 +44,7 @@ export default function Items({items = [], onUpdateItems = () => {}}) {
             <div style={{display: 'flex', flexDirection: 'column', marginBottom: '1rem'}}>
                 <div style={{display: "grid", gap: '0.5rem',  gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', flexWrap: "wrap", width: '100%'}}>
                     {items.map(({key, isExausted, isDamaged}, index) => (
-                        <div onTouchStart={() => handleMouseDown(index)} onMouseDown={() => handleMouseDown(index)} onTouchEnd={() => handleMouseUp(index)} onClick={() => handleMouseUp(index)} key={key} style={{position: "relative", userSelect: 'none', cursor: "pointer", display: 'flex', flex: 1,}} >
+                        <div onTouchStart={() => handleMouseDown(index)} onMouseDown={() => handleMouseDown(index)} onClick={() => handleMouseUp(index)} key={key} style={{position: "relative", userSelect: 'none', cursor: "pointer", display: 'flex', flex: 1,}} >
                             <img style={{opacity: '100%', borderRadius: '15%'}} src={Item} width="100%" alt="sawmill" />
                             {isExausted && (<div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', backgroundColor: 'black', opacity: '40%', borderRadius: '15%', position: "absolute", top: 0,}}></div>)}
                             <div style={{width: '100%', height: '100%', display: 'flex', boxSizing: 'border-box', alignItems: "center", justifyContent: 'center', 
