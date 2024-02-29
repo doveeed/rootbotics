@@ -3,9 +3,11 @@ import OneVP from "../one-vp";
 import Suit from "../suit";
 
 const traitIdDescriptionMap = {
+    'adventurer': <><b>Battle</b> only once per turn. At the end of Daylight, spend any remaining items on repeated <b>Quest</b> actions.</>,
     'automated-ambush': 'In battle as defender with any Alliance warriors, you deal 1 extra Hit.',
     'automated-outrage': <>Whenever a human player removes a sympathy token or moves any warriors into a sympathetic clearing, they must discard a matching card. If they cannot, you score <OneVP />.</>,
     'backup-plans': 'When one of your tokens is removed, place a warrior from your supply into the clearing which contained the token.',
+    'berserker': <>During the <b>Battle</b> action, target the clearing with the most pieces and target the player with the most pieces in that clearing. At the end of your turn, repair on additional item.</>,
     'blitz': <>After your <b>Move</b> action, select the highest priority clearing you rule without any enemy pieces. Move all but 1 warrior from the clearing and battle in the destination if opponents are present.</>,
     'cost-of-errors': 'Whenever any number of Duchy buildings are removed, remove the crown furthest towards the bottom of the Minister Track.',
     'embedded-agents': 'In battle as defender with a face-down plot token, you deal 1 extra Hit.',
@@ -18,6 +20,7 @@ const traitIdDescriptionMap = {
     'garrison': 'Trade posts are never defenseless and increase your possible Hits by 1 as if they were a warrior.',
     'greedy': <>Gain <OneVP/> when the player with the highest score uses one or more of your services.</>,
     'hates-surprises': 'Ambush cards cannot be played against you.',
+    'helper': <>Whenever you <b>Aid</b>, if there are no available items, move to aid the player with the lowest score, and exhaust one item to score <OneVP/>. The aided player draws one card.</>,
     'hospitals': 'At the end of battle as defender, if 2 or more Marquise warriors were removed in the battle, place 1 warrior in the clearing with the keep token.',
     'invaders': <>During the <b>Dig</b> action, target ordered clearings with the most enemy buildings, but the least enemy warriors. If you cannot build due to no free building slots, battle in all clearings instead.</>,
     'investors': <>When Cost of Errors is triggered by a human player, that player has to discard a card matching the clearing in which a building was removed. If they discard a matching card, lose 1 victory point. If they can't, immediately sway a Minister matching the clearing.</>,
@@ -25,6 +28,7 @@ const traitIdDescriptionMap = {
     'iron-will': <><b>Expand</b> may happen twice per turn instead of only once.</>,
     'lords-of-the-forest': 'You rule any clearings where you are tied in presence.',
     'market': 'The Market is a row of 5 cards visible to all players. While players can freely look at the cards at all times, the order of the Market has to be maintained as new cards are added to the right side.',
+    'marksman': <>As Attacker, deal 1 immediate hit to your opponent <i>(scoring a point if a warrior is removed)</i> before the dice are rolled.</>,
     'martyrs': <>Whenever you perform a ritual for a <Suit suit="bird" /> card in Daylight, move an aditional warrior from the supply to your Acolytes.</>,
     'mastermind': 'Perform "Plot" twice each turn.',
     'nimble': 'You can move regardless of who rules your origin or destination clearing.',
