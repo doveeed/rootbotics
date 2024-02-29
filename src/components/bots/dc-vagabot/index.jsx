@@ -9,7 +9,7 @@ import Trait from '../../trait';
 import OneVP from "../../one-vp";
 import { CONSTANTS } from "../../../utils";
 import HumanRiverfolk from "../../human-riverfolk";
-import Items from "./items";
+import Items, { ItemsPreview } from "./items";
 import VP2 from '../../../assets/vp2.png';
 import Characters from "./characters";
 
@@ -20,9 +20,9 @@ const characters = {
     vagrant: {id: 'vagrant', name: 'Vagrant', special:  <>Initiate a battle in your clearing. You choose the attacker and then the defender <i>(using setup priority)</i>, and you remove pieces for each.</>},
     scoundrel: {id: 'scoundrel', name: 'Scoundrel', special:  <>If your clearing has 3 or more enemy pieces, including 1 building or token, remove all enemy pieces there. Place any one of your items in your clearing, covering a building slot. Buildings cannot be placed in this slot. Score <OneVP />.</>},
     arbiter: {id: 'arbiter', name: 'Arbiter', special:  <>Before rolling in battle, the defender may enlist the Arbiter if the pawn is in the battle clearing. <i>(If other bots are in play, they will interact with the Arbiter, whether played by a human or bot, in the same way.)</i> The Arbiter scores one victory point and adds the number of items on his Battle Track to the defender's maximum rolled hits. Defending bots will enlist the Arbiter if they meet all three of the following conditions:
-    <br/><br/>I One. Their maximum rolled hits is lessthan three.
-    <br/>II Two. Their maximum rolled hits is less than the number of enemy pieces in the battle.
-    <br/>III Three. They have more victory points than the Arbiter.</>}
+    <br/><br/>I. Their maximum rolled hits is less than three.
+    <br/>II. Their maximum rolled hits is less than the number of enemy pieces in the battle.
+    <br/>III. They have more victory points than the Arbiter.</>}
 }
 export default function DCVagabot({ state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
     const {isSetup = false, orderedSuit = 'bird', traits = [], level = 'expert', items = [], character = 'thief', isHumanRiverfolk = false} = state;
@@ -85,11 +85,14 @@ export default function DCVagabot({ state = {}, isRivetfolkPlaying, onDelete = (
             <div style={{padding: '16px 8px', maxWidth: '740px', margin: '0 auto'}}>
                 {!isSetup && (
                     <>
-                        <Card title="Setup (A)">
+                        <Card title="Setup (D)">
                             <Steps
                                 steps={
                                     [
-                                        <Step title="" description=""/>,
+                                        <Step title="Choose Character." description="Pick a character from the options below."/>,
+                                        <Step title="Place Pawn." description="Place your Vagabot pawn in the forest adjacent to the most clearings. If there are multiple such forests, decide randomly among those."/>,
+                                        <Step title="Get Quests." description="Shuffle the quest deck, draw 1 quest card, and place it face up near you. This quest can only be completed by the bot."/>,
+                                        <Step title="Populate Ruins." description='Take the 4 items marked "R" and place 1 randomly under each ruin.' />,
                                     ]
                                 }
                             />
@@ -111,9 +114,6 @@ export default function DCVagabot({ state = {}, isRivetfolkPlaying, onDelete = (
                         <Card title={characters[character].name} >
                             <Step title="Special:" description={characters[character].special} />
                         </Card>
-                        <Card title="Battle Track">
-                            <Step title={`Maximum Rolled Hits: ${items.length >= 12 ? `3, deal an extra hit` : items.length >= 9 ? 3 : items.length >= 6 ? 2 : 1}`}/>
-                        </Card>
                         <Items items={items} onUpdateItems={(newItems) => updateState({...state, items: newItems})} />
                         <Card title="Ordered suit">
                             <Order order={orderedSuit} onChangeOrder={(newOrder) => updateState({...state, orderedSuit:newOrder})}/>
@@ -125,8 +125,8 @@ export default function DCVagabot({ state = {}, isRivetfolkPlaying, onDelete = (
                             />
                             
                         </Card>
-                        <Items items={items} onUpdateItems={(newItems) => updateState({...state, items: newItems})} />
                         <Card title="Daylight" headerBackgroundColor="#6db6dc" headerColor="white">
+                        <ItemsPreview items={items} />
                             <div style={{marginBottom: '1rem'}}>Take the following ordered actions. when ordered to move, exhaust one item per move.</div>
                             <Step description="" />
                             <Steps 
