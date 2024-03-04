@@ -5,7 +5,7 @@ import { getRandomKey } from '../../../../utils';
 import Button from '../../../button';
 import Card from '../../../card';
 
-function isBattleTrack(index) {
+export function isBattleTrack(index) {
     return index === 5 || index === 8 || index === 11;
 }
 
