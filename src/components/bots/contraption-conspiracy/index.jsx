@@ -24,7 +24,7 @@ import Button from '../../button';
 
 export default function ContraptionConspiracy({ state = {}, isRivetfolkPlaying, onDelete = () => {}, updateState = () => {}}) {
 
-    const {isSetup = false, orderedSuit = 'bird', plots = [], traits = [], level = 'expert', isHumanRiverfolk = false} = state;
+    const {isSetup = false, orderedSuit = 'bird', plots = [], traits = [], level = 'expert', isHumanRiverfolk = false, isStandardDeck = false} = state;
     const isBossMode = level === 'boss';
     const isMastermind = traits.find(({id}) => id === 'mastermind').isEnabled;
     const isVendetta = traits.find(({id}) => id === 'vendetta').isEnabled;
@@ -109,7 +109,7 @@ export default function ContraptionConspiracy({ state = {}, isRivetfolkPlaying, 
             />
     ];
 
-    if (canBuyServices) {
+    if (canBuyServices && isStandardDeck) {
         birdsongSteps.unshift(<Step title='(Riverfolk)' description={<>If the Riverfolk player does not have more victory points than you do and there is a "Favor" card in the Riverfolk Market, immediately buy and resolve its effect.</>} />)
     }
     
@@ -143,6 +143,15 @@ export default function ContraptionConspiracy({ state = {}, isRivetfolkPlaying, 
                                 }
                             />
                         </Card >
+                        <Card title="Deck">
+                            <label htmlFor='base-deck' style={{display: 'flex', alignItems: 'center', marginBottom: '0.5rem', gap: '1rem', cursor: 'pointer'}} >
+                                <input id='base-deck'type="checkbox" checked={isStandardDeck}  onChange={() => updateState({...state, isStandardDeck: !isStandardDeck})}/>
+                                <div>
+                                    <div><b>Standard Deck</b></div>
+                                    <div>Check this if playing with the Standard Deck</div>
+                                </div>
+                            </label>
+                        </Card>
                         <Level  level={level} labels={{beginner: <>Whenever you <b>Recruit</b>, place <b>1 warrior</b> in each clearing.</>, expert: <>Whenever you <b>Recruit</b>, place <b>2 warriors</b> in each clearing.</>, master: <>Whenever you <b>Recruit</b>, place <b>3 warriors</b> in each clearing.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
                         {!isRivetfolkPlaying && (<HumanRiverfolk  onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
                     </>
