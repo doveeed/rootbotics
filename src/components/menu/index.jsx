@@ -97,6 +97,7 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                     ...bot,
                     state: {
                         ...bot.state,
+                        isStandardDeck: false,
                         traits: [
                             {
                                 id: 'poor-manual-dexterity',
