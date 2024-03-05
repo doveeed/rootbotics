@@ -245,7 +245,7 @@ export default function DCElectricEyrie({state = {}, isRivetfolkPlaying, onDelet
                             <Decree decree={decree} onUpdateDecree={(newDecree) => updateState({...state, decree: newDecree})}/>
                         </Card>
                         <Level  level={level} labels={{'beginner': <>Whenever you <b>Recruit</b> for <Suit suit="bird" />, place <b>one fewer</b> warrior than the card count.</>, 'expert': <>Whenever you <b>Recruit</b> for <Suit suit="bird" />, place <b>the same</b> number of warriors as the card count.</>, 'master': <>Whenever you <b>Recruit</b> for <Suit suit="bird" />, place <b>one more</b> warrior than the card count.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
-                        {!isRivetfolkPlaying && (<HumanRiverfolk  onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
+                        {!isRivetfolkPlaying && (<HumanRiverfolk isHumanRiverfolk={isHumanRiverfolk} onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
                     </>
                 )}
                 <Card title='Traits'>
