@@ -137,7 +137,7 @@ export default function DummyDuchy({ state = {}, isRivetfolkPlaying, onDelete = 
                             <Ministers ministers={ministers} onUpdateMinisters={(newMinisters) => updateState({...state, ministers: newMinisters})} />
                         </Card>
                         <Level  level={level} labels={{beginner: <>Whenever you <b>Recruit</b>, place <b>1 warrior</b> in the Burrow.</>, expert: <>Whenever you <b>Recruit</b>, place <b>2 warriors</b> in the Burrow.</>, master: <>Whenever you <b>Recruit</b>, place <b>3 warriors</b> in the Burrow.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
-                        {!isRivetfolkPlaying && (<HumanRiverfolk  onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
+                        {!isRivetfolkPlaying && (<HumanRiverfolk isHumanRiverfolk={isHumanRiverfolk} onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
                     </>
                 )}
                 <Card title='Traits'>
