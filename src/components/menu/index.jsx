@@ -97,7 +97,7 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                     ...bot,
                     state: {
                         ...bot.state,
-                        isStandardDeck: false,
+                        deck: 'exiles',
                         traits: [
                             {
                                 id: 'poor-manual-dexterity',
