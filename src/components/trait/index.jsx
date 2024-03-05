@@ -26,6 +26,7 @@ const traitIdDescriptionMap = {
     'investors': <>When Cost of Errors is triggered by a human player, that player has to discard a card matching the clearing in which a building was removed. If they discard a matching card, lose 1 victory point. If they can't, immediately sway a Minister matching the clearing.</>,
     'involved': "If a human player did not buy your Mercenary services on their turn, your warriors belong to all other players for rule and battle purposes as if the player's oppenents bought the Mercenaries service. Vagabond can buy Mercenaries to avoid this, but does not gain the benefits of the service.",
     'iron-will': <><b>Expand</b> may happen twice per turn instead of only once.</>,
+    'lone-wanderer': 'Your pawn is not a warrior and cannot be removed from the map.',
     'lords-of-the-forest': 'You rule any clearings where you are tied in presence.',
     'market': 'The Market is a row of 5 cards visible to all players. While players can freely look at the cards at all times, the order of the Market has to be maintained as new cards are added to the right side.',
     'marksman': <>As Attacker, deal 1 immediate Hit to the Defender <i>(scoring a point if a warrior is removed)</i> before the dice are rolled.</>,
