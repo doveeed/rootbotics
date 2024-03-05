@@ -106,7 +106,7 @@ export default function CogwheelCult({ state = {}, isRivetfolkPlaying, onDelete 
                             />
                         </Card >
                         <Level level={level} labels={{'beginner': <>At the start of Daylight, Reveal the top <b>3 cards</b> from the lost Souls pile.</>, 'expert': <>At the start of Daylight, Reveal the top <b>4 cards</b> from the lost Souls pile.</>, 'master': <>At the start of Daylight, Reveal the top <b>5 cards</b> from the lost Souls pile.</>}} onChangeLevel={(newLevel) => updateState({...state, level: newLevel})} />
-                        {!isRivetfolkPlaying && (<HumanRiverfolk onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
+                        {!isRivetfolkPlaying && (<HumanRiverfolk isHumanRiverfolk={isHumanRiverfolk} onChange={(newIsHumanRiverfolk) => updateState({...state, isHumanRiverfolk: newIsHumanRiverfolk})}/>)}
                     </>
                 )}
                 <Card title='Traits'>
