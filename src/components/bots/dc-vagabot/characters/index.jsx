@@ -18,7 +18,7 @@ export default function Characters({characters, selectedCharacter, onChangeChara
     return (
         <Card title="Characters">
             {Object.values(characters).map(({id, name, special}) => (
-                 <label htmlFor={id} style={{display: 'flex', alignItems: 'center', marginBottom: '0.5rem', gap: '1rem', cursor: 'pointer'}} >
+                 <label key={id} htmlFor={id} style={{display: 'flex', alignItems: 'center', marginBottom: '0.5rem', gap: '1rem', cursor: 'pointer'}} >
                     <input id={id} type="checkbox" style={{accentColor: factionColor}} checked={selectedCharacter === id}  onChange={() => handleUpdateCharacter(id)}/>
                     <div>
                         <div><b>{name}</b></div>
