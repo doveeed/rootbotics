@@ -445,10 +445,10 @@ export default function Menu ({bots, onAddBot = () => {}}) {
                             },
                         ],
                         items: [
-                            {key: getRandomKey(), isExausted: false, isDamaged: false},
-                            {key: getRandomKey(), isExausted: false, isDamaged: false},
-                            {key: getRandomKey(), isExausted: false, isDamaged: false},
-                            {key: getRandomKey(), isExausted: false, isDamaged: false}
+                            {key: getRandomKey(), isExhausted: false, isDamaged: false},
+                            {key: getRandomKey(), isExhausted: false, isDamaged: false},
+                            {key: getRandomKey(), isExhausted: false, isDamaged: false},
+                            {key: getRandomKey(), isExhausted: false, isDamaged: false}
                         ],
                         character: 'thief'
                     }
