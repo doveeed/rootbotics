@@ -12,6 +12,7 @@ import HumanRiverfolk from "../../human-riverfolk";
 import Items, { ItemsPreview, isBattleTrack } from "./items";
 import VP2 from '../../../assets/vp2.png';
 import Characters from "./characters";
+import Button from "../../button";
 
 const characters = {
     thief: {id: 'thief', name: 'Thief', special:  <>Take a random card from the enemy in your clearing with the most victory points. On a tie, take it from such an enemy with the most pieces there.</>},
@@ -35,6 +36,9 @@ export default function DCVagabot({ state = {}, isRivetfolkPlaying, onDelete = (
 
     const totalDamagedItems = items.filter(({isDamaged}, index) => !isBattleTrack(index) && isDamaged).length;
     const totalUndamagedItems = items.filter(({isDamaged}, index) => !(isBattleTrack(index) || isDamaged)).length;
+    const totalExhaustedItems = items.filter(({isExhausted}, index) => !isBattleTrack(index) && (isExhausted)).length;
+    const totalExhaustedOrDamagedItems = items.filter(({isExhausted, isDamaged}, index) => !isBattleTrack(index) && (isExhausted || isDamaged)).length;
+    const totalActionItems = items.filter((_, index) => !isBattleTrack(index)).length;
 
     const maxHits = items.length >= 12 ? <>3, <b>deal an extra hit</b></> : items.length >= 9 ? 3 : items.length >= 6 ? 2 : 1;
     const isBossMode = level === 'boss';
@@ -50,12 +54,137 @@ export default function DCVagabot({ state = {}, isRivetfolkPlaying, onDelete = (
     }
     const canBuyServices = isRivetfolkPlaying || isHumanRiverfolk;
 
+    const damageItem = () => {
+        let hasDamagedItem = false
+        // damage exhausted items first
+        let newItems = items.map((item, index) => {
+            if (hasDamagedItem || item.isDamaged || !item.isExhausted || isBattleTrack(index)) {
+                return item;
+            }
+            hasDamagedItem = true;
+            return {
+                ...item,
+                isDamaged: true,
+            }
+        });
+
+        if (hasDamagedItem) {
+            updateState({...state, items: newItems});
+            return;
+        }
+
+        // damage unexhausted items
+        newItems = newItems.map((item, index) => {
+            if (hasDamagedItem || item.isDamaged || isBattleTrack(index)) {
+                return item;
+            }
+            hasDamagedItem = true;
+            return {
+                ...item,
+                isDamaged: true,
+            }
+        });
+
+        updateState({...state, items: newItems})
+    }
+
+    const exhaustItem = () => {
+        let hasExhaustedItem = false
+        const newItems = items.map((item, index) => {
+            if (hasExhaustedItem || item.isDamaged || item.isExhausted || isBattleTrack(index)) {
+                return item;
+            }
+            hasExhaustedItem = true;
+            return {
+                ...item,
+                isExhausted: true,
+            }
+        });
+
+        if (!hasExhaustedItem) {
+            return;
+        }
+       
+        updateState({...state, items: newItems})
+    }
+
+    const refreshItems = () => {
+        const totalToRefresh = Math.min(levelToRefresh[level] + (totalDamagedItems === 0 ? 2: 0) + (isBerserker ? 1: 0), totalExhaustedItems);
+
+        let totalRefreshed = 0;
+        // refresh undamaged items
+        let newItems = items.map((item, index) => {
+            if (totalRefreshed >= totalToRefresh || item.isDamaged || !item.isExhausted || isBattleTrack(index)) {
+                return item;
+            }
+            totalRefreshed += 1;
+            return {
+                ...item,
+                isExhausted: false,
+            }
+        });
+
+        if (totalRefreshed >= totalToRefresh) {
+            updateState({...state, items: newItems});
+            return;
+        }
+
+        // refresh damaged items
+        newItems = newItems.map((item, index) => {
+            if (totalRefreshed >= totalToRefresh || !item.isExhausted || isBattleTrack(index)) {
+                return item;
+            }
+            totalRefreshed += 1;
+            return {
+                ...item,
+                isExhausted: false,
+            }
+        });
+
+        updateState({...state, items: newItems})
+    };
+
+    const repairItems = (totalToRepair) => {
+        let totalRepaired = 0;
+
+        // repair unexhausted items
+        let newItems = items.map((item, index) => {
+            if (totalRepaired >= totalToRepair || !item.isDamaged || item.isExhausted || isBattleTrack(index)) {
+                return item;
+            }
+            totalRepaired += 1;
+            return {
+                ...item,
+                isDamaged: false,
+            }
+        });
+
+        if (totalRepaired >= totalToRepair) {
+            updateState({...state, items: newItems});
+            return;
+        }
+
+        // repair exhausted items
+        newItems = newItems.map((item, index) => {
+            if (totalRepaired >= totalToRepair || !item.isDamaged || isBattleTrack(index)) {
+                return item;
+            }
+            totalRepaired += 1;
+            return {
+                ...item,
+                isDamaged: false,
+            }
+        });
+
+        updateState({...state, items: newItems})
+    };
+
     const steps = {
-        aid: <Step title="Aid." description={<>Move to the nearest clearing containing pieces of a player with any items in their Crafted Items box if possible. Then exhaust 1 item to take 1 of their items and place it in your satchel. Score <OneVP/> and then they draw 1 card.{isHelper && (<div style={{paddingLeft: '26px'}}><b>(Helper)</b> If there are no players with available items in their Crafted Items box, move to the nearest clearing containing pieces of the player with the lowest score. Exhaust 1 item to score <OneVP/> and then the aided player draws 1 card.</div>)}</>} substeps={<Steps type="I" steps={[<Step title={<i>Player tie:</i>} description={<i>If multiple players with items have pieces in equal distance, select the player with the lower score.</i>}/>]}/>}/>,
-        battle: <Step title={`Battle.${isBerserker && ' (Berserker)'}`} description={<>Move to the nearest clearing with {isBerserker ? 'the most pieces' : 'any peices of the enemy with the most points'}, then exhaust 1 item to battle {isBerserker ? 'the player with the most pieces there' : 'that player'}. Your maximum Rolled Hits is {maxHits}. Score <OneVP/> per enemy warrior removed.{!isAdventurer && <> Repeat this action, exhausting 2 items per extra battle, as many times as possible.</>}{isMarksman && (<div style={{paddingLeft: '26px'}}><b>(Marksman)</b> Deal 1 immediate Hit to the Defender <i>(scoring a point if a warrior is removed)</i> before the dice are rolled.</div>)}{isAdventurer && (<div style={{paddingLeft: '26px'}}><b>(Adventurer)</b> Do not repeat this action.</div>)}</>} substeps={isBerserker ? undefined : <Steps type="I" steps={[<Step title={<i>Clearing Tie:</i>} description={<i>Move to the clearing where the target player has the most tokens and buildings, then fewest warriors.</i>} />]} />}/>,
-        explore: <Step title="Explore." description="Move to the nearest ruin, then exhoust 1 item to take an item from it."/>,
-        quest: <Step title="Quest." description={<>Move to the nearest clearing matching your quest. Then exhaust any 2 items to discard your quest and score  <img src={VP2} alt="two victory points" width={24} style={{marginBottom: '-4px'}}/>. Then, replace the quest.</>} />,
-        special: <Step title="Special." description={<>Exhaust 1 item to take the following action: {characters[character].special} Skip this action if it would have no effect.</>} />,
+        aid: <Step title="Aid." description={<>Move to the nearest clearing containing pieces of a player with any items in their Crafted Items box if possible. Then exhaust 1 item to take 1 of their items and place it in your satchel. Score <OneVP/> and then they draw 1 card.{totalActionItems - totalExhaustedOrDamagedItems > 0 && (<> <Button onClick={exhaustItem}>Exhaust item</Button></>)}{isHelper && (<div style={{paddingLeft: '26px'}}><b>(Helper)</b> If there are no players with available items in their Crafted Items box, move to the nearest clearing containing pieces of the player with the lowest score. Exhaust 1 item to score <OneVP/> and then the aided player draws 1 card.</div>)}</>} substeps={<Steps type="I" steps={[<Step title={<i>Player tie:</i>} description={<i>If multiple players with items have pieces in equal distance, select the player with the lower score.</i>}/>]}/>}/>,
+        battle: <Step title={`Battle.${isBerserker && ' (Berserker)'}`} description={<>Move to the nearest clearing with {isBerserker ? 'the most pieces' : 'any peices of the enemy with the most points'}, then exhaust 1 item to battle {isBerserker ? 'the player with the most pieces there' : 'that player'}. Your maximum Rolled Hits is {maxHits}. Score <OneVP/> per enemy warrior removed.{!isAdventurer && <> Repeat this action, exhausting 2 items per extra battle, as many times as possible.</>}{totalActionItems - totalExhaustedOrDamagedItems > 0 && (<> <Button onClick={exhaustItem}>Exhaust item</Button></>)}{totalActionItems - totalDamagedItems > 0 && (<> <Button onClick={damageItem}>Damage item</Button></>)}{isMarksman && (<div style={{paddingLeft: '26px'}}><b>(Marksman)</b> Deal 1 immediate Hit to the Defender <i>(scoring a point if a warrior is removed)</i> before the dice are rolled.</div>)}{isAdventurer && (<div style={{paddingLeft: '26px'}}><b>(Adventurer)</b> Do not repeat this action.</div>)}</>} substeps={isBerserker ? undefined : <Steps type="I" steps={[<Step title={<i>Clearing Tie:</i>} description={<i>Move to the clearing where the target player has the most tokens and buildings, then fewest warriors.</i>} />]} />}/>,
+        explore: <Step title="Explore." description={<>Move to the nearest ruin, then exhoust 1 item to take an item from it.{totalActionItems - totalExhaustedOrDamagedItems > 0 && (<> <Button onClick={exhaustItem}>Exhaust item</Button></>)}</>}/>,
+        quest: <Step title="Quest." description={<>Move to the nearest clearing matching your quest. Then exhaust any 2 items to discard your quest and score  <img src={VP2} alt="two victory points" width={24} style={{marginBottom: '-4px'}}/>. Then, replace the quest.{totalActionItems - totalExhaustedOrDamagedItems > 0 && (<> <Button onClick={exhaustItem}>Exhaust item</Button></>)}</>} />,
+        special: <Step title="Special." description={<>Exhaust 1 item to take the following action: {characters[character].special} Skip this action if it would have no effect.{totalActionItems - totalExhaustedOrDamagedItems > 0 && (<> <Button onClick={exhaustItem}>Exhaust item</Button></>)}</>} />,
     }
 
     const birdsongSteps = [
@@ -76,8 +205,8 @@ export default function DCVagabot({ state = {}, isRivetfolkPlaying, onDelete = (
     }
 
     const eveningSteps = [
-        <Step title="Refresh" description={<>up to {levelToRefresh[level] + (totalDamagedItems === 0 ? 2: 0)} items.{isBerserker && (<div style={{paddingLeft: '26px'}}><b>(Berserker)</b> Refresh 1 additional item.</div>)}</>} />,
-        <Step title="Repair." description={<>If you are in a forest, repair all items. If not, repair 1 item. Repair unexhausted items before exhausted items.</>} />,
+        <Step title="Refresh" description={<>up to {levelToRefresh[level] + (totalDamagedItems === 0 ? 2: 0)} items.{totalExhaustedItems > 0 && (<> <Button onClick={refreshItems}>Refresh items</Button></>)}{isBerserker && (<div style={{paddingLeft: '26px'}}><b>(Berserker)</b> Refresh 1 additional item.</div>)}</>} />,
+        <Step title="Repair." description={<>If you are in a forest, repair all items. If not, repair 1 item. Repair unexhausted items before exhausted items. {totalDamagedItems > 0 && (<> <Button onClick={() => repairItems(totalDamagedItems)}>Repair all items</Button> <Button onClick={() => repairItems(1)}>Repair 1 item</Button></>)}</>} />,
         <Step title="Discard" description="the order card."/>
     ];
 
@@ -137,7 +266,7 @@ export default function DCVagabot({ state = {}, isRivetfolkPlaying, onDelete = (
                             
                         </Card>
                         <Card title="Daylight" headerBackgroundColor="#6db6dc" headerColor="white">
-                        <ItemsPreview items={items} />
+                            <ItemsPreview items={items} />
                             <div style={{marginBottom: '1rem'}}>Take the following ordered actions. when ordered to move, exhaust 1 item per move.</div>
                             <Step description="" />
                             <Steps 
@@ -146,6 +275,7 @@ export default function DCVagabot({ state = {}, isRivetfolkPlaying, onDelete = (
                             />
                         </Card>
                         <Card title="Evening" headerBackgroundColor='#8a8892' headerColor='white'>
+                            <ItemsPreview items={items} />
                             <Steps 
                                 type="1"
                                 steps={eveningSteps}
