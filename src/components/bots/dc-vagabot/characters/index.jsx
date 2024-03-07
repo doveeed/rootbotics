@@ -6,7 +6,7 @@ export default function Characters({characters, selectedCharacter, onChangeChara
     const {factionColor} = useSettings();
 
     const handleUpdateCharacter = (id) => {
-        let items = [{key: getRandomKey(), isExausted: false, isDamaged: false}, {key: getRandomKey(), isExausted: false, isDamaged: false}, {key: getRandomKey(), isExausted: false, isDamaged: false}, {key: getRandomKey(), isExausted: false, isDamaged: false}]
+        let items = [{key: getRandomKey(), isExhausted: false, isDamaged: false}, {key: getRandomKey(), isExhausted: false, isDamaged: false}, {key: getRandomKey(), isExhausted: false, isDamaged: false}, {key: getRandomKey(), isExhausted: false, isDamaged: false}]
         
         if (id === 'tinker') {
             items = [...items.slice(0, -1)];
