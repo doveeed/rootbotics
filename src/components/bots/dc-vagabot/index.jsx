@@ -189,7 +189,7 @@ export default function DCVagabot({ state = {}, isRivetfolkPlaying, onDelete = (
 
     const birdsongSteps = [
         <Step title="Reveal" description="the top card of the deck as order card."/>,
-        <Step title="Craft" description={<>order card for <OneVP/> if it shows an available item.{canBuyServices ?  <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no available craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly. Exhaust 1 item and <b>use Riverfolk Warriors to pay</b></div>:''}</>} />,
+        <Step title="Craft" description={<>order card for <OneVP/> if it shows an available item.{canBuyServices ?  <div style={{paddingLeft: '26px'}}><b>(Riverfolk)</b> If the Riverfolk player does not have more victory points than you do and the order card has no available craftable item, buy a card with an available craftable item from the Riverfolk Market and replace the order card. If multiple cards exist, pick the one with the most VP for the item. If multiple, choose randomly. Exhaust 1 item and <b>use Riverfolk Warriors to pay</b>.{totalActionItems - totalExhaustedOrDamagedItems > 0 && (<> <Button onClick={exhaustItem}>Exhaust item</Button></>)}</div>:''}</>} />,
     ]
 
     if (totalUndamagedItems <= 2) {
